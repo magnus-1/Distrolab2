@@ -1,8 +1,8 @@
 
 
-namespace community.Models.EntryViewModel {
+namespace community.Models.EntryViewModels {
     public class NewsViewModel
     {
-        public String NewsItem {get; set;};
+        public string NewsItem {get; set;}
     }
 }

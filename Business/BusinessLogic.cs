@@ -7,6 +7,5 @@ namespace community.Business
     public class BusinessLogic
     {
         
-
     }
 }

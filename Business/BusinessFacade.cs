@@ -7,6 +7,8 @@ namespace community.Business
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class BusinessFacade
     {   
-        
+        public static string GetHej() {
+            return "hej2";
+        }
     }
 }
