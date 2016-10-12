@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using community.Models;
 using Microsoft.AspNetCore.Http;
+using community.Models.DBModels;
 
 namespace community.Business
 {
@@ -8,7 +9,12 @@ namespace community.Business
     public class BusinessFacade
     {   
         public static string GetHej() {
-            return "hej2";
+            var a = new BusinessLogic().GetEntries();
+            return a;
+        }
+
+        public static void InsertEntry(EntryDB entry) {
+            new BusinessLogic().InsertEntry(entry);
         }
     }
 }

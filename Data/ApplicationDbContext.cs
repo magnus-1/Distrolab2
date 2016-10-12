@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using community.Models;
+using community.Models.DBModels;
+
 
 namespace community.Data
 {
@@ -15,6 +17,15 @@ namespace community.Data
         {
         }
 
+
+        public static ApplicationDbContext Create()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
+            options.UseSqlite("Filename=./community.db");
+            return new ApplicationDbContext(options.Options);
+
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -22,5 +33,7 @@ namespace community.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+        public DbSet<EntryDB> Entries{get; set;}
     }
+
 }
