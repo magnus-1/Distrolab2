@@ -1,4 +1,4 @@
-namespace community.Models{
+namespace Distrolab2.Models{
     public class Session{
         public int Id { get; set; }
         public string Title { get; set; }

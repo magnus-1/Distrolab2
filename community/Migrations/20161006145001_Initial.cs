@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace community.Migrations
+namespace Distrolab2.Migrations
 {
     public partial class Initial : Migration
     {

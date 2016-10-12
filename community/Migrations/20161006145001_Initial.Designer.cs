@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using community.Models;
+using Distrolab2.Models;
 
-namespace community.Migrations
+namespace Distrolab2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     [Migration("20161006145001_Initial")]

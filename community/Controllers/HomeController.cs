@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using community.Models;
+using Distrolab2.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace community.Controllers
+namespace Distrolab2.Controllers
 {
     public class HomeController : Controller
     {

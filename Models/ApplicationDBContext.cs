@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace community.Models
+namespace Distrolab2.Models
 {
     public class ApplicationDBContext : DbContext{
         public DbSet<Conference> Conferences { get; set; }

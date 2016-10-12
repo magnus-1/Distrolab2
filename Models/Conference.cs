@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace community.Models{
+namespace Distrolab2.Models{
 
     public class Conference{
         public int Id { get; set; }
