@@ -1,4 +1,21 @@
 @using community.Models
-@model community.Models.ViewModels.GroupViewModels.GroupVM;
+@using community.Models.ViewModels
+@model community.Models.ViewModels.GroupViewModels.GroupVM
 
-<h2>@Model.NewsItem </h2>
+<h2>@Model.Title </h2>
+<table class="table">
+@foreach (var msg in Model.Messages) {
+    <tr>
+        <!--<td>
+            <h4>@Html.DisplayFor(modelMsg => msg.Title)</h4>
+        </td>-->
+        <td>
+            @Html.DisplayFor(modelMsg => msg.Content)
+        </td>
+        <!--<td>
+            @Html.DisplayFor(modelMsg => msg.SenderName)
+        </td>-->
+    </tr>
+}
+
+</table>
