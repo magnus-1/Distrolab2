@@ -14,7 +14,12 @@ namespace community.Business
         public string GetEntries() {
             return DBFacade.GetEntries();
         }
-        
+
+        public string EntriesWithKey(int key)
+        {
+            var entry = ctx.Entries.Where(c => c.Id == key).ToList();
+            return entry.First().NewsItem;//First().NewsItem;
+        }
         public void InsertEntry(EntryDB entry) {
             DBFacade.InsertEntry(entry);
             
