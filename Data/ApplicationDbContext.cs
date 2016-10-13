@@ -29,16 +29,25 @@ namespace community.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+            builder.Entity<MessageDB>()
+                .HasOne(p => p.Sender)
+                .WithMany(a => a.SentMessages);
+            builder.Entity<ApplicationUser>()
+                .HasMany(p => p.SentMessages)
+                .WithOne(a => a.Sender);
+            // builder.Entity<ApplicationUser>()
+            //     .HasMany(p => p.ReceivedMessages)
+            //     .WithOne(a => a.Sender);
 
-            
+
+
             // TODO: builder.Entity<outstuff>.hasOne(k => till vad) . hasOneToMany
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<EntryDB> Entries{get; set;}
+        public DbSet<EntryDB> Entries { get; set; }
     }
 
 }
