@@ -16,6 +16,10 @@ namespace community.DBLayer {
             new DBLogic().InsertEntry(entry);
         }
 
+        public static GroupBL GetGroup(int groupId) {
+            var groupDB = new DBLogic().GetGroup(groupId);
+            return DBModelConverter.ConvertToGroupBL(groupDB);
+        }
         public static void PostMessageToGroup(MessageBL msg,int groupId) 
         {
             new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);

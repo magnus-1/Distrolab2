@@ -19,6 +19,12 @@ namespace community.Business
             DBFacade.InsertEntry(entry);
             
         }
+
+        public GroupBL GroupsWithKey(int groupId)
+        {
+            return DBFacade.GetGroup(groupId);
+        }
+
         public void PostMessageToGroup(MessageBL msg,int groupId) 
         {
             DBFacade.PostMessageToGroup(msg,groupId);

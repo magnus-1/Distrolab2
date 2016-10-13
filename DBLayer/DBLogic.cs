@@ -3,6 +3,10 @@
 using System.Linq;
 using community.Data;
 using community.Models.DBModels;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace community.DBLayer {
 
@@ -25,6 +29,11 @@ namespace community.DBLayer {
         public void InsertEntry(EntryDB entry) {
             ctx.Entries.Add(entry);
             ctx.SaveChanges();
+        }
+
+        public GroupDB GetGroup(int groupId) {
+            var group = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
+            return group;
         }
 
         public void PostMessageToGroup(MessageDB msg,int groupId) 

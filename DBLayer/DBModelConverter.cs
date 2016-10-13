@@ -17,13 +17,28 @@ namespace community.DBLayer
             return dbl;
         }
 
+        public static List<MessageBL> ConvertToMessageListBL(List<MessageDB> msgList)
+        {
+            List<MessageBL> dbl = new List<MessageBL>();
+
+            msgList.ForEach(p => dbl.Add(new MessageBL {  Content = p.Content }));
+            
+            System.Console.WriteLine("ConvertToMessageListBL: " + dbl.ToString());
+            return dbl;
+        }
+
         public static MessageDB ConvertMessageBL(MessageBL msg)
         {
             return new MessageDB {  Content = msg.Content };
         }
-        static GroupDB ConvertGroupBL(GroupBL groupBL)
+        public static GroupDB ConvertGroupBL(GroupBL groupBL)
         {
             return new GroupDB { Id = groupBL.Id, Title = groupBL.Title, Messages = ConvertMessageListBL(groupBL.Messages) };
         }
+
+        public static GroupBL ConvertToGroupBL(GroupDB groupDB) {
+            return new GroupBL{Title = groupDB.Title, Id = groupDB.Id, Messages = ConvertToMessageListBL(groupDB.Messages)};
+        }
+        
     }
 }
