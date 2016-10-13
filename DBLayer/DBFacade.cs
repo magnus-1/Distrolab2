@@ -1,4 +1,5 @@
 using community.Models.DBModels;
+using community.Models.BusinessModels;
 
 namespace community.DBLayer { 
 
