@@ -11,6 +11,7 @@ namespace community.Controllers
     public class EntryController : Controller
     {
         //private BusinessFacade ctx = new BusinessFacade();
+        
         public IActionResult EntryStart(string output)
         {
             NewsViewModel news = new NewsViewModel();

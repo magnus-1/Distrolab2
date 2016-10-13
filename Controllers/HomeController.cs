@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace community.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -18,7 +20,7 @@ namespace community.Controllers
             ViewData["Message"] = "Your application description page.";
             return View();
         }
-        
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
