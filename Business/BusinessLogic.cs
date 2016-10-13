@@ -1,6 +1,7 @@
 using community.Models;
 using Microsoft.AspNetCore.Identity;
 using community.Data;
+using community.DBLayer;
 using Microsoft.EntityFrameworkCore;
 using community.Models.DBModels;
 using System.Linq;
@@ -11,14 +12,11 @@ namespace community.Business
     {
         private ApplicationDbContext ctx = ApplicationDbContext.Create();
         public string GetEntries() {
-            EntryDB a =  ctx.Entries.First();
-            System.Console.WriteLine("-------  db sak" + a.ToString());
-            return a.NewsItem;
+            return DBFacade.GetEntries();
         }
-
+        
         public void InsertEntry(EntryDB entry) {
-            ctx.Entries.Add(entry);
-            ctx.SaveChanges();
+            DBFacade.InsertEntry(entry);
             
         }
     }
