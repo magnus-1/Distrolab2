@@ -17,8 +17,7 @@ namespace community.Business
 
         public string EntriesWithKey(int key)
         {
-            var entry = ctx.Entries.Where(c => c.Id == key).ToList();
-            return entry.First().NewsItem;//First().NewsItem;
+            return DBFacade.EntriesWithKey(key);
         }
         public void InsertEntry(EntryDB entry) {
             DBFacade.InsertEntry(entry);
