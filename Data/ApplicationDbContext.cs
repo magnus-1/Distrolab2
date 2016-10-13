@@ -48,6 +48,8 @@ namespace community.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<EntryDB> Entries { get; set; }
+        public DbSet<GroupDB> Groups { get; set; }
+        public DbSet<MessageDB> Messages { get; set; }
     }
 
 }

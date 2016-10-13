@@ -10,7 +10,7 @@ namespace community.Business
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class BusinessLogic
     {
-        private ApplicationDbContext ctx = ApplicationDbContext.Create();
+        //private ApplicationDbContext ctx = ApplicationDbContext.Create();
         public string GetEntries() {
             return DBFacade.GetEntries();
         }
@@ -22,6 +22,10 @@ namespace community.Business
         public void InsertEntry(EntryDB entry) {
             DBFacade.InsertEntry(entry);
             
+        }
+        public void PostMessageToGroup(MessageBL msg,int groupId) 
+        {
+            DBFacade.PostMessageToGroup(msg,groupId);
         }
     }
 }

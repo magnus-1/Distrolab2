@@ -11,6 +11,8 @@ namespace community.Models.DBModels
         [Key]
         public int Id {get;set;}
         public string Content {get; set;}
+        public bool IsRead {get; set;}
+        public bool IsDeleted { get; set; }
 
         public string SenderId {get;set;}
         [ForeignKey("SenderId")]

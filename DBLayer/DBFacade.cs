@@ -14,5 +14,10 @@ namespace community.DBLayer {
         public static void InsertEntry(EntryDB entry){
             new DBLogic().InsertEntry(entry);
         }
+
+        public static void PostMessageToGroup(MessageBL msg,int groupId) 
+        {
+            new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);
+        }
     }
 }

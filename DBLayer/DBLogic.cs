@@ -26,5 +26,13 @@ namespace community.DBLayer {
             ctx.Entries.Add(entry);
             ctx.SaveChanges();
         }
+
+        public void PostMessageToGroup(MessageDB msg,int groupId) 
+        {
+            var a = ctx.Groups.Where(c => c.Id == groupId);
+            a.First().Messages.Add(msg);
+            ctx.Messages.Add(msg);
+            ctx.SaveChanges();
+        }
     }
 }

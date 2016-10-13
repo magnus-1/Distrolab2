@@ -39,6 +39,7 @@ namespace community.Controllers
             {
                 var data = new EntryDB { NewsItem = "hej" + i };
                 Business.BusinessFacade.InsertEntry(data);
+                
             }
             return RedirectToAction("EntryStart");
         }
