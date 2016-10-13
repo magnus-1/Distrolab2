@@ -4,6 +4,7 @@ using community.Data;
 using community.DBLayer;
 using Microsoft.EntityFrameworkCore;
 using community.Models.DBModels;
+using community.Models.BusinessModels;
 using System.Linq;
 namespace community.Business
 {

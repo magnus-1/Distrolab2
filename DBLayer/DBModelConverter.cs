@@ -10,7 +10,7 @@ namespace community.DBLayer
         public static List<MessageDB> ConvertMessageListBL(List<MessageBL> msgList)
         {
             List<MessageDB> dbl = new List<MessageDB>();
-            msgList.ForEach(p => dbl.add(new MessageDB { Title = p.Title, Content = p.Content });
+            msgList.ForEach(p => dbl.add(new MessageDB { Title = p.Title, Content = p.Content }));
             System.Console.WriteLine("ConvertMessageListBL: " + dbl.ToString());
             return dbl;
         }
