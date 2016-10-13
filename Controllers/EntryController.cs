@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Routing;
 
 namespace community.Controllers
 {
-
     public class EntryController : Controller
     {
         //private BusinessFacade ctx = new BusinessFacade();
