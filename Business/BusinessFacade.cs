@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
 using community.Models;
-using Microsoft.AspNetCore.Http;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
-using community.Models.BusinessModels;
 
 namespace community.Business
 {
@@ -26,7 +24,7 @@ namespace community.Business
 
         public static void PostMessageToGroup(MessageVM msg,GroupVM groupVM) 
         {
-            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg),groupVM.GroupId );
+            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupVM.GroupId );
         }
     }
 }

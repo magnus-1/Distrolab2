@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using community.Data;
 
-namespace community.Data.Migrations
+namespace Distrolab2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161013085117_test")]
-    partial class test
+    [Migration("20161013150912_test6")]
+    partial class test6
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,6 +75,50 @@ namespace community.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Entries");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.GroupDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<int?>("GroupDBId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<string>("SenderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("GroupDBId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -182,6 +226,28 @@ namespace community.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.GroupDB", b =>
+                {
+                    b.HasOne("community.Models.ApplicationUser")
+                        .WithMany("Groups")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
+                {
+                    b.HasOne("community.Models.ApplicationUser")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("community.Models.DBModels.GroupDB")
+                        .WithMany("Messages")
+                        .HasForeignKey("GroupDBId");
+
+                    b.HasOne("community.Models.ApplicationUser", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

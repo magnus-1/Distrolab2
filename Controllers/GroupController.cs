@@ -19,7 +19,7 @@ namespace community.Controllers {
     {
         public IActionResult MessageGroup() 
         {
-            
+            return RedirectToAction("EntryStart");
         }
     }
 }
