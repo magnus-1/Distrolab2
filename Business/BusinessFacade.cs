@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using community.Models;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;

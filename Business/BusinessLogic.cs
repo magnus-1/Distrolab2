@@ -1,11 +1,6 @@
-using community.Models;
-using Microsoft.AspNetCore.Identity;
-using community.Data;
 using community.DBLayer;
-using Microsoft.EntityFrameworkCore;
 using community.Models.DBModels;
 using community.Models.BusinessModels;
-using System.Linq;
 namespace community.Business
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
