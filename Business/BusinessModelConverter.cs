@@ -8,11 +8,8 @@ namespace community.Business {
     public class BusinessModelConverter {
         public static List<MessageBL> ConvertMessageListVM (List<MessageVM> msgList) {
             List<MessageBL> bl =  new List<MessageBL>();
-<<<<<<< HEAD
-            msgList.ForEach(p =>bl.add(new MessageBL{Title = p.Title , Content = p.Content}));
-=======
+
             msgList.ForEach(p => bl.Add(new MessageBL{ Content = p.Content}));
->>>>>>> 1e663b49b21b62738e138b192f57ed4732e4ea87
             System.Console.WriteLine("ConvertMessageListVM: " + bl.ToString());
             return bl;
         }
