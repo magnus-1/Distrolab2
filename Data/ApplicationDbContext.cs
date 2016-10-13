@@ -29,7 +29,9 @@ namespace community.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
 
+            
             // TODO: builder.Entity<outstuff>.hasOne(k => till vad) . hasOneToMany
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
