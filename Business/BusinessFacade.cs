@@ -9,7 +9,7 @@ namespace community.Business
     public class BusinessFacade
     {   
         public static string GetHej() {
-            var a = new BusinessLogic().GetEntries();
+            var a = new BusinessLogic().EntriesWithKey(8);//.GetEntries();
             return a;
         }
 
