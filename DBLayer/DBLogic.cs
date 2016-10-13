@@ -27,9 +27,16 @@ namespace community.DBLayer {
         }
         
         public void InsertEntry(EntryDB entry) {
-            ctx.Entries.Add(entry);
+            ctx.Entries.Add(entry);//.Entries.Add(entry);
             ctx.SaveChanges();
         }
+
+        public void InsertGroup(GroupDB group) {
+            ctx.Groups.Add(group);
+            ctx.SaveChanges();
+        }
+
+
 
         public GroupDB GetGroup(int groupId) {
             var group = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
