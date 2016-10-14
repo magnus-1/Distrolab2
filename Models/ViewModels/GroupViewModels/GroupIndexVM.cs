@@ -1,17 +1,16 @@
 
 using System.Collections.Generic;
 
-namespace community.Models.ViewModels.GroupViewModels {
-    public class GroupVM
-    {
-       List<GroupInfoVM> Groups {get;set;}
-    
-    }
-
+namespace community.Models.ViewModels.GroupViewModels
+{
     public class GroupInfoVM
     {
-        public int GroupId {get; set;}
-        public string Title {get; set;}
+        public int GroupId { get; set; }
+        public string Title { get; set; }
     }
 
+    public class GroupIndexVM
+    {
+        public List<GroupInfoVM> Groups { get; set; }
+    }
 }

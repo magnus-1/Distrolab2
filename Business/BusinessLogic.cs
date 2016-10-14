@@ -1,6 +1,8 @@
 using community.DBLayer;
 using community.Models.DBModels;
 using community.Models.BusinessModels;
+using System.Collections.Generic;
+
 namespace community.Business
 {
     // Add profile data for application users by adding properties to the ApplicationUser class

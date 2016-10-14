@@ -23,7 +23,8 @@ namespace community.DBLayer
         }
 
         public static GroupBL ConvertToGroupBL(GroupDB groupDB)
-        {
+        {   
+
             return new GroupBL
             {
                 Title = groupDB.Title,
@@ -31,6 +32,8 @@ namespace community.DBLayer
                 Messages = ListConverter.Map(groupDB.Messages, m => new MessageBL{Content = m.Content})
             };
         }
-
+        public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups){
+            return ListConverter.Map(groups,g => new GroupBL {Title = g.Title, Id = g.Id});
+        }
     }
 }

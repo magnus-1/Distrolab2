@@ -26,10 +26,11 @@ namespace community.Controllers
         }
         public IActionResult Index()
         {   
-            var groupVM = BusinessFacade.GetGroups();
+            var groupInfoVMs = BusinessFacade.GetGroups();
             
-            
-            return View();
+            var groupVm = new GroupIndexVM {Groups = groupInfoVMs};
+
+            return View(groupVm);
         }
 
         // public IActionResult GroupPage()
@@ -41,7 +42,7 @@ namespace community.Controllers
         {
              System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
             //var group = BusinessFacade.GroupsWithKey(1);
-            return View(group);
+            return RedirectToAction("Index");
         }
 
 
@@ -70,10 +71,12 @@ namespace community.Controllers
 
         [HttpPostAttribute]
         public IActionResult PostMessageToGroup(string text, int groupId)
-        {
+        {   
+            int Id = groupId;
             System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
             BusinessFacade.PostMessageToGroup(new MessageVM { Content = text }, groupId);
-            return RedirectToAction("GroupPage");
+            return RedirectToAction("ViewGroup", new {groupId = Id});
         }
+
     }
 }

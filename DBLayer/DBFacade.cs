@@ -1,5 +1,6 @@
 using community.Models.DBModels;
 using community.Models.BusinessModels;
+using System.Collections.Generic;
 
 namespace community.DBLayer { 
 
@@ -28,10 +29,8 @@ namespace community.DBLayer {
 
         public static List<GroupBL> GetGroups() {
             List<GroupDB> groupDBs = new DBLogic().GetGroups();
-            
-            return DBModelConverter.ConvertToGroupBL(groupDBs);
+            return DBModelConverter.ConvertListToGroupBL(groupDBs);
         }
-
 
         public static void PostMessageToGroup(MessageBL msg,int groupId) 
         {

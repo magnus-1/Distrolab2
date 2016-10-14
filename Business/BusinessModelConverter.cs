@@ -38,5 +38,8 @@ namespace community.Business
                 Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content }))
             };
         }
+        public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups){
+            return ListConverter.Map(groups,g => new GroupInfoVM {Title = g.Title, GroupId = g.Id} );
+        }
     }
 }
