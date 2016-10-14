@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using community.Data;
 
-namespace Distrolab2.Migrations
+namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161013150912_test6")]
-    partial class test6
+    [Migration("20161013151814_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
