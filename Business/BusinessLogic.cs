@@ -1,11 +1,6 @@
-using community.Models;
-using Microsoft.AspNetCore.Identity;
-using community.Data;
 using community.DBLayer;
-using Microsoft.EntityFrameworkCore;
 using community.Models.DBModels;
 using community.Models.BusinessModels;
-using System.Linq;
 namespace community.Business
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
@@ -24,6 +19,16 @@ namespace community.Business
             DBFacade.InsertEntry(entry);
             
         }
+        public void InsertGroup(GroupBL group) {
+           DBFacade.InsertGroup(group);            
+        }
+
+
+        public GroupBL GroupsWithKey(int groupId)
+        {
+            return DBFacade.GetGroup(groupId);
+        }
+
         public void PostMessageToGroup(MessageBL msg,int groupId) 
         {
             DBFacade.PostMessageToGroup(msg,groupId);

@@ -29,6 +29,9 @@ namespace community.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<GroupDB>()
+                .HasMany(p => p.Messages)
+                .WithOne();
             builder.Entity<MessageDB>()
                 .HasOne(p => p.Sender)
                 .WithMany(a => a.SentMessages);

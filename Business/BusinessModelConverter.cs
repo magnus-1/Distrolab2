@@ -11,7 +11,18 @@ namespace community.Business {
             List<MessageBL> bl =  new List<MessageBL>();
 
             msgList.ForEach(p => bl.Add(new MessageBL{ Content = p.Content}));
+<<<<<<< HEAD
 
+=======
+            System.Console.WriteLine("ConvertMessageListVM: " + bl.ToString());
+            return bl;
+        }
+        
+        public static List<MessageVM> ConvertToMessageListVM (List<MessageBL> msgList) {
+            List<MessageVM> bl =  new List<MessageVM>();
+
+            msgList.ForEach(p => bl.Add(new MessageVM{ Content = p.Content}));
+>>>>>>> 40eb7e4be8105e5b9c3ae4a1a713ec440c947d6b
             System.Console.WriteLine("ConvertMessageListVM: " + bl.ToString());
             return bl;
         }
@@ -21,6 +32,10 @@ namespace community.Business {
         }
         public static GroupBL ConvertGroupVM(GroupVM groupVM) {
             return new GroupBL{Id = groupVM.GroupId, Title = groupVM.Title , Messages = ConvertMessageListVM(groupVM.Messages) };
+        }
+
+        public static GroupVM ConvertToGroupVM(GroupBL groupBL) {
+            return new GroupVM{GroupId = groupBL.Id, Title = groupBL.Title , Messages = ConvertToMessageListVM(groupBL.Messages) };
         }
     }
 }

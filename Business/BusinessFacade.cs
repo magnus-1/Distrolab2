@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using community.Models;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
@@ -20,6 +18,15 @@ namespace community.Business
 
         public static void InsertEntry(EntryDB entry) {
             new BusinessLogic().InsertEntry(entry);
+        }
+
+        public static void InsertGroup(GroupVM group) {
+            new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
+        }
+        public static GroupVM GroupsWithKey(int groupId)
+        {
+            var groupBL = new BusinessLogic().GroupsWithKey(groupId);
+            return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
 
         public static void PostMessageToGroup(MessageVM msg,GroupVM groupVM) 
