@@ -11,9 +11,7 @@ namespace community.Business {
             List<MessageBL> bl =  new List<MessageBL>();
 
             msgList.ForEach(p => bl.Add(new MessageBL{ Content = p.Content}));
-<<<<<<< HEAD
 
-=======
             System.Console.WriteLine("ConvertMessageListVM: " + bl.ToString());
             return bl;
         }
@@ -22,7 +20,7 @@ namespace community.Business {
             List<MessageVM> bl =  new List<MessageVM>();
 
             msgList.ForEach(p => bl.Add(new MessageVM{ Content = p.Content}));
->>>>>>> 40eb7e4be8105e5b9c3ae4a1a713ec440c947d6b
+
             System.Console.WriteLine("ConvertMessageListVM: " + bl.ToString());
             return bl;
         }
