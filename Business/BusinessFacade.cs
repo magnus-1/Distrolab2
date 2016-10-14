@@ -29,9 +29,10 @@ namespace community.Business
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
 
-        public static void PostMessageToGroup(MessageVM msg,GroupVM groupVM) 
+        public static void PostMessageToGroup(MessageVM msg,int groupId) 
         {
-            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupVM.GroupId );
+            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId);
         }
+       
     }
 }

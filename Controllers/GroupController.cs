@@ -48,5 +48,12 @@ namespace community.Controllers {
             BusinessFacade.InsertGroup(group1);
             return RedirectToAction("GroupPage");
         }
+
+       [HttpPostAttribute]
+        public IActionResult PostMessageToGroup(string text, int groupId){
+            System.Console.WriteLine("--------- Input from ajax, message = "+ text + " groupId = "+ groupId);
+            BusinessFacade.PostMessageToGroup(new MessageVM{Content = text},groupId);
+            return RedirectToAction("GroupPage");
+        }
     }
 }

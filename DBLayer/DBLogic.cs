@@ -45,9 +45,9 @@ namespace community.DBLayer {
 
         public void PostMessageToGroup(MessageDB msg,int groupId) 
         {
-            var a = ctx.Groups.Where(c => c.Id == groupId);
-            a.First().Messages.Add(msg);
-            ctx.Messages.Add(msg);
+            var a = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
+            a.Messages.Add(msg);
+            //ctx.Messages.Add(msg);
             ctx.SaveChanges();
         }
     }

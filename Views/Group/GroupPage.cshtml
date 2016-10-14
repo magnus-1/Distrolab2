@@ -1,21 +1,62 @@
-@using community.Models
-@using community.Models.ViewModels
-@model community.Models.ViewModels.GroupViewModels.GroupVM
+@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.GroupViewModels.GroupVM
 
 <h2>@Model.Title </h2>
+
+<!--<form id="postMessage" asp-controller="Group" asp-action="/Group/PostMessageToGroup" method="post" class="form-horizontal">
+	<input name="text" asp-for="Message" class="form-control" />
+	<button type="submit" class="btn btn-default" value="@Model.GroupId" >Submit</button>
+</form>-->
+
+<form id="postMessage" action="/Group/PostMessageToGroup" method="post" class="form-horizontal">
+	<input name="text" type="text" class="form-control" />
+	<button name="groupId" type="submit" class="btn btn-default" value="@Model.GroupId">Submit</button>
+</form>
+
+<script>
+// Attach a submit handler to the form
+$( "#postMessage" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    message = $form.find( "input[name='text']" ).val(),
+    groupId = @Model.GroupId,
+    url = $form.attr( "action" );
+ 
+
+ console.log("Values for message in script = " + message ); // John
+  console.log("Values for message in script = " + groupId ); // 2pm
+  // Send the data using post
+  var posting = $.post( url, { text: "message",groupId: "lol" } );
+ 
+  // Put the results in a div
+  //posting.done(function( data ) {
+  //  var content = $( data ).find( "#content" );
+  //  $( "#result" ).empty().append( content );
+  //});
+});
+</script>
+
 <table class="table">
-@foreach (var msg in Model.Messages) {
-    <tr>
-        <!--<td>
+	@foreach (var msg in Model.Messages) {
+	<tr>
+		<!--<td>
             <h4>@Html.DisplayFor(modelMsg => msg.Title)</h4>
         </td>-->
-        <td>
-            @Html.DisplayFor(modelMsg => msg.Content)
-        </td>
-        <!--<td>
-            @Html.DisplayFor(modelMsg => msg.SenderName)
+		<td>
+			@Html.DisplayFor(modelMsg => msg.Content)
+		</td>
+		<td>
+			<form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData[" ReturnUrl "]" method="post" class="form-horizontal">
+				<button type="submit" class="btn btn-default">Log in</button>
+			</form>
+		</td>
+		<!--<td>
+			@Html.DisplayFor(modelMsg => msg.SenderName)
         </td>-->
-    </tr>
-}
+	</tr>
+	}
 
 </table>
