@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
@@ -23,12 +24,16 @@ namespace community.Business
         public static void InsertGroup(GroupVM group) {
             new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
         }
-        public static GroupVM GroupsWithKey(int groupId)
+        public static List<GroupInfoVM> GetGroups() {
+            return new BusinessLogic().GetGroups();
+        }
+        public static GroupVM GetGroupById(int groupId)
         {
             var groupBL = new BusinessLogic().GroupsWithKey(groupId);
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
 
+    
         public static void PostMessageToGroup(MessageVM msg,int groupId) 
         {
             new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId);

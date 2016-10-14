@@ -28,6 +28,9 @@ namespace community.Business
         {
             return DBFacade.GetGroup(groupId);
         }
+        public List<GroupBL> GetGroups(){
+            return DBFacade.GetGroups();
+        }
 
         public void PostMessageToGroup(MessageBL msg,int groupId) 
         {

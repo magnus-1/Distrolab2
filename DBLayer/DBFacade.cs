@@ -25,6 +25,14 @@ namespace community.DBLayer {
             var groupDB = new DBLogic().GetGroup(groupId);
             return DBModelConverter.ConvertToGroupBL(groupDB);
         }
+
+        public static List<GroupBL> GetGroups() {
+            List<GroupDB> groupDBs = new DBLogic().GetGroups();
+            
+            return DBModelConverter.ConvertToGroupBL(groupDBs);
+        }
+
+
         public static void PostMessageToGroup(MessageBL msg,int groupId) 
         {
             new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);

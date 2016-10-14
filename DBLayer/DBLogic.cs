@@ -42,6 +42,10 @@ namespace community.DBLayer {
             var group = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
             return group;
         }
+        public List<GroupDB> GetGroups() {
+            var groups = ctx.Groups.ToList();
+            return groups;
+        }
 
         public void PostMessageToGroup(MessageDB msg,int groupId) 
         {
