@@ -18,5 +18,12 @@ namespace community.Models.DBModels
         [ForeignKey("SenderId")]
         public virtual ApplicationUser Sender {get;set;}
 
+
+        public override string ToString (){
+            return "Id= "+Id+"\n"+
+            "Content= "+Content+"\n"+
+            "SenderId= "+SenderId+"\n"+ 
+            "Sender= "+Sender; 
+        }
     }
 }

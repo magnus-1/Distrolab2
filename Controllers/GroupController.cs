@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,20 +14,31 @@ using community.Services;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
 using community.Business;
+using System.Security.Claims;
 
 namespace community.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
+
+        UserManager<ApplicationUser> _userManager;
+        public GroupController(
+            UserManager<ApplicationUser> userManager
+        )
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult MessageGroup()
         {
             return RedirectToAction("EntryStart");
         }
         public IActionResult Index()
-        {   
+        {
             var groupInfoVMs = BusinessFacade.GetGroups();
-            
-            var groupVm = new GroupIndexVM {Groups = groupInfoVMs};
+
+            var groupVm = new GroupIndexVM { Groups = groupInfoVMs };
 
             return View(groupVm);
         }
@@ -40,7 +50,7 @@ namespace community.Controllers
         // }
         public IActionResult JoinGroup(int groupId)
         {
-             System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
+            System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
             //var group = BusinessFacade.GroupsWithKey(1);
             return RedirectToAction("Index");
         }
@@ -54,7 +64,7 @@ namespace community.Controllers
         }
 
         public IActionResult CreateGroup(string groupTitle)
-        {   
+        {
             System.Console.WriteLine("--------- CreateGroup with title = " + groupTitle);
             List<MessageVM> messages = new List<MessageVM>();
             // for (int i = 0; i < 20; i++)
@@ -65,18 +75,31 @@ namespace community.Controllers
             // }
             var group = new GroupVM { Title = groupTitle, Messages = messages };
             BusinessFacade.InsertGroup(group);
-            
+
             return RedirectToAction("Index");
         }
 
         [HttpPostAttribute]
-        public IActionResult PostMessageToGroup(string text, int groupId)
-        {   
-            int Id = groupId;
-            System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
-            BusinessFacade.PostMessageToGroup(new MessageVM { Content = text }, groupId);
-            return RedirectToAction("ViewGroup", new {groupId = Id});
+        public async Task<IActionResult> PostMessageToGroup(string text, int groupId)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+                var currentUserId = user.Id;
+                System.Console.WriteLine("----------- Current User Id  = " + currentUserId);
+
+                int Id = groupId;
+                System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
+                BusinessFacade.PostMessageToGroup(new MessageVM { Content = text}, groupId,user);
+                return RedirectToAction("ViewGroup", new { groupId = Id });
+            }
+                return RedirectToAction("Index");
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return _userManager.GetUserAsync(HttpContext.User);
+
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using community.Models;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
@@ -38,9 +39,9 @@ namespace community.Business
         }
 
     
-        public static void PostMessageToGroup(MessageVM msg,int groupId) 
+        public static void PostMessageToGroup(MessageVM msg,int groupId, ApplicationUser sender ) 
         {
-            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId);
+            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId, sender);
         }
        
     }

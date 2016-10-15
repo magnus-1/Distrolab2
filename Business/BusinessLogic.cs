@@ -2,6 +2,7 @@ using community.DBLayer;
 using community.Models.DBModels;
 using community.Models.BusinessModels;
 using System.Collections.Generic;
+using community.Models;
 
 namespace community.Business
 {
@@ -34,8 +35,9 @@ namespace community.Business
             return DBFacade.GetGroups();
         }
 
-        public void PostMessageToGroup(MessageBL msg,int groupId) 
-        {
+        public void PostMessageToGroup(MessageBL msg,int groupId, ApplicationUser sender) 
+        {   
+            msg.Sender = sender;
             DBFacade.PostMessageToGroup(msg,groupId);
         }
     }

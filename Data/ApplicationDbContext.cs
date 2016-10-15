@@ -37,7 +37,7 @@ namespace community.Data
                 .WithMany(a => a.SentMessages);
             builder.Entity<ApplicationUser>()
                 .HasMany(p => p.SentMessages)
-                .WithOne(a => a.Sender);
+                .WithOne();
             // builder.Entity<ApplicationUser>()
             //     .HasMany(p => p.ReceivedMessages)
             //     .WithOne(a => a.Sender);
@@ -53,6 +53,8 @@ namespace community.Data
         public DbSet<EntryDB> Entries { get; set; }
         public DbSet<GroupDB> Groups { get; set; }
         public DbSet<MessageDB> Messages { get; set; }
+
+        public DbSet<ApplicationUser> Users {get;set;}
     }
 
 }

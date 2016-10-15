@@ -43,9 +43,9 @@ $( "#postMessage" ).submit(function( event ) {
 <table class="table">
 	@foreach (var msg in Model.Messages) {
 	<tr>
-		<!--<td>
-            <h4>@Html.DisplayFor(modelMsg => msg.Title)</h4>
-        </td>-->
+		<td>
+			@Html.DisplayFor(modelMsg => msg.SenderName)
+		</td>
 		<td>
 			@Html.DisplayFor(modelMsg => msg.Content)
 		</td>

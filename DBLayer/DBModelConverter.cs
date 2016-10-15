@@ -10,7 +10,7 @@ namespace community.DBLayer
     {
         public static MessageDB ConvertMessageBL(MessageBL msg)
         {
-            return new MessageDB { Content = msg.Content };
+            return new MessageDB { Content = msg.Content,Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted  };
         }
         public static GroupDB ConvertGroupBL(GroupBL groupBL)
         {

@@ -353,6 +353,7 @@ namespace community.Controllers
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
+
         }
 
         #endregion
