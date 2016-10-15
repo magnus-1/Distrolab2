@@ -40,7 +40,7 @@ namespace community.DBLayer {
 
 
         public GroupDB GetGroup(int groupId) {
-            var group = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
+            var group = ctx.Groups.Include(m => m.Messages).ThenInclude(messages => messages.Sender).Single(p => p.Id == groupId);
             return group;
         }
         public List<GroupDB> GetGroups() {

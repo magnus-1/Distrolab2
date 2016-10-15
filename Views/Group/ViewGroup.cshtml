@@ -49,14 +49,6 @@ $( "#postMessage" ).submit(function( event ) {
 		<td>
 			@Html.DisplayFor(modelMsg => msg.Content)
 		</td>
-		<td>
-			<form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData[" ReturnUrl "]" method="post" class="form-horizontal">
-				<button type="submit" class="btn btn-default">Log in</button>
-			</form>
-		</td>
-		<!--<td>
-			@Html.DisplayFor(modelMsg => msg.SenderName)
-        </td>-->
 	</tr>
 	}
 

@@ -35,7 +35,7 @@ namespace community.Business
             {
                 GroupId = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content }))
+                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown"}))
             };
         }
         public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups){

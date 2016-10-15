@@ -29,7 +29,7 @@ namespace community.DBLayer
             {
                 Title = groupDB.Title,
                 Id = groupDB.Id,
-                Messages = ListConverter.Map(groupDB.Messages, m => new MessageBL{Content = m.Content})
+                Messages = ListConverter.Map(groupDB.Messages, m => new MessageBL{Content = m.Content, Sender = m.Sender})
             };
         }
         public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups){
