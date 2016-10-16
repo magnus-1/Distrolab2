@@ -15,11 +15,12 @@
 	<button type="submit" class="btn btn-default">Create Group</button>
 </form>
 
-<select>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
+<!--oops solved it...-->
+
+<select id="destSelect">
+    @foreach (var dest in Model.DestinationInfo) {
+        <option value="@dest.destinationId" >@dest.destinationName</option>
+    }
 </select>
 
 
@@ -50,6 +51,10 @@ $( "#writeMsg" ).submit( function( event ) {
     var destName1 = $form.find( "input[name='destName']" ).val();
     var textArea1 = $form.find( "input[name='textArea']" ).val();
     //var  url1 = $form.attr( "action" );
+    //oops solved it...
+    var mysel = $("#destSelect option:selected").text();
+    var myselval = $("#destSelect option:selected").val();
+    alert(myselval +" : " + mysel);
   var data = {
       destinations : [{
           isGroup : false,
