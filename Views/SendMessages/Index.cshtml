@@ -35,27 +35,38 @@
 	}
 
 </table>
+<<<<<<< HEAD
 
 
 
+=======
+<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
+    <input name="destId" type="text" class="form-control" />
+    <input name="destName" type="text" class="form-control" />
+    <input name="textArea" type="text" class="form-control" />
+	<!--<input name="groupTitle" type="text" class="form-control" />-->
+	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+    <button type="submit" class="btn btn-default">Create Group</button>
+</form>
+>>>>>>> f220fca89d1dc17c8c482dbced0e4b6df61c87cf
 <div id="disphere"> text to replace</div>
 @section scripts {
 <script>
 
 $( "#writeMsg" ).submit( function( event ) {
     event.preventDefault();
-    var $form = $( this ),
-    destId1 = $form.find( "input[name='destId']" ).val(),
-    destName1 = $form.find( "input[name='destName']" ).val(),
-    textArea1 = $form.find( "input[name='textArea']" ).val(),
-    url1 = $form.attr( "action" );
+    var $form = $( this );
+    var destId1 = $form.find( "input[name='destId']" ).val();
+    var destName1 = $form.find( "input[name='destName']" ).val();
+    var textArea1 = $form.find( "input[name='textArea']" ).val();
+    //var  url1 = $form.attr( "action" );
   var data = {
-      destinations : {
+      destinations : [{
           isGroup : false,
-          destinationId : destId,
-          destinationName : destName
-       },
-       textArea : textArea
+          destinationId : destId1,
+          destinationName : destName1
+      }],
+       textArea : textArea1
   };
 
   var url1 = "/SendMessages/CreateMessage";
