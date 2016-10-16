@@ -1,0 +1,46 @@
+@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.DummyVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<form id="mybtn" action="/SendMessages/DummyPage" method="post" class="form-horizontal">
+	<!--<input name="groupTitle" type="text" class="form-control" />-->
+	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+    <button type="submit" class="btn btn-default">Create Group</button>
+</form>
+<form id="btntest2" action="/SendMessages/DummyPage" method="post" class="form-horizontal">
+	<!--<input name="groupTitle" type="text" class="form-control" />-->
+	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+    <button type="submit" class="btn btn-default">Test my dummy</button>
+</form>
+
+<div id="disphere" >  text to replace</div>
+@section scripts {
+<script> 
+$( "#btntest2" ).submit( function( event ) {
+    event.preventDefault();
+  var data = {
+          Name : "me",
+          MyData : " this is the data",
+          SomeDate : "more data"      
+  };
+  var url1 = '@Url.Action("DummyPageData","SendMessages")';
+  var posting = $.post({
+      type: "POST",
+      url: "/SendMessages/DummyPageData",
+      data: JSON.stringify(data),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(msg) {
+          $("#disphere").html("New name: " + msg.name + " data: " + msg.myData )
+          //alert(msg.name);
+      }
+  });
+
+  
+  // Send the data using post
+  //var posting = $.post( url, { text: "message",groupId: "lol" } );
+});
+</script>
+}

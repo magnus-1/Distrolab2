@@ -1,7 +1,7 @@
 @using community.Models @using community.Models.ViewModels.GroupViewModels @model community.Models.ViewModels.GroupViewModels.GroupIndexVM
 <h2>Groups</h2>
 
-<form id="createGroup" action="/Group/CreateGroup" method="post" class="form-horizontal">
+<form id="createGroup" action="/Group/CreateGroup" method="GET" class="form-horizontal">
 	<input name="groupTitle" type="text" class="form-control" />
 	<button type="submit" class="btn btn-default">Create Group</button>
 </form>
