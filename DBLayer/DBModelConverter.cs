@@ -10,7 +10,7 @@ namespace community.DBLayer
     {
         public static MessageDB ConvertMessageBL(MessageBL msg)
         {
-            return new MessageDB { Content = msg.Content,Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted  };
+            return new MessageDB { Content = msg.Content, Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted };
         }
         public static GroupDB ConvertGroupBL(GroupBL groupBL)
         {
@@ -18,22 +18,23 @@ namespace community.DBLayer
             {
                 Id = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = ListConverter.Map(groupBL.Messages, m => new MessageDB{Content = m.Content})
+                Messages = ListConverter.Map(groupBL.Messages, m => new MessageDB { Content = m.Content })
             };
         }
 
         public static GroupBL ConvertToGroupBL(GroupDB groupDB)
-        {   
+        {
 
             return new GroupBL
             {
                 Title = groupDB.Title,
                 Id = groupDB.Id,
-                Messages = ListConverter.Map(groupDB.Messages, m => new MessageBL{Content = m.Content, Sender = m.Sender})
+                Messages = ListConverter.Map(groupDB.Messages, m => new MessageBL { Content = m.Content, Sender = m.Sender })
             };
         }
-        public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups){
-            return ListConverter.Map(groups,g => new GroupBL {Title = g.Title, Id = g.Id});
+        public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups)
+        {
+            return ListConverter.Map(groups, g => new GroupBL { Title = g.Title, Id = g.Id });
         }
     }
 }

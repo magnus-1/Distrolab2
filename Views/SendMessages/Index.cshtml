@@ -1,9 +1,23 @@
-@using community.Models 
-@using community.Models.ViewModels 
-@model community.Models.ViewModels.SendMessageVM
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.SendMessageVM @{ Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
+
+	<input name="destId" type="text" class="form-control" />
+	<input name="destName" type="text" class="form-control" />
+	<H5>Message: </H5>
+	<input name="textArea" type="text" class="form-control" />
+	<!--<input name="groupTitle" type="text" class="form-control" />-->
+	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+	<button type="submit" class="btn btn-default">Create Group</button>
+</form>
+<select>
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>
+
 
 <table class="table">
 	@foreach (var msg in Model.DestinationInfo) {
@@ -14,23 +28,17 @@
 		<td>
 			@Html.DisplayFor(modelMsg => msg.destinationId)
 		</td>
-        <td>
+		<td>
 			@Html.DisplayFor(modelMsg => msg.destinationName)
 		</td>
 	</tr>
 	}
 
 </table>
-<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
-    <input name="destId" type="text" class="form-control" />
-    <input name="destName" type="text" class="form-control" />
-    <input name="textArea" type="text" class="form-control" />
-	<!--<input name="groupTitle" type="text" class="form-control" />-->
-	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
-    <button type="submit" class="btn btn-default">Create Group</button>
-</form>
 
-<div id="disphere" >  text to replace</div>
+
+
+<div id="disphere"> text to replace</div>
 @section scripts {
 <script>
 
@@ -50,7 +58,7 @@ $( "#writeMsg" ).submit( function( event ) {
        textArea : textArea
   };
 
-  var url1: "/SendMessages/CreateMessage";
+  var url1 = "/SendMessages/CreateMessage";
   var posting = $.post({
       type: "POST",
       url: url1,
@@ -67,5 +75,4 @@ $( "#writeMsg" ).submit( function( event ) {
   // Send the data using post
   //var posting = $.post( url, { text: "message",groupId: "lol" } );
 });
-</script>
-}
+</script> }
