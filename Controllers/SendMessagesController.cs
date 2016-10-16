@@ -60,7 +60,7 @@ namespace community.Controllers
             if(ModelState.IsValid) {
                 System.Console.WriteLine("-----------CreateMessage : " + vm.ToString());
             }else {
-                System.Console.WriteLine("-----------CreateMessage model invalid: " + vm.ToString());
+                System.Console.WriteLine("-----------CreateMessage model invalid: " );
             }
             return Json(new {text = "hej"});
         }
