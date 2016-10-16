@@ -1,4 +1,7 @@
-@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.SendMessageVM @{ Layout = "~/Views/Shared/_Layout.cshtml";
+@using community.Models 
+@using community.Models.ViewModels 
+@model community.Models.ViewModels.SendMessageVM 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
@@ -11,6 +14,7 @@
 	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
 	<button type="submit" class="btn btn-default">Create Group</button>
 </form>
+
 <select>
   <option value="volvo">Volvo</option>
   <option value="saab">Saab</option>
@@ -35,20 +39,6 @@
 	}
 
 </table>
-<<<<<<< HEAD
-
-
-
-=======
-<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
-    <input name="destId" type="text" class="form-control" />
-    <input name="destName" type="text" class="form-control" />
-    <input name="textArea" type="text" class="form-control" />
-	<!--<input name="groupTitle" type="text" class="form-control" />-->
-	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
-    <button type="submit" class="btn btn-default">Create Group</button>
-</form>
->>>>>>> f220fca89d1dc17c8c482dbced0e4b6df61c87cf
 <div id="disphere"> text to replace</div>
 @section scripts {
 <script>
