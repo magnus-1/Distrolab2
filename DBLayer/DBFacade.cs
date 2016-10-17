@@ -38,8 +38,12 @@ namespace community.DBLayer {
             new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);
         }
 
-        public static DestinationBL GetDestinations(ApplicationUser sender) {
-            return null;
+        public static List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender) {
+            return new DBLogic().GetUserGroupDestinations(sender);
+        }
+
+        public static List<DestinationBL> GetUserDestinations(ApplicationUser sender) {
+            return new DBLogic().GetUserDestinations(sender);
         }
     }
 }

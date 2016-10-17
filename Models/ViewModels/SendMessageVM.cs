@@ -8,6 +8,9 @@ namespace community.Models.ViewModels
         public bool isGroup {get; set;}
         public int destinationId {get; set;}
         public string destinationName {get; set;}
+        public override string ToString() {
+            return "DestinationVM: " +  " : " + isGroup +  " : " + destinationId +  " : " + destinationName;
+        }
     }
     public class NewMessageVM {
         public List<DestinationVM> destinations  {get; set;}

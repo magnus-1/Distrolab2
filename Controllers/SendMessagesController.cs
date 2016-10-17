@@ -35,7 +35,7 @@ namespace community.Controllers
             return RedirectToAction("EntryStart");
         }
        
-        public IActionResult Index(SendMessageVM message)
+        public async Task<IActionResult> Index(SendMessageVM message)
         {
             // var groupInfoVMs = BusinessFacade.GetGroups();
 
@@ -44,13 +44,19 @@ namespace community.Controllers
             //     System.Console.WriteLine("-----------hi Index : " + message.Tmptext);
             //     return View(message);
             // }
-            
-            List<DestinationVM> destinfo = new List<DestinationVM>();
-            for(int i = 0; i < 4;i++) {
-                destinfo.Add(new DestinationVM{isGroup = false,
-                 destinationId = i,
-                destinationName = "namn" + i});
+            var user = await GetCurrentUserAsync();
+            var currentUserId = user.Id;
+            List<DestinationVM> destinfo = BusinessFacade.GetDestinations(user);//new List<DestinationVM>();
+            foreach(DestinationVM d in destinfo) {
+                System.Console.WriteLine("Index:GetDestinations: " + d.ToString());
+
             }
+            
+            // for(int i = 0; i < 4;i++) {
+            //     destinfo.Add(new DestinationVM{isGroup = false,
+            //      destinationId = i,
+            //     destinationName = "namn" + i});
+            // }
             SendMessageVM msg = new SendMessageVM{Tmptext ="tmptext",DestinationInfo = destinfo };
             System.Console.WriteLine("-----------hi Index : " +msg);
             return View(msg);

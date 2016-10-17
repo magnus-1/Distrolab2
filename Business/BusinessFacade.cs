@@ -31,8 +31,9 @@ namespace community.Business
         
         }
 
-        public static DestinationVM GetDestinations(ApplicationUser sender) {
-            return null;
+        public static List<DestinationVM> GetDestinations(ApplicationUser sender) {
+            var destinations = new BusinessLogic().GetDestinations(sender);
+            return BusinessModelConverter.ConvertToDestinationVM(destinations);
         }
 
 

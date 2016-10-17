@@ -43,10 +43,21 @@ namespace community.DBLayer
             ctx.SaveChanges();
         }
 
-        public static DestinationBL GetDestinations(ApplicationUser sender)
+        public List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender)
         {
             //ctx.Users.
-            return null;
+            var user = ctx.Users.Include(m => m.Groups).Single(u => u.Id == sender.Id);
+            List<GroupDB> group = user.Groups;
+            return ListUtils.ListConverter.Map(group,m => new DestinationBL { Id = m.Id, Name = m.Title, IsGroup = true });
+        }
+
+        public List<DestinationBL> GetUserDestinations(ApplicationUser sender)
+        {
+            //ctx.Users.
+            var user = ctx.Users.ToList();
+            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.g.Id);return true;});
+
+            return ListUtils.ListConverter.Map(user,m => new DestinationBL { Id = int.Parse(m.Id), Name = m.UserName, IsGroup = false });
         }
 
         public GroupDB GetGroup(int groupId)

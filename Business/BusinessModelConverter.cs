@@ -28,6 +28,15 @@ namespace community.Business
                 Messages = Reverse(ListConverter.Map(groupVM.Messages, m => new MessageBL { Content = m.Content }))
             };
         }
+        public static List<DestinationVM> ConvertToDestinationVM(List<DestinationBL> destsBL)
+        {
+            return ListConverter.Map(destsBL, m => new DestinationVM
+            {
+                isGroup = m.IsGroup,
+                destinationId = m.Id,
+                destinationName = m.Name
+            });
+        }
 
         public static GroupVM ConvertToGroupVM(GroupBL groupBL)
         {
@@ -35,11 +44,12 @@ namespace community.Business
             {
                 GroupId = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown"}))
+                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown" }))
             };
         }
-        public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups){
-            return ListConverter.Map(groups,g => new GroupInfoVM {Title = g.Title, GroupId = g.Id} );
+        public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups)
+        {
+            return ListConverter.Map(groups, g => new GroupInfoVM { Title = g.Title, GroupId = g.Id });
         }
     }
 }
