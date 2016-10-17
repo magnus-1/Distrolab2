@@ -1,0 +1,40 @@
+@using community.Models @using community.Models.ViewModels.ReadMessageViewModels @model community.Models.ViewModels.ReadMessageViewModels.ReadMessageIndexVM
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<table class="table">
+	@foreach (var msg in Model.messages) {
+        
+	<tr>
+		<td>
+			@Html.DisplayFor(modelMsg => msg.title)
+		</td>
+		<td>
+			@Html.DisplayFor(modelMsg => msg.from)
+		</td>
+        <td>
+			@Html.DisplayFor(modelMsg => msg.time)
+		</td>
+        <td>
+            <myrow>
+                <input name="msgid" value="@msg.id" />
+                <button id="btnreadmsg" type="button" name="@msg.id"> read</button>
+            </myrow>
+			
+            
+		</td>
+	</tr>
+    
+	}
+</table>
+
+@section scripts {
+<script>
+$( "myrow" ).click( function( event) {
+    event.preventDefault();
+    var a = $( this ).find( "input[name='msgid']" ).val();
+    alert("myrow: " + a);
+});
+
+
+</script>
+}
