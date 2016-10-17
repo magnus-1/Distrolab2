@@ -55,7 +55,7 @@ namespace community.DBLayer
         {
             //ctx.Users.
             var user = ctx.Users.ToList();
-            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.g.Id);return true;});
+            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.Id);return true;});
 
             return ListUtils.ListConverter.Map(user,m => new DestinationBL { Id = int.Parse(m.Id), Name = m.UserName, IsGroup = false });
         }
