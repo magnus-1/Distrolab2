@@ -1,12 +1,35 @@
 @using community.Models @using community.Models.ViewModels.GroupViewModels @model community.Models.ViewModels.GroupViewModels.GroupIndexVM
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
 <h2>Groups</h2>
 
 <form id="createGroup" action="/Group/CreateGroup" method="GET" class="form-horizontal">
 	<input name="groupTitle" type="text" class="form-control" />
 	<button type="submit" class="btn btn-default">Create Group</button>
 </form>
-<script>
 
+
+<table id="groupsTable" class="table">
+	@foreach (var grp in Model.Groups) {
+	<tr>`
+		<td>
+			@Html.DisplayFor(groupTitle => grp.Title)
+		</td>
+		<td>
+				<button id="viewGroup" type="button" value="@grp.GroupId" class="btn btn-default">View Group</button>
+
+		</td>
+		<td>
+				<button id="joinGroup" type="button" value="@grp.GroupId" class="btn btn-default">Join Group</button>
+
+		</td>
+	</tr>
+	}
+
+</table>
+
+@section scripts {
+<script>
 $( "#createGroup" ).submit(function( event ) {
  
   event.preventDefault();
@@ -16,51 +39,29 @@ $( "#createGroup" ).submit(function( event ) {
     groupTitle2 = $form.find( "input[name='groupTitle']" ).val(),
     url = $form.attr( "action" );
  
-  var posting = $.post( url, { groupTitle: "groupTitle"} );
+  var posting = $.post( url, { groupTitle: groupTitle2} );
  
-  // Put the results in a div
-  //posting.done(function( data ) {
-  //  var content = $( data ).find( "#content" );
-  //  $( "#result" ).empty().append( content );
-  //});
+ // Put the results in a div
+  posting.done(function( data ) {
+    alert("I returnfunktionen!");
+        var GroupId = data.groupId;
+        var Title = data.title;
+  
+      
+      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td><button id="viewGroup" type="button" value='+GroupId+' class="btn btn-default">View Group</button></td><td><button id="joinGroup" type="button" value='+GroupId+' class="btn btn-default">Join Group</button></td></tr>');
+
+  });
 });
-</script>
 
-<table class="table">
-	@foreach (var grp in Model.Groups) {
-	<tr>`
-		<td>
-			@Html.DisplayFor(groupTitle => grp.Title)
-		</td>
-		<td>
-			<form id="viewGroup" action="/Group/ViewGroup" method="post" class="form-horizontal">
-				<input name="groupId" type="hidden" value="@grp.GroupId" />
-				<button type="submit" class="btn btn-default">View Group</button>
-			</form>
-		</td>
-		<td>
-			<form id="joinGroup" action="/Group/JoinGroup" method="post" class="form-horizontal">
-				<input name="groupId" type="hidden" value="@grp.GroupId" />
-				<button type="submit" class="btn btn-default">Join Group</button>
-			</form>
-		</td>
-	</tr>
-	}
-
-</table>
-<script>
-
-$( "#viewGroup" ).submit(function( event ) {
+$( "#viewGroup" ).click(function( event ) {
  
   event.preventDefault();
+alert("I viewGroup!");
 
-  var $form = $( this ),
-    groupTitle2 = $form.find( "input[name='groupTitle']" ).val(),
-    groupId2 = $form.find("input[name='groupId']").val(),
-
-    url = $form.attr( "action" );
- 
-  var posting = $.post( url, { groupId: "groupId"} );
+  var url = "/Group/ViewGroup";
+  var gId = $("#viewGroup").val();
+ // todo parse out values
+  var posting = $.post( url, { groupId: gId} );
  
   // Put the results in a div
   //posting.done(function( data ) {
@@ -68,20 +69,17 @@ $( "#viewGroup" ).submit(function( event ) {
   //  $( "#result" ).empty().append( content );
   //});
 });
-</script>
 
-<script>
-$( "#joinGroup" ).submit(function( event ) {
+$( "#joinGroup" ).click(function( event ) {
  
   event.preventDefault();
- 
+ alert("I joinGroup!");
 
-  var $form = $( this ),
-    groupTitle2 = $form.find( "input[name='groupTitle']" ).val(),
-    groupId = $form.find("input[name='groupId']").val(),
-    url = $form.attr( "action" );
- 
-  var posting = $.post( url, { groupId: "groupId"} );
+// todo parse out values
+  
+  var url ="/Group/JoinGroup";
+  var gId = $("#joinGroup").val();
+  var posting = $.post( url, { groupId: gId} );
  
   // Put the results in a div
   //posting.done(function( data ) {
@@ -89,4 +87,4 @@ $( "#joinGroup" ).submit(function( event ) {
   //  $( "#result" ).empty().append( content );
   //});
 });
-</script>
+</script> }

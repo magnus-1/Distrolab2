@@ -22,8 +22,9 @@ namespace community.Business
             new BusinessLogic().InsertEntry(entry);
         }
 
-        public static void InsertGroup(GroupVM group) {
-            new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
+        public static GroupVM InsertGroup(GroupVM group) {
+            var groupBL = new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
+            return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
         public static List<GroupInfoVM> GetGroups() {
         

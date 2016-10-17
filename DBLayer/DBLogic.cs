@@ -38,10 +38,14 @@ namespace community.DBLayer
             ctx.SaveChanges();
         }
 
-        public void InsertGroup(GroupDB group)
+        public GroupDB InsertGroup(GroupDB group)
         {
+            System.Console.WriteLine("Group before: "+ group);
             ctx.Groups.Add(group);
             ctx.SaveChanges();
+            System.Console.WriteLine("Group after: "+ group);
+            
+            return group;
         }
 
         public List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender)
