@@ -59,6 +59,11 @@ namespace community.Controllers
         public IActionResult CreateMessage([FromBodyAttribute]NewMessageVM vm) {
             if(ModelState.IsValid) {
                 System.Console.WriteLine("-----------CreateMessage : " + vm.ToString());
+                System.Console.WriteLine("Destination size : " + vm.destinations.Count());
+                
+                foreach(DestinationVM dest in vm.destinations){
+                    System.Console.WriteLine("destination : " + dest.ToString());
+                }
             }else {
                 System.Console.WriteLine("-----------CreateMessage model invalid: " );
             }
