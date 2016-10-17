@@ -44,6 +44,7 @@ namespace community.Controllers
             //     System.Console.WriteLine("-----------hi Index : " + message.Tmptext);
             //     return View(message);
             // }
+            
             List<DestinationVM> destinfo = new List<DestinationVM>();
             for(int i = 0; i < 4;i++) {
                 destinfo.Add(new DestinationVM{isGroup = false,

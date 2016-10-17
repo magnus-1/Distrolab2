@@ -15,9 +15,9 @@ namespace community.Models
         public virtual List<MessageDB> ReceivedMessages { get; set; }
         public virtual List<MessageDB> SentMessages { get; set; }
     
-        public string ToString(){
-            return "Hej jag 'r en anv'ndare";
-        }
+        // public override string ToString(){
+        //     return "Hej jag 'r en anv'ndare";
+        // }
 
     }
 }

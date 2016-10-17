@@ -31,6 +31,10 @@ namespace community.Business
         
         }
 
+        public static DestinationVM GetDestinations(ApplicationUser sender) {
+            return null;
+        }
+
 
         public static GroupVM GetGroupById(int groupId)
         {

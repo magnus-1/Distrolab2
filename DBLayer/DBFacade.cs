@@ -1,6 +1,7 @@
 using community.Models.DBModels;
 using community.Models.BusinessModels;
 using System.Collections.Generic;
+using community.Models;
 
 namespace community.DBLayer { 
 
@@ -35,6 +36,10 @@ namespace community.DBLayer {
         public static void PostMessageToGroup(MessageBL msg,int groupId) 
         {
             new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);
+        }
+
+        public static DestinationBL GetDestinations(ApplicationUser sender) {
+            return null;
         }
     }
 }

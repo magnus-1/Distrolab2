@@ -27,6 +27,9 @@ namespace community.Business
         }
 
 
+        public static DestinationBL GetDestinations(ApplicationUser sender) {
+            return null;
+        }
         public GroupBL GroupsWithKey(int groupId)
         {
             return DBFacade.GetGroup(groupId);

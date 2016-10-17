@@ -54,7 +54,7 @@ namespace community.Data
         public DbSet<GroupDB> Groups { get; set; }
         public DbSet<MessageDB> Messages { get; set; }
 
-        public DbSet<ApplicationUser> Users {get;set;}
+        //public DbSet<ApplicationUser> Users {get;set;}
     }
 
 }
