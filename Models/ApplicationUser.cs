@@ -18,6 +18,7 @@ namespace community.Models
         // public override string ToString(){
         //     return "Hej jag 'r en anv'ndare";
         // }
+        public UserIdDB UserId {get;set;}
 
     }
 }

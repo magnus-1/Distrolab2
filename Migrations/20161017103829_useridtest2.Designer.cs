@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161015220653_lol2")]
-    partial class lol2
+    [Migration("20161017103829_useridtest2")]
+    partial class useridtest2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,6 +50,8 @@ namespace community.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
+                    b.Property<int?>("UserIdId");
+
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
 
@@ -61,6 +63,9 @@ namespace community.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
+
+                    b.HasIndex("UserIdId")
+                        .IsUnique();
 
                     b.ToTable("AspNetUsers");
                 });
@@ -119,6 +124,16 @@ namespace community.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.UserIdDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserIdDB");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -226,6 +241,13 @@ namespace community.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("community.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("community.Models.DBModels.UserIdDB", "UserId")
+                        .WithOne()
+                        .HasForeignKey("community.Models.ApplicationUser", "UserIdId");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.GroupDB", b =>

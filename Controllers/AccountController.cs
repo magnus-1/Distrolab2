@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using community.Models;
 using community.Models.AccountViewModels;
 using community.Services;
+using community.Models.DBModels;
 
 namespace community.Controllers
 {
@@ -105,7 +106,7 @@ namespace community.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email , UserId = new UserIdDB()};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

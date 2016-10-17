@@ -46,7 +46,7 @@ namespace community.DBLayer
         public List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender)
         {
             //ctx.Users.
-            var user = ctx.Users.Include(m => m.Groups).Single(u => u.Id == sender.Id);
+            var user = ctx.Users.Include(m => m.Groups).Include(u => u.UserId).Single(u => u.Id == sender.Id);
             List<GroupDB> group = user.Groups;
             return ListUtils.ListConverter.Map(group,m => new DestinationBL { Id = m.Id, Name = m.Title, IsGroup = true });
         }
@@ -54,10 +54,10 @@ namespace community.DBLayer
         public List<DestinationBL> GetUserDestinations(ApplicationUser sender)
         {
             //ctx.Users.
-            var user = ctx.Users.ToList();
-            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.Id);return true;});
-
-            return ListUtils.ListConverter.Map(user,m => new DestinationBL { Id = int.Parse(m.Id), Name = m.UserName, IsGroup = false });
+            var user = ctx.Users.Include(u => u.UserId).ToList();
+            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.UserId.Id);return true;});
+            
+            return ListUtils.ListConverter.Map(user,m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
 
         public GroupDB GetGroup(int groupId)
