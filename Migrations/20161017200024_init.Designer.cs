@@ -8,7 +8,7 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161017121016_init")]
+    [Migration("20161017200024_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,8 @@ namespace community.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<int?>("UserIdId");
+                    b.Property<int?>("UserIdId")
+                        .IsRequired();
 
                     b.Property<string>("UserName")
                         .HasAnnotation("MaxLength", 256);
@@ -247,7 +248,8 @@ namespace community.Migrations
                 {
                     b.HasOne("community.Models.DBModels.UserIdDB", "UserId")
                         .WithOne()
-                        .HasForeignKey("community.Models.ApplicationUser", "UserIdId");
+                        .HasForeignKey("community.Models.ApplicationUser", "UserIdId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("community.Models.DBModels.GroupDB", b =>
@@ -260,7 +262,7 @@ namespace community.Migrations
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
                 {
                     b.HasOne("community.Models.ApplicationUser")
-                        .WithMany("SentMessages")
+                        .WithMany("ReceivedMessages")
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("community.Models.DBModels.GroupDB")
@@ -268,7 +270,7 @@ namespace community.Migrations
                         .HasForeignKey("GroupDBId");
 
                     b.HasOne("community.Models.ApplicationUser", "Sender")
-                        .WithMany("ReceivedMessages")
+                        .WithMany("SentMessages")
                         .HasForeignKey("SenderId");
                 });
 

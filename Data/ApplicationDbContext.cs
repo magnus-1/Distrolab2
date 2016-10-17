@@ -36,9 +36,9 @@ namespace community.Data
             builder.Entity<MessageDB>()
                 .HasOne(p => p.Sender)
                 .WithMany(a => a.SentMessages);
-            builder.Entity<ApplicationUser>()
-                .HasMany(p => p.SentMessages)
-                .WithOne();
+            // builder.Entity<ApplicationUser>()
+            //     .HasMany(p => p.SentMessages)
+            //     .WithOne();
             // builder.Entity<ApplicationUser>()
             //     .HasMany(p => p.ReceivedMessages)
             //     .WithOne(a => a.Sender);

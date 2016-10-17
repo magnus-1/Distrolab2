@@ -114,43 +114,13 @@ namespace community.Controllers
         //     return View("DummyPage",dummy);
         // }
 
-        [HttpGet]
-        public IActionResult TestDel(SendMessageVM message)
-        {
-            // var groupInfoVMs = BusinessFacade.GetGroups();
-            System.Console.WriteLine("-----------hi TestDel : " );
-            // var groupVm = new GroupIndexVM { Groups = groupInfoVMs };
-            if(message != null) {
-                System.Console.WriteLine("-----------hi message : " + message.Tmptext);
-                //return View(message);
-            }
-            return Content("testing");
-        }
 
-        //[HttpGetAttribute]
-        [HttpPostAttribute]
-        public IActionResult TestButton() {
-            System.Console.WriteLine("-----------hi TestButton");
-            return RedirectToAction("Index", new SendMessageVM{Tmptext = "test"});// RedirectToAction();
-        }
+
 
         public IActionResult SendMessage(SendMessageVM message) {
             
             return RedirectToAction("Index");
         }
-
-        // public IActionResult GroupPage()
-        // {
-        //     var group = BusinessFacade.GroupsWithKey(1);
-        //     return View(group);
-        // }
-        public IActionResult JoinGroup(int groupId)
-        {
-            System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
-            //var group = BusinessFacade.GroupsWithKey(1);
-            return RedirectToAction("Index");
-        }
-
 
         public IActionResult ViewGroup(int groupId)
         {

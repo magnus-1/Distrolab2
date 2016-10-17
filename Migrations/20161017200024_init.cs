@@ -79,7 +79,7 @@ namespace community.Migrations
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
                     SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserIdId = table.Column<int>(nullable: true),
+                    UserIdId = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -90,7 +90,7 @@ namespace community.Migrations
                         column: x => x.UserIdId,
                         principalTable: "UserIdDB",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

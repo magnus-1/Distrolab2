@@ -67,22 +67,29 @@ namespace community.DBLayer
 
         public List<MessageDB> GetUsersMessages(ApplicationUser user)
         {
-            var dude = ctx.Users.Include(u => u.ReceivedMessages).Single(u => u.Id == user.Id);
+            var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);
             if(dude == null) {
                 return new List<MessageDB>();
             }
+            foreach(MessageDB m in dude.ReceivedMessages){
+                System.Console.WriteLine( "Fetching msg from db: "+m.ToString());
+            }
+
             return dude.ReceivedMessages;
         }
 
         internal string SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
-        {
+        {   
+            System.Console.WriteLine( "Inserting message to db: " + messageDB.ToString());
+
             var targetUser = ctx.Users.Include(u => u.ReceivedMessages).Include(u => u.UserId).Single( u => u.UserId.Id == destinationId);
             var senderUser = ctx.Users.Include(u => u.SentMessages).Single( u => u.Id == sender.Id);
-            //messageDB.Sender = senderUser;
-            //messageDB.SenderId = senderUser.UserId.Id;
+            messageDB.Sender = sender;
+            messageDB.SenderId = sender.Id;
             senderUser.SentMessages.Add(messageDB);
             targetUser.ReceivedMessages.Add(messageDB);
             ctx.SaveChanges();
+            System.Console.WriteLine( "After inserting message to db: " + messageDB.ToString());
             return "this is the time";
         }
 
@@ -107,6 +114,9 @@ namespace community.DBLayer
             var userId = sender;
             var user = ctx.Users.Include(u => u.UserId).Include(u => u.ReceivedMessages).Single(u => u.UserId.Id == userId);
             var msg = user.ReceivedMessages.Where(m => m.Id == messageId).Single();
+
+            msg.IsRead = true;
+            ctx.SaveChanges();
 
             System.Console.WriteLine( "ReadMessage: msgdb:" + msg.ToString() );
             return msg;
