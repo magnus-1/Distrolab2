@@ -73,10 +73,12 @@ namespace community.Controllers
             //     messages.Add(data);
 
             // }
-            var group = new GroupVM { Title = groupTitle, Messages = messages };
-            BusinessFacade.InsertGroup(group);
 
-            return RedirectToAction("Index");
+            var group = new GroupVM { Title = groupTitle, Messages = messages };
+            var result = BusinessFacade.InsertGroup(group);
+            
+            return Json(result);
+            //return RedirectToAction("Index");
         }
 
         [HttpPostAttribute]

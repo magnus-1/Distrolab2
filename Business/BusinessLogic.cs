@@ -22,8 +22,8 @@ namespace community.Business
             DBFacade.InsertEntry(entry);
             
         }
-        public void InsertGroup(GroupBL group) {
-           DBFacade.InsertGroup(group);            
+        public GroupBL InsertGroup(GroupBL group) {
+           return DBFacade.InsertGroup(group);                
         }
 
 

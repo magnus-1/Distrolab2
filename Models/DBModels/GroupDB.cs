@@ -12,6 +12,8 @@ namespace community.Models.DBModels{
 
         public virtual List<MessageDB> Messages {get;set;}
         
-
+        public override string ToString(){
+            return "GroupDB: Id = "+Id+", Title = "+Title+", Messages = "+ Messages;
+        }
     }
 }

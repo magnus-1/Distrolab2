@@ -18,8 +18,9 @@ namespace community.DBLayer {
             new DBLogic().InsertEntry(entry);
         }
 
-        public static void InsertGroup(GroupBL group) {
-            new DBLogic().InsertGroup(DBModelConverter.ConvertGroupBL(group));
+        public static GroupBL InsertGroup(GroupBL group) {
+            var groupDB = new DBLogic().InsertGroup(DBModelConverter.ConvertGroupBL(group));
+            return DBModelConverter.ConvertToGroupBL(groupDB);
         }
 
 

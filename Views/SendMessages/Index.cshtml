@@ -1,7 +1,4 @@
-@using community.Models 
-@using community.Models.ViewModels 
-@model community.Models.ViewModels.SendMessageVM 
-@{ Layout = "~/Views/Shared/_Layout.cshtml";
+@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.SendMessageVM @{ Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -20,30 +17,31 @@
 
 
 <table class="table">
-    <tr>
-        <td>    
-            <select id="destSelect">
+	<tr>
+		<td>
+			<select id="destSelect">
                 @foreach (var dest in Model.DestinationInfo) {
                     <!--<option value="{'isGroup':'@dest.isGroup','destinationId':'@dest.destinationId','destinationName':'@dest.destinationName'}">@dest.destinationName</option>-->
                     <option value="@dest.isGroup|@dest.destinationId|@dest.destinationName">@dest.destinationName</option>
                 }
             </select>
-        </td>
-         <td>
-            <button id="addRecipient" type="button" class="btn btn-default">Add Recipient</button>
-        </td>
-        <td>
-            <button id="clearRecipients" type="button" class="btn btn-default">Clear Recipients</button>
-        </td>
-    </tr>
+		</td>
+		<td>
+			<button id="addRecipient" type="button" class="btn btn-default">Add Recipient</button>
+		</td>
+		<td>
+			<button id="clearRecipients" type="button" class="btn btn-default">Clear Recipients</button>
+		</td>
+	</tr>
 </table>
 
 
 
 <div id="recipientsToSend"></div>
 <div id="disphere"> text to replace</div>
+
 @section scripts {
-    
+
 <script>
 
     var recipients = [];
