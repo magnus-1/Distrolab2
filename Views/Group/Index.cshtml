@@ -9,6 +9,8 @@
 </form>
 
 
+
+
 <table id="groupsTable" class="table">
 	@foreach (var grp in Model.Groups) {
 	<tr>`
@@ -16,12 +18,14 @@
 			@Html.DisplayFor(groupTitle => grp.Title)
 		</td>
 		<td>
-				<button id="viewGroup" type="button" value="@grp.GroupId" class="btn btn-default">View Group</button>
-
+			<viewGroup>
+				<button id="viewGroup" type="button" name="grpId" value="@grp.GroupId" class="btn btn-default">View Group</button>
+			</viewGroup>
 		</td>
 		<td>
-				<button id="joinGroup" type="button" value="@grp.GroupId" class="btn btn-default">Join Group</button>
-
+			<joinGroup>
+				<button id="joinGroup" type="button" name="grpId" value="@grp.GroupId" class="btn btn-default">Join Group</button>
+			</joinGroup>
 		</td>
 	</tr>
 	}
@@ -41,50 +45,40 @@ $( "#createGroup" ).submit(function( event ) {
  
   var posting = $.post( url, { groupTitle: groupTitle2} );
  
- // Put the results in a div
   posting.done(function( data ) {
-    alert("I returnfunktionen!");
+ 
         var GroupId = data.groupId;
         var Title = data.title;
   
       
-      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td><button id="viewGroup" type="button" value='+GroupId+' class="btn btn-default">View Group</button></td><td><button id="joinGroup" type="button" value='+GroupId+' class="btn btn-default">Join Group</button></td></tr>');
+      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td><viewGroup><button id="viewGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">View Group</button></viewGroup></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
 
   });
 });
 
-$( "#viewGroup" ).click(function( event ) {
+
+
+
+$( "table" ).on("click","viewGroup", function( event ) {
  
-  event.preventDefault();
-alert("I viewGroup!");
+  //event.preventDefault();
 
   var url = "/Group/ViewGroup";
-  var gId = $("#viewGroup").val();
- // todo parse out values
-  var posting = $.post( url, { groupId: gId} );
+  var a = $( this ).find( "button[name='grpId']" ).val();
+
+  var posting = $.post( url, { groupId: a} );
  
-  // Put the results in a div
-  //posting.done(function( data ) {
-  //  var content = $( data ).find( "#content" );
-  //  $( "#result" ).empty().append( content );
-  //});
+ 
 });
 
-$( "#joinGroup" ).click(function( event ) {
+$( "table" ).on("click","joinGroup", function( event ) {
  
   event.preventDefault();
- alert("I joinGroup!");
 
-// todo parse out values
-  
+
   var url ="/Group/JoinGroup";
-  var gId = $("#joinGroup").val();
-  var posting = $.post( url, { groupId: gId} );
- 
-  // Put the results in a div
-  //posting.done(function( data ) {
-  //  var content = $( data ).find( "#content" );
-  //  $( "#result" ).empty().append( content );
-  //});
+  var a = $( this ).find( "button[name='grpId']" ).val();
+  var posting = $.post( url, { groupId: a} );
+
 });
 </script> }

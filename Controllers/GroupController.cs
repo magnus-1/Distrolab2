@@ -60,6 +60,9 @@ namespace community.Controllers
         {
             System.Console.WriteLine("--------- ViewGroup with Id = " + groupId);
             var group = BusinessFacade.GetGroupById(groupId);
+            
+            System.Console.WriteLine("--------- Gruppen vi ska till:  " + group);
+            
             return View(group);
         }
 
@@ -67,18 +70,12 @@ namespace community.Controllers
         {
             System.Console.WriteLine("--------- CreateGroup with title = " + groupTitle);
             List<MessageVM> messages = new List<MessageVM>();
-            // for (int i = 0; i < 20; i++)
-            // {
-            //     var data = new MessageVM { Title = "Title" + i, Content = "this is my text" + i, SenderName = "dude" + i };
-            //     messages.Add(data);
-
-            // }
-
+       
             var group = new GroupVM { Title = groupTitle, Messages = messages };
             var result = BusinessFacade.InsertGroup(group);
             System.Console.WriteLine( "Group to be returned to view: " + result );
             return Json(result);
-            //return RedirectToAction("Index");
+       
         }
 
         [HttpPostAttribute]
