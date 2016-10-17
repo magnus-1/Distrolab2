@@ -65,6 +65,33 @@ namespace community.DBLayer
             return ListConverter.Map(user,m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
 
+        public List<MessageDB> GetUsersMessages(ApplicationUser user)
+        {
+            var dude = ctx.Users.Include(u => u.ReceivedMessages).Single(u => u.Id == user.Id);
+            if(dude == null) {
+                return new List<MessageDB>();
+            }
+            return dude.ReceivedMessages;
+        }
+
+        internal string SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
+        {
+            var targetUser = ctx.Users.Include(u => u.ReceivedMessages).Include(u => u.UserId).Single( u => u.UserId.Id == destinationId);
+            var senderUser = ctx.Users.Include(u => u.SentMessages).Single( u => u.Id == sender.Id);
+            //messageDB.Sender = senderUser;
+            //messageDB.SenderId = senderUser.UserId.Id;
+            senderUser.SentMessages.Add(messageDB);
+            targetUser.ReceivedMessages.Add(messageDB);
+            ctx.SaveChanges();
+            return "this is the time";
+        }
+
+        public int GetUserId(ApplicationUser sender)
+        {
+            var user = ctx.Users.Include(u => u.UserId).Single(u => u.Id == sender.Id);
+            return user.UserId.Id;
+        }
+
         public GroupDB GetGroup(int groupId)
         {
             var group = ctx.Groups.Include(m => m.Messages).ThenInclude(messages => messages.Sender).Single(p => p.Id == groupId);
@@ -74,6 +101,15 @@ namespace community.DBLayer
         {
             var groups = ctx.Groups.ToList();
             return groups;
+        }
+
+        public MessageDB ReadMessage(int sender,int messageId) {
+            var userId = sender;
+            var user = ctx.Users.Include(u => u.UserId).Include(u => u.ReceivedMessages).Single(u => u.UserId.Id == userId);
+            var msg = user.ReceivedMessages.Where(m => m.Id == messageId).Single();
+
+            System.Console.WriteLine( "ReadMessage: msgdb:" + msg.ToString() );
+            return msg;
         }
 
         public void PostMessageToGroup(MessageDB msg, int groupId)

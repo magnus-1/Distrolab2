@@ -3,6 +3,8 @@ using community.Models.DBModels;
 using community.Models.BusinessModels;
 using System.Collections.Generic;
 using community.Models;
+using System;
+using community.Models.ViewModels;
 
 namespace community.Business
 {
@@ -43,14 +45,38 @@ namespace community.Business
         {
             return DBFacade.GetGroup(groupId);
         }
+
+        public List<MessageBL> GetUsersMessages(ApplicationUser user)
+        {
+            return DBFacade.GetUsersMessages(user);
+        }
+
         public List<GroupBL> GetGroups(){
             return DBFacade.GetGroups();
+        
+        }
+        public MessageBodyBL ReadMessageBody(MessageBodyBL msgbody,int reader) {
+            var a = DBFacade.ReadMessage(reader,msgbody.Id);
+            return new MessageBodyBL{Id = a.Id,Content = a.Content};
+            
         }
 
         public void PostMessageToGroup(MessageBL msg,int groupId, ApplicationUser sender) 
         {   
             msg.Sender = sender;
             DBFacade.PostMessageToGroup(msg,groupId);
+        }
+
+        internal CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
+        {
+            string timeStamp = "none sent";
+            //MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
+            foreach(DestinationVM d in vm.destinations) {
+                MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
+                timeStamp = DBFacade.SendMessage(d.destinationId,tmpMsg,sender);
+            }
+            
+           return new CreateMessageResponseVM{id = 44,destinations = vm.destinations,timeStamp = timeStamp};
         }
     }
 }

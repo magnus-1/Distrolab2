@@ -23,6 +23,13 @@ namespace community.Models.ViewModels
             return "NewMessageVM: " +  " : " + textArea;
         }
     }
+
+    public class CreateMessageResponseVM {
+        public int id { get; set; }
+        public List<DestinationVM> destinations  {get; set;}
+        public string timeStamp { get; set; }
+    }
+
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class SendMessageVM
     {

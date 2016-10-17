@@ -1,4 +1,5 @@
-@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.SendMessageVM @{ Layout = "~/Views/Shared/_Layout.cshtml";
+@using community.Models @using community.Models.ViewModels @model community.Models.ViewModels.SendMessageVM 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -38,7 +39,7 @@
 
 
 <div id="recipientsToSend"></div>
-<div id="disphere"> text to replace</div>
+<div id="disphere"> </div>
 
 @section scripts {
 
@@ -73,8 +74,8 @@ alert("BidData! = "+ data);
       contentType:  "application/json",
       dataType: "json",
       success: function(msg) {
-          //$("#disphere").html("New name: " + msg.name + " data: " + msg.myData )
-          alert(msg.text);
+          $("#disphere").html("Meddelande nummer: " + msg.id + " avsänt till "+ msg.destinations + "," + msg.timeStamp);
+          alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
       }
   });
   
@@ -114,6 +115,7 @@ $( "#clearRecipients" ).click( function( event ) {
     event.preventDefault();
     recipients.length = 0;
     reciepientsNames = "";
+    $("#disphere").html(" ");
     $("#recipientsToSend").html(reciepientsNames);
 });
 

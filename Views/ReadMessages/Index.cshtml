@@ -3,7 +3,7 @@
 
 <table class="table">
 	@foreach (var msg in Model.messages) {
-        
+
 	<tr>
 		<td>
 			@Html.DisplayFor(modelMsg => msg.title)
@@ -11,23 +11,23 @@
 		<td>
 			@Html.DisplayFor(modelMsg => msg.from)
 		</td>
-        <td>
+		<td>
 			@Html.DisplayFor(modelMsg => msg.time)
 		</td>
-        <td>
-            
-            <div id="message-@msg.id" hidden>
-                text
-            </div>
-            <myrow>
-                
-                <button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
-            </myrow>
-			
-            
+		<td>
+
+			<div id="message-@msg.id" hidden>
+				text
+			</div>
+			<myrow>
+
+				<button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
+			</myrow>
+
+
 		</td>
 	</tr>
-    
+
 	}
 </table>
 
@@ -39,11 +39,26 @@ $( "myrow" ).click( function( event) {
     //alert("myrow: " + a);
     var btn =$( this ).find( "button[name='msgid']" );
     
+    var data = {
+          id : a,
+          content : "msg"  
+  };
+  var url1 = '@Url.Action("GetMessageBody","ReadMessages")';
+  var posting = $.post({
+      type: "POST",
+      url: url1,
+      data: JSON.stringify(data),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(msg) {
+          btn.hide();
+          $("#message-" + a ).html(msg.content).show()
+          //alert(msg.name);
+      }
+  });
 
-    btn.hide();
-    $("#message-" + a ).html("this is the new msg").show()
+    
 });
 
 
-</script>
-}
+</script> }

@@ -63,7 +63,8 @@ namespace community.Controllers
         }
         
         [HttpPostAttribute]
-        public IActionResult CreateMessage([FromBodyAttribute]NewMessageVM vm) {
+        public async Task<IActionResult> CreateMessage([FromBodyAttribute]NewMessageVM vm) {
+            CreateMessageResponseVM response = null;
             if(ModelState.IsValid) {
                 System.Console.WriteLine("-----------CreateMessage : " + vm.ToString());
                 System.Console.WriteLine("Destination size : " + vm.destinations.Count());
@@ -71,10 +72,13 @@ namespace community.Controllers
                 foreach(DestinationVM dest in vm.destinations){
                     System.Console.WriteLine("destination : " + dest.ToString());
                 }
+                var sender = await GetCurrentUserAsync();
+                response = BusinessFacade.SendNewMessage(vm,sender);
+
             }else {
                 System.Console.WriteLine("-----------CreateMessage model invalid: " );
             }
-            return Json(new {text = "hej"});
+            return Json(response ?? new CreateMessageResponseVM{id = 42,destinations = vm.destinations,timeStamp = "now i think..."});
         }
 
         public IActionResult DummyPage(DummyVM dummy) {

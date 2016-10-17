@@ -2,6 +2,7 @@ using community.Models.DBModels;
 using community.Models.BusinessModels;
 using System.Collections.Generic;
 using community.Models;
+using System;
 
 namespace community.DBLayer { 
 
@@ -45,6 +46,26 @@ namespace community.DBLayer {
 
         public static List<DestinationBL> GetUserDestinations(ApplicationUser sender) {
             return new DBLogic().GetUserDestinations(sender);
+        }
+
+        public static List<MessageBL> GetUsersMessages(ApplicationUser user)
+        {
+            List<MessageDB> msg =  new DBLogic().GetUsersMessages(user);
+            return DBModelConverter.ListConvertToMessageBL(msg);
+        }
+
+        public static MessageBL ReadMessage(int sender,int messageId) {
+            MessageDB msg =  new DBLogic().ReadMessage(sender,messageId);
+            return DBModelConverter.ConvertToMessageBL(msg);
+        }
+
+        public static int GetUserId(ApplicationUser sender) {
+            return new DBLogic().GetUserId(sender);
+        }
+
+        internal static string SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
+        {
+            return new DBLogic().SendMessage(destinationId,DBModelConverter.ConvertMessageBL(tmpMsg),sender);
         }
     }
 }

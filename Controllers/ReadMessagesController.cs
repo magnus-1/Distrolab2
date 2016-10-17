@@ -37,55 +37,56 @@ namespace community.Controllers
             System.Console.WriteLine("-----------hi Index : " );
             if (ModelState.IsValid)
             {
-                List<ReadMessageVM> genmessages = new List<ReadMessageVM>();
-                for (int i = 0; i < 10; i++)
-                {
-                    genmessages.Add(new ReadMessageVM
-                    {
-                        id = i,
-                        isRead = false,
-                        title = "title" + i,
-                        time = "now o clock: " + i,
-                        from = "from everone " + i
-                    });
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                // List<ReadMessageVM> genmessages = new List<ReadMessageVM>();
+                // for (int i = 0; i < 10; i++)
+                // {
+                //     genmessages.Add(new ReadMessageVM
+                //     {
+                //         id = i,
+                //         isRead = false,
+                //         title = "title" + i,
+                //         time = "now o clock: " + i,
+                //         from = "from everone " + i
+                //     });
 
-                }
-                ReadMessageIndexVM vm = new ReadMessageIndexVM{messages = genmessages};
-                return View(vm);
+                // }
+                // ReadMessageIndexVM vm = new ReadMessageIndexVM{messages = genmessages};
+                return View(rmIndexVm);
             }
             else
             {
                 System.Console.WriteLine( "invalid model " );
                 return View();
             }
-            // var groupInfoVMs = BusinessFacade.GetGroups();
-
-            // var groupVm = new GroupIndexVM { Groups = groupInfoVMs };
-            // if(message != null) {
-            //     System.Console.WriteLine("-----------hi Index : " + message.Tmptext);
-            //     return View(message);
-            // }
-            // var user = await GetCurrentUserAsync();
-            // var currentUserId = user.Id;
-            // List<DestinationVM> destinfo = BusinessFacade.GetDestinations(user);//new List<DestinationVM>();
-            // foreach (DestinationVM d in destinfo)
-            // {
-            //     System.Console.WriteLine("Index:GetDestinations: " + d.ToString());
-
-            // }
-
-            // for(int i = 0; i < 4;i++) {
-            //     destinfo.Add(new DestinationVM{isGroup = false,
-            //      destinationId = i,
-            //     destinationName = "namn" + i});
-            // }
-           //SendMessageVM msg = new SendMessageVM { Tmptext = "tmptext", DestinationInfo = destinfo };
-            
+           
             return View();
+        }
+
+
+        [HttpPostAttribute]
+        public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm) {
+            GetMessageBodyVM msgbody = null;
+            if(ModelState.IsValid) {
+                System.Console.WriteLine("-----------GetMessageBody : " + vm.ToString());
+                var user = await GetCurrentUserAsync();
+                
+                var currentUserId = BusinessFacade.GetUserId(user);
+                System.Console.WriteLine( "User is: " + user.ToString() +" : " + currentUserId);
+                System.Console.WriteLine( "User Id: " +  currentUserId);
+                
+                msgbody = BusinessFacade.GetMessageBody(vm,currentUserId);
+                
+            }else {
+                System.Console.WriteLine("-----------GetMessageBody model invalid: " );
+            }
+            return Json(msgbody ?? new GetMessageBodyVM{id = 4,content = "this is from the controller"});
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
+            //return _userManager.GetUsersForClaimAsync(HttpContext.User);
             return _userManager.GetUserAsync(HttpContext.User);
 
         }

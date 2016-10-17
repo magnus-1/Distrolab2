@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
+using community.DBLayer;
 using community.Models;
+using community.Models.BusinessModels;
 using community.Models.DBModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
+using community.Models.ViewModels.ReadMessageViewModels;
 
 namespace community.Business
 {
@@ -32,6 +36,12 @@ namespace community.Business
         
         }
 
+        public static ReadMessageIndexVM GetUsersMessages(ApplicationUser user)
+        {
+            List<MessageBL> msg = new BusinessLogic().GetUsersMessages(user);
+            return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
+        }
+
         public static List<DestinationVM> GetDestinations(ApplicationUser sender) {
             var destinations = new BusinessLogic().GetDestinations(sender);
             return BusinessModelConverter.ConvertToDestinationVM(destinations);
@@ -44,11 +54,26 @@ namespace community.Business
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
 
+        public static GetMessageBodyVM GetMessageBody(GetMessageBodyVM vm,int reader) {
+            var msgBody = BusinessModelConverter.ConvertGetMessageBodyVM(vm);
+            MessageBodyBL msg = new BusinessLogic().ReadMessageBody(msgBody,reader);
+            return BusinessModelConverter.ConvertToGetMessageBodyVM(msg);
+        }
+
     
         public static void PostMessageToGroup(MessageVM msg,int groupId, ApplicationUser sender ) 
         {
             new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId, sender);
         }
-       
+
+        public static int GetUserId(ApplicationUser sender) {
+            return DBFacade.GetUserId(sender);
+        }
+
+        public static CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
+        {
+            CreateMessageResponseVM response = new BusinessLogic().SendNewMessage(vm,sender);
+            return response;
+        }
     }
 }

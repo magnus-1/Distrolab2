@@ -29,7 +29,7 @@ namespace community.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<ApplicationUser>().HasOne(p => p.UserId).WithOne();
+            builder.Entity<ApplicationUser>().HasOne(p => p.UserId).WithOne().IsRequired();
             builder.Entity<GroupDB>()
                 .HasMany(p => p.Messages)
                 .WithOne();

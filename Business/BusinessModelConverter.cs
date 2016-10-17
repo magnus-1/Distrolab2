@@ -1,9 +1,11 @@
 
+using System;
 using System.Collections.Generic;
 using community.ListUtils;
 using community.Models.BusinessModels;
 using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
+using community.Models.ViewModels.ReadMessageViewModels;
 
 namespace community.Business
 {
@@ -36,6 +38,33 @@ namespace community.Business
                 destinationId = m.Id,
                 destinationName = m.Name
             });
+        }
+
+        public static GetMessageBodyVM ConvertToGetMessageBodyVM(MessageBodyBL msgBodyBL)
+        {
+            return new GetMessageBodyVM { id = msgBodyBL.Id, content = msgBodyBL.Content };
+        }
+
+        public static MessageBodyBL ConvertGetMessageBodyVM(GetMessageBodyVM msgBodyVM)
+        {
+            return new MessageBodyBL { Id = msgBodyVM.id, Content = msgBodyVM.content };
+        }
+
+        public static ReadMessageIndexVM ConvertToReadMessageIndexVM(List<MessageBL> msg)
+        {
+            return new ReadMessageIndexVM
+            {
+                messages = ListConverter.Map(msg,
+                m => new ReadMessageVM
+                {
+                    id = m.Id,
+                    isRead = m.IsRead,
+                    title = "not implemented yet",
+                    time = " time stamp now?",
+                    from = m.Sender.UserName
+                })
+            };
+            
         }
 
         public static GroupVM ConvertToGroupVM(GroupBL groupBL)
