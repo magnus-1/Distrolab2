@@ -27,6 +27,18 @@ namespace community.Business
         }
 
 
+        public List<DestinationBL> GetDestinations(ApplicationUser sender) {
+            List<DestinationBL> destinations = new List<DestinationBL>();
+            var groups = DBFacade.GetUserGroupDestinations(sender);
+            if(groups != null) {
+                destinations.AddRange(groups);
+            }
+            var users = DBFacade.GetUserDestinations(sender);
+            if(users != null) {
+                destinations.AddRange(users);
+            }
+            return destinations;
+        }
         public GroupBL GroupsWithKey(int groupId)
         {
             return DBFacade.GetGroup(groupId);

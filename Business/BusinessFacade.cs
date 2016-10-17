@@ -31,6 +31,11 @@ namespace community.Business
         
         }
 
+        public static List<DestinationVM> GetDestinations(ApplicationUser sender) {
+            var destinations = new BusinessLogic().GetDestinations(sender);
+            return BusinessModelConverter.ConvertToDestinationVM(destinations);
+        }
+
 
         public static GroupVM GetGroupById(int groupId)
         {

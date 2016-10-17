@@ -9,9 +9,13 @@ namespace community.Models.ViewModels
         public int destinationId {get; set;}
         public string destinationName {get; set;}
         public override string ToString() {
+<<<<<<< HEAD
             return "DestinationVM: " +  " : IsGroup = " + isGroup +  
             " : destinationId = " + destinationId +  
             " : destinationName = " + destinationName;
+=======
+            return "DestinationVM: " +  " : " + isGroup +  " : " + destinationId +  " : " + destinationName;
+>>>>>>> 2614acb9c09e9466fe46f82fa74bb9cc9cae22d8
         }
     }
     public class NewMessageVM {
