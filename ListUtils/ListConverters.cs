@@ -12,6 +12,12 @@ namespace community.ListUtils {
             return result;
         }
 
+        public static void DoAction<T>(List<T> inList,Action<T> lambda) {
+            foreach(T elm in inList) {
+                lambda(elm);  
+            }
+        }
+
         public static List<T> Filter<T>(List<T> inList,Func<T,bool> lambda) {
             List<T> result = new List<T>();
             foreach(T elm in inList) {

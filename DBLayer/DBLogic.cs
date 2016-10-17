@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using community.Models;
 using community.Models.BusinessModels;
+using community.ListUtils;
 
 namespace community.DBLayer
 {
@@ -55,9 +56,9 @@ namespace community.DBLayer
         {
             //ctx.Users.
             var user = ctx.Users.Include(u => u.UserId).ToList();
-            ListUtils.ListConverter.Filter(user, u => {System.Console.WriteLine("user id: " + u.UserId.Id);return true;});
+            ListConverter.DoAction(user, u => System.Console.WriteLine("user id: " + u.UserId.Id));
             
-            return ListUtils.ListConverter.Map(user,m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
+            return ListConverter.Map(user,m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
 
         public GroupDB GetGroup(int groupId)
