@@ -20,10 +20,7 @@
 	<tr>
 		<td>
 			<select id="destSelect">
-                @foreach (var dest in Model.DestinationInfo) {
-                    <!--<option value="{'isGroup':'@dest.isGroup','destinationId':'@dest.destinationId','destinationName':'@dest.destinationName'}">@dest.destinationName</option>-->
-                    <option value="@dest.isGroup|@dest.destinationId|@dest.destinationName">@dest.destinationName</option>
-                }
+                @foreach (var dest in Model.DestinationInfo) {<option value="@dest.isGroup|@dest.destinationId|@dest.destinationName">@dest.destinationName</option>}
             </select>
 		</td>
 		<td>
@@ -53,17 +50,13 @@ $( "#writeMsg" ).submit( function( event ) {
     var destId1 = $form.find( "input[name='destId']" ).val();
     var destName1 = $form.find( "input[name='destName']" ).val();
     var textArea1 = $form.find( "input[name='textArea']" ).val();
-    //var  url1 = $form.attr( "action" );
-    //oops solved it...
     var mysel = $("#destSelect option:selected").text();
     var myselval = $("#destSelect option:selected").val();
-    alert(myselval +" : " + mysel);
+
   var data = {
       destinations : recipients,
        textArea : textArea1
   };
-
-alert("BidData! = "+ data);
 
   var url1 = "/SendMessages/CreateMessage";
   var posting = $.post({
@@ -90,10 +83,6 @@ $( "#addRecipient" ).click( function( event ) {
     var selectedIsGroup = res[0];
     var selectedId = res[1];
     var selectedName = res[2];
-
-
-
-
     var newDestination = {
           isGroup : selectedIsGroup,
          destinationId : selectedId,
