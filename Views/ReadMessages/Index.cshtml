@@ -15,7 +15,15 @@
 			@Html.DisplayFor(modelMsg => msg.time)
 		</td>
         <td>
+            
+            <div id="message-@msg.id" hidden>
+                text
+            </div>
             <myrow>
+<<<<<<< HEAD
+=======
+                
+>>>>>>> 3b2f9cf2632764d4e6802b69913592b81bf9c39a
                 <button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
             </myrow>
 			
@@ -31,7 +39,12 @@
 $( "myrow" ).click( function( event) {
     event.preventDefault();
     var a = $( this ).find( "button[name='msgid']" ).val();
-    alert("myrow: " + a);
+    //alert("myrow: " + a);
+    var btn =$( this ).find( "button[name='msgid']" );
+    
+
+    btn.hide();
+    $("#message-" + a ).html("this is the new msg").show()
 });
 
 
