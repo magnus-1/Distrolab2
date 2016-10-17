@@ -17,7 +17,7 @@
         <td>
             <myrow>
                 <input name="msgid" value="@msg.id" />
-                <button id="btnreadmsg" type="button" name="@msg.id"> read</button>
+                <button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
             </myrow>
 			
             
@@ -31,7 +31,7 @@
 <script>
 $( "myrow" ).click( function( event) {
     event.preventDefault();
-    var a = $( this ).find( "input[name='msgid']" ).val();
+    var a = $( this ).find( "button[name='msgid']" ).val();
     alert("myrow: " + a);
 });
 

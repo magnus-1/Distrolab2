@@ -76,7 +76,7 @@ namespace community.Controllers
 
             var group = new GroupVM { Title = groupTitle, Messages = messages };
             var result = BusinessFacade.InsertGroup(group);
-            
+            System.Console.WriteLine( "Group to be returned to view: " + result );
             return Json(result);
             //return RedirectToAction("Index");
         }
