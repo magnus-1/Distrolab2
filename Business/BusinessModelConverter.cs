@@ -19,7 +19,7 @@ namespace community.Business
 
         public static MessageBL ConvertMessageVM(MessageVM msg)
         {
-            return new MessageBL { Content = msg.Content };
+            return new MessageBL {Title = msg.Title, Content = msg.Content };
         }
         public static GroupBL ConvertGroupVM(GroupVM groupVM)
         {
@@ -27,7 +27,7 @@ namespace community.Business
             {
                 Id = groupVM.GroupId,
                 Title = groupVM.Title,
-                Messages = Reverse(ListConverter.Map(groupVM.Messages, m => new MessageBL { Content = m.Content }))
+                Messages = Reverse(ListConverter.Map(groupVM.Messages, m => new MessageBL {Title = m.Title, Content = m.Content }))
             };
         }
         public static List<DestinationVM> ConvertToDestinationVM(List<DestinationBL> destsBL)
@@ -59,7 +59,7 @@ namespace community.Business
                 {
                     id = m.Id,
                     isRead = m.IsRead,
-                    title = "not implemented yet",
+                    title = m.Title,
                     time = " time stamp now?",
                     from = m.Sender.UserName
                 })
@@ -73,7 +73,7 @@ namespace community.Business
             {
                 GroupId = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM { Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown" }))
+                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM {Title = m.Title, Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown" }))
             };
         }
         public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups)
