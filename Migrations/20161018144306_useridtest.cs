@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class init : Migration
+    public partial class useridtest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -211,6 +211,7 @@ namespace community.Migrations
                     IsRead = table.Column<bool>(nullable: false),
                     ReceiverId = table.Column<string>(nullable: true),
                     SenderId = table.Column<string>(nullable: true),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

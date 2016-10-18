@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161018090657_init")]
-    partial class init
+    [Migration("20161018144306_useridtest")]
+    partial class useridtest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,8 @@ namespace community.Migrations
                     b.Property<string>("ReceiverId");
 
                     b.Property<string>("SenderId");
+
+                    b.Property<DateTime>("TimeStamp");
 
                     b.Property<string>("Title");
 
