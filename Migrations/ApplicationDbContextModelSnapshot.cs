@@ -103,8 +103,6 @@ namespace community.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Content");
 
                     b.Property<int?>("GroupDBId");
@@ -113,15 +111,17 @@ namespace community.Migrations
 
                     b.Property<bool>("IsRead");
 
+                    b.Property<string>("ReceiverId");
+
                     b.Property<string>("SenderId");
 
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("GroupDBId");
+
+                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -262,13 +262,13 @@ namespace community.Migrations
 
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
                 {
-                    b.HasOne("community.Models.ApplicationUser")
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("community.Models.DBModels.GroupDB")
                         .WithMany("Messages")
                         .HasForeignKey("GroupDBId");
+
+                    b.HasOne("community.Models.ApplicationUser", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId");
 
                     b.HasOne("community.Models.ApplicationUser", "Sender")
                         .WithMany("SentMessages")

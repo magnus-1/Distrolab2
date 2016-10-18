@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class useridtest56 : Migration
+    public partial class useridtest5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -205,11 +205,11 @@ namespace community.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     GroupDBId = table.Column<int>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsRead = table.Column<bool>(nullable: false),
+                    ReceiverId = table.Column<string>(nullable: true),
                     SenderId = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -217,15 +217,15 @@ namespace community.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Messages_Groups_GroupDBId",
                         column: x => x.GroupDBId,
                         principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -259,14 +259,14 @@ namespace community.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ApplicationUserId",
-                table: "Messages",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Messages_GroupDBId",
                 table: "Messages",
                 column: "GroupDBId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ReceiverId",
+                table: "Messages",
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",

@@ -20,9 +20,8 @@ namespace community.Models.BusinessModels {
             "IsDeleted= "+IsDeleted+"\n"+
             "Title= "+Title+"\n"+
             "Content= "+Content+"\n"+
-            "SenderId= "+SenderId+"\n"+ 
             "Sender= "+Sender; 
         }
-        public ApplicationUser Receiver {get;set} 
+        public ApplicationUser Receiver {get;set;} 
     }
 }
