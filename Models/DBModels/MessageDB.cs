@@ -31,7 +31,9 @@ namespace community.Models.DBModels
             "Title= "+Title+"\n"+
             "Content= "+Content+"\n"+
             "SenderId= "+SenderId+"\n"+ 
-            "Sender= "+Sender; 
+            "Sender= "+Sender + "\n" +
+            "ReceiverId= "+ReceiverId+"\n"+ 
+            "Receiver= "+Receiver; 
         }
     }
 }

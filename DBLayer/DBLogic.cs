@@ -78,7 +78,7 @@ namespace community.DBLayer
             return dude.ReceivedMessages;
         }
 
-        internal string SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
+        internal MessageDB SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
         {   
             System.Console.WriteLine( "Inserting message to db: " + messageDB.ToString());
 
@@ -94,7 +94,7 @@ namespace community.DBLayer
             targetUser.ReceivedMessages.Add(messageDB);
             ctx.SaveChanges();
             System.Console.WriteLine( "After inserting message to db: " + messageDB.ToString());
-            return "this is the time";
+            return messageDB;
         }
 
         public int GetUserId(ApplicationUser sender)
