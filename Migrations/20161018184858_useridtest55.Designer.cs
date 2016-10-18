@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161018154007_logins")]
-    partial class logins
+    [Migration("20161018184858_useridtest55")]
+    partial class useridtest55
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

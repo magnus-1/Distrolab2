@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class logins : Migration
+    public partial class useridtest55 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
