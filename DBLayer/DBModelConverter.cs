@@ -22,7 +22,8 @@ namespace community.DBLayer
                 IsRead = msg.IsRead,
                 IsDeleted = msg.IsDeleted,
                 Content = msg.Content,
-                Sender = msg.Sender
+                Sender = msg.Sender,
+                Receiver = msg.Receiver
             };
         }
         public static GroupDB ConvertGroupBL(GroupBL groupBL)
