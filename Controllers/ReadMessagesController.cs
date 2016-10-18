@@ -34,7 +34,7 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
-            System.Console.WriteLine("-----------hi Index : " );
+            System.Console.WriteLine("-----------hi Index : ");
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
@@ -57,31 +57,35 @@ namespace community.Controllers
             }
             else
             {
-                System.Console.WriteLine( "invalid model " );
+                System.Console.WriteLine("invalid model ");
                 return View();
             }
-           
+
             return View();
         }
 
 
         [HttpPostAttribute]
-        public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm) {
+        public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm)
+        {
             GetMessageBodyVM msgbody = null;
-            if(ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 System.Console.WriteLine("-----------GetMessageBody : " + vm.ToString());
                 var user = await GetCurrentUserAsync();
-                
+
                 var currentUserId = BusinessFacade.GetUserId(user);
-                System.Console.WriteLine( "User is: " + user.ToString() +" : " + currentUserId);
-                System.Console.WriteLine( "User Id: " +  currentUserId);
-                
-                msgbody = BusinessFacade.GetMessageBody(vm,currentUserId);
-                
-            }else {
-                System.Console.WriteLine("-----------GetMessageBody model invalid: " );
+                System.Console.WriteLine("User is: " + user.ToString() + " : " + currentUserId);
+                System.Console.WriteLine("User Id: " + currentUserId);
+
+                msgbody = BusinessFacade.GetMessageBody(vm, currentUserId);
+
             }
-            return Json(msgbody ?? new GetMessageBodyVM{id = 4,content = "this is from the controller"});
+            else
+            {
+                System.Console.WriteLine("-----------GetMessageBody model invalid: ");
+            }
+            return Json(msgbody ?? new GetMessageBodyVM { id = 4, content = "this is from the controller" });
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
@@ -90,5 +94,11 @@ namespace community.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
 
         }
+        public async Task<IActionResult> GetConversations()
+        {   
+            System.Console.WriteLine("----------- GetConversations init ");
+            var user = await GetCurrentUserAsync();
+            BusinessFacade.GetConversations(user);
+            return RedirectToAction("Index");        }
     }
 }

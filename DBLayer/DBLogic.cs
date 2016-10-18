@@ -17,7 +17,6 @@ namespace community.DBLayer
     public class DBLogic
     {
 
-
         private ApplicationDbContext ctx = ApplicationDbContext.Create();
         public string GetEntries()
         {
@@ -141,6 +140,22 @@ namespace community.DBLayer
             //     System.Console.WriteLine("Users sent messages  = "+ m);
 
             // }
+        }
+
+        public void GetConversations(ApplicationUser user){
+            List<ApplicationUser> uniqueConversations = new List<ApplicationUser>();
+            var currentUser = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(rm => rm.Sender).Single(u => u.Id == user.Id);
+            System.Console.WriteLine("DBLogic:GetConversations:CurrnetUser = "+ currentUser.ToString());
+            System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count before = "+ uniqueConversations.Count());
+
+            foreach(MessageDB m in currentUser.ReceivedMessages){
+                if( !uniqueConversations.Exists(p => p.Id == m.Sender.Id)){
+                    System.Console.WriteLine("DBLogic:GetConversations:Unique user added: "+ m.Sender.UserName);
+                    uniqueConversations.Add(m.Sender);
+                }
+            }
+            System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count after = "+ uniqueConversations.Count());
+
         }
     }
 }
