@@ -15,6 +15,7 @@ using community.Models.ViewModels.GroupViewModels;
 using community.Business;
 using System.Security.Claims;
 using community.Models.ViewModels.ReadMessageViewModels;
+using community.ListUtils;
 
 namespace community.Controllers
 {
@@ -34,25 +35,59 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
+<<<<<<< HEAD
+=======
+            System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                ReadInboxVM inbox = new ReadInboxVM
+                {
+                    incomingFrom = ListConverter.Map(
+                        rmIndexVm.messages, m => new FromUser
+                        {
+                            senderId = 22,
+                            senderName = m.from,
+                            recevedCount = 3
+                        })
+                };
+                return View(inbox);
+            }
+            else
+            {
+                System.Console.WriteLine("invalid model ");
+                return View();
+            }
+
+            return View();
+        }
+
+        [HttpPostAttribute]
+        public async Task<IActionResult> ReadFromSender(int? senderId)
+        {
+            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId);
+            if (ModelState.IsValid)
+            {
+                //var user = await GetCurrentUserAsync();
+                //ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                return RedirectToAction("ReadMessages");
+            }
+            else
+            {
+                System.Console.WriteLine("invalid model ");
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> ReadMessages(ReadMessageIndexVM readMessageIndexVM)
+        {
+>>>>>>> e01c4bd2c42b4a7c1817717b31e689a81a06ee4d
             System.Console.WriteLine("-----------hi Index : ");
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                // List<ReadMessageVM> genmessages = new List<ReadMessageVM>();
-                // for (int i = 0; i < 10; i++)
-                // {
-                //     genmessages.Add(new ReadMessageVM
-                //     {
-                //         id = i,
-                //         isRead = false,
-                //         title = "title" + i,
-                //         time = "now o clock: " + i,
-                //         from = "from everone " + i
-                //     });
-
-                // }
-                // ReadMessageIndexVM vm = new ReadMessageIndexVM{messages = genmessages};
                 return View(rmIndexVm);
             }
             else

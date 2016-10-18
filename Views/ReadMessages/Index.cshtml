@@ -1,63 +1,31 @@
-@using community.Models @using community.Models.ViewModels.ReadMessageViewModels @model community.Models.ViewModels.ReadMessageViewModels.ReadMessageIndexVM
+@using community.Models @using community.Models.ViewModels.ReadMessageViewModels @model community.Models.ViewModels.ReadMessageViewModels.ReadInboxVM 
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
+ @foreach (var from in Model.incomingFrom ) {
+   
+}
+
 <table class="table">
-	@foreach (var msg in Model.messages) {
+	@foreach (var from in Model.incomingFrom ) {
 
 	<tr>
 		<td>
-			@Html.DisplayFor(modelMsg => msg.title)
+			@Html.DisplayFor(modelMsg => from.senderName)
 		</td>
 		<td>
-			@Html.DisplayFor(modelMsg => msg.from)
+			@Html.DisplayFor(modelMsg => from.recevedCount)
 		</td>
 		<td>
-			@Html.DisplayFor(modelMsg => msg.time)
+			@Html.DisplayFor(modelMsg => from.senderId)
 		</td>
 		<td>
 
-			<div id="message-@msg.id" hidden>
-				text
-			</div>
-			<myrow>
-
-				<button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
-			</myrow>
+			 <form id="ReadFromSender" action="/ReadMessages/ReadFromSender/@from.senderId" method="post" class="form-horizontal">
+	            <button type="submit" class="btn btn-default">check it out</button>
+            </form>
 
 		</td>
 	</tr>
 
 	}
 </table>
-
-@section scripts {
-<script>
-$( "myrow" ).click( function( event) {
-    event.preventDefault();
-    var a = $( this ).find( "button[name='msgid']" ).val();
-    //alert("myrow: " + a);
-    var btn =$( this ).find( "button[name='msgid']" );
-    
-    var data = {
-          id : a,
-          content : "msg"  
-  };
-  var url1 = '@Url.Action("GetMessageBody","ReadMessages")';
-  var posting = $.post({
-      type: "POST",
-      url: url1,
-      data: JSON.stringify(data),
-      contentType:  "application/json",
-      dataType: "json",
-      success: function(msg) {
-          btn.hide();
-          $("#message-" + a ).html(msg.content).show()
-          //alert(msg.name);
-      }
-  });
-
-    
-});
-
-
-</script> }
