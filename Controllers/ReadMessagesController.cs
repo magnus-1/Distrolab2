@@ -159,15 +159,5 @@ namespace community.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
 
         }
-<<<<<<< HEAD
-=======
-        public async Task<IActionResult> GetConversations()
-        {
-            System.Console.WriteLine("----------- GetConversations init ");
-            var user = await GetCurrentUserAsync();
-            BusinessFacade.GetConversations(user);
-            return RedirectToAction("Index");
-        }
->>>>>>> 55732e889bf0f2aba44af1d43cc74ad6e07adca2
     }
 }

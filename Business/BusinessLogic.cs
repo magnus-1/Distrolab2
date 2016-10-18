@@ -7,10 +7,8 @@ using System;
 using community.Models.ViewModels;
 using community.ListUtils;
 using community.Models.ViewModels.ReadMessageViewModels;
-<<<<<<< HEAD
 using System.Linq;
-=======
->>>>>>> 55732e889bf0f2aba44af1d43cc74ad6e07adca2
+
 
 namespace community.Business
 {
@@ -143,7 +141,7 @@ namespace community.Business
             return DBFacade.DeleteMessage(messageId,user);
         }
 
-        public List<InboxBL> GetConversations(ApplicationUser user) 
+        public ReadInboxVM GetConversations(ApplicationUser user) 
 
         {   
             List<InboxBL> inboxes = DBFacade.GetConversations(user);
