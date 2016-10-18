@@ -12,6 +12,7 @@ using community.Models;
 using community.Models.AccountViewModels;
 using community.Services;
 using community.Models.DBModels;
+using community.Data;
 
 namespace community.Controllers
 {
@@ -23,12 +24,14 @@ namespace community.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _ctx;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
+            ApplicationDbContext ctx,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
@@ -36,6 +39,7 @@ namespace community.Controllers
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _ctx = ctx;
         }
 
         //
@@ -63,7 +67,13 @@ namespace community.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = _ctx.Users.Where(e => e.Email == model.Email).Single();
+                    LoginDB loginSuccess = new LoginDB {TimeStamp = DateTime.Now, UserId = user.Id, User = user };
+                    _ctx.Logins.Add(loginSuccess);
+                    _ctx.SaveChanges();
 
+                    System.Console.WriteLine( "/////////??????//--/-/--/ User = "+ user  );
+                    System.Console.WriteLine( "/////////??????//--/-/--/ Login !! CTX = "+_ctx.ToString() );
                     // Logg user login grej 
 
                     _logger.LogInformation(1, "User logged in.");
@@ -112,7 +122,14 @@ namespace community.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email , UserId = new UserIdDB()};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
+                {   
+
+                    var user2 = _ctx.Users.Where(e => e.Email == model.Email).Single();
+                    LoginDB loginSuccess = new LoginDB {TimeStamp = DateTime.Now, UserId = user2.Id, User = user2 };
+                    _ctx.Logins.Add(loginSuccess);
+                    _ctx.SaveChanges();
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

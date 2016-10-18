@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class useridtest : Migration
+    public partial class logins : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -129,6 +129,26 @@ namespace community.Migrations
                     table.ForeignKey(
                         name: "FK_Groups_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Logins_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -260,6 +280,11 @@ namespace community.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Logins_UserId",
+                table: "Logins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Messages_GroupDBId",
                 table: "Messages",
                 column: "GroupDBId");
@@ -309,6 +334,9 @@ namespace community.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Entries");
+
+            migrationBuilder.DropTable(
+                name: "Logins");
 
             migrationBuilder.DropTable(
                 name: "Messages");

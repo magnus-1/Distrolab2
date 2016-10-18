@@ -39,6 +39,10 @@ namespace community.Data
             builder.Entity<MessageDB>()  
                 .HasOne(r => r.Receiver)
                 .WithMany(b => b.ReceivedMessages);
+            builder.Entity<LoginDB>()  
+                .HasOne(r => r.User);
+                
+            
             
             // builder.Entity<ApplicationUser>()
             //     .HasMany(p => p.SentMessages)
@@ -56,7 +60,13 @@ namespace community.Data
         public DbSet<EntryDB> Entries { get; set; }
         public DbSet<GroupDB> Groups { get; set; }
         public DbSet<MessageDB> Messages { get; set; }
+        public DbSet<LoginDB> Logins {get;set;}
 
+        public override string ToString(){
+            return "Detta ar en instans av AppDbContext!";
+        }
+
+        
         //public DbSet<ApplicationUser> Users {get;set;}
     }
 

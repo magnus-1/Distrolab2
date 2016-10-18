@@ -98,6 +98,22 @@ namespace community.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("TimeStamp");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Logins");
+                });
+
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
                 {
                     b.Property<int>("Id")
@@ -260,6 +276,13 @@ namespace community.Migrations
                     b.HasOne("community.Models.ApplicationUser")
                         .WithMany("Groups")
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>
+                {
+                    b.HasOne("community.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>

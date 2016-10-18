@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161018144306_useridtest")]
-    partial class useridtest
+    [Migration("20161018154007_logins")]
+    partial class logins
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,6 +97,22 @@ namespace community.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("TimeStamp");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Logins");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
@@ -261,6 +277,13 @@ namespace community.Migrations
                     b.HasOne("community.Models.ApplicationUser")
                         .WithMany("Groups")
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>
+                {
+                    b.HasOne("community.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.MessageDB", b =>
