@@ -1,4 +1,5 @@
-@using community.Models @using community.Models.ViewModels.ReadMessageViewModels @model community.Models.ViewModels.ReadMessageViewModels.ReadInboxVM 
+@using community.Models @using community.Models.ViewModels.ReadMessageViewModels 
+@model community.Models.ViewModels.ReadMessageViewModels.ReadInboxVM 
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
  @foreach (var from in Model.incomingFrom ) {
