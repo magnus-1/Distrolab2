@@ -42,6 +42,13 @@ namespace community.Business
             return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
         }
 
+        internal static ReadMessageIndexVM GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+        {
+            List<MessageBL> msg = new BusinessLogic().GetUsersMessagesWithSender(user,senderId);
+            return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
+        }
+
+
         public static List<DestinationVM> GetDestinations(ApplicationUser sender) {
             var destinations = new BusinessLogic().GetDestinations(sender);
             return BusinessModelConverter.ConvertToDestinationVM(destinations);
@@ -53,6 +60,7 @@ namespace community.Business
             var groupBL = new BusinessLogic().GroupsWithKey(groupId);
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
+
 
         public static GetMessageBodyVM GetMessageBody(GetMessageBodyVM vm,int reader) {
             var msgBody = BusinessModelConverter.ConvertGetMessageBodyVM(vm);

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using community.Models;
 using System;
 using community.Models.ViewModels;
+using community.ListUtils;
 
 namespace community.Business
 {
@@ -51,10 +52,25 @@ namespace community.Business
             return DBFacade.GetUsersMessages(user);
         }
 
+        public int GetUsersUnreadMessagesCount(ApplicationUser user)
+        {
+            var msg = DBFacade.GetUsersMessages(user);
+            
+            return ListConverter.Reduce(msg,0,(count,m) => (m.IsRead == false) ? count + 1 : count );
+        }
+
+        internal List<MessageBL> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<GroupBL> GetGroups(){
             return DBFacade.GetGroups();
         
         }
+
+        
+
         public MessageBodyBL ReadMessageBody(MessageBodyBL msgbody,int reader) {
             var a = DBFacade.ReadMessage(reader,msgbody.Id);
             return new MessageBodyBL{Id = a.Id,Content = a.Content};

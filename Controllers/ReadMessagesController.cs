@@ -61,7 +61,7 @@ namespace community.Controllers
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
-                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);//BusinessFacade.GetUsersMessagesWithSender(user,senderId.picked);
                 return View("ReadMessages",rmIndexVm);
             }
             else
