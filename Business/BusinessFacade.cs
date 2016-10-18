@@ -45,6 +45,11 @@ namespace community.Business
             return new BusinessLogic().GetUsersUnreadMessagesCount(user);
         }
 
+        internal static bool JoinGroup(ApplicationUser user, int groupId)
+        {
+            return new BusinessLogic().JoinGroup(user,groupId);
+        }
+
         internal static ReadMessageIndexVM GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
             List<MessageBL> msg = new BusinessLogic().GetUsersMessagesWithSender(user,senderId);

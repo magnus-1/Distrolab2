@@ -35,9 +35,10 @@ namespace community.DBLayer {
             return DBModelConverter.ConvertListToGroupBL(groupDBs);
         }
 
-        public static void PostMessageToGroup(MessageBL msg,int groupId) 
+        public static MessageBL PostMessageToGroup(MessageBL msg,int groupId) 
         {
-            new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);
+            MessageDB messageDB = new DBLogic().PostMessageToGroup(DBModelConverter.ConvertMessageBL(msg),groupId);
+            return DBModelConverter.ConvertToMessageBL(messageDB);
         }
 
         public static List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender) {
@@ -59,6 +60,12 @@ namespace community.DBLayer {
             List<MessageDB> msg =  new DBLogic().GetUsersMessagesWithSender(user,senderId);
             return DBModelConverter.ListConvertToMessageBL(msg);
         }
+
+        internal static bool JoinGroup(ApplicationUser user, int groupId)
+        {
+            return new DBLogic().JoinGroup(user,groupId);
+        }
+
         public static MessageBL ReadMessage(int sender,int messageId) {
             MessageDB msg =  new DBLogic().ReadMessage(sender,messageId);
             return DBModelConverter.ConvertToMessageBL(msg);

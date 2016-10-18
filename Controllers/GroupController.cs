@@ -48,10 +48,12 @@ namespace community.Controllers
         //     var group = BusinessFacade.GroupsWithKey(1);
         //     return View(group);
         // }
-        public IActionResult JoinGroup(int groupId)
+        public async Task<IActionResult>  JoinGroup(int groupId)
         {
             System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
             //var group = BusinessFacade.GroupsWithKey(1);
+            var user = await GetCurrentUserAsync();
+            bool joined = BusinessFacade.JoinGroup(user , groupId);
             return RedirectToAction("Index");
         }
 

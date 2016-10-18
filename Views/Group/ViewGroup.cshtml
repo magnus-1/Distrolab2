@@ -47,16 +47,60 @@ $( "#postMessage" ).submit(function( event ) {
 });
 </script>
 
-<table class="table">
+
+  <table class="table">
+<tr>
+    <th>Title</th>
+    <th>From</th> 
+    <th>Content: </th>
+  </tr>
+
 	@foreach (var msg in Model.Messages) {
+
 	<tr>
+		<td>
+			@Html.DisplayFor(modelMsg => msg.Title)
+		</td>
 		<td>
 			@Html.DisplayFor(modelMsg => msg.SenderName)
 		</td>
-		<td>
+
+    <td>
 			@Html.DisplayFor(modelMsg => msg.Content)
 		</td>
-	</tr>
-	}
 
+	</tr>
+
+	}
 </table>
+
+@section scripts {
+<script>
+$( "myrow" ).click( function( event) {
+    event.preventDefault();
+    var a = $( this ).find( "button[name='msgid']" ).val();
+    //alert("myrow: " + a);
+    var btn =$( this ).find( "button[name='msgid']" );
+    
+    var data = {
+          id : a,
+          content : "msg"  
+  };
+  var url1 = '@Url.Action("GetMessageBody","ReadMessages")';
+  var posting = $.post({
+      type: "POST",
+      url: url1,
+      data: JSON.stringify(data),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(msg) {
+          btn.hide();
+          $("#message-" + a ).html(msg.content).show()
+          //alert(msg.name);
+      }
+  });
+
+    
+});
+</script>
+}

@@ -70,6 +70,18 @@ namespace community.DBLayer
             return ListUtils.ListConverter.Map(group, m => new DestinationBL { Id = m.Id, Name = m.Title, IsGroup = true });
         }
 
+        internal bool JoinGroup(ApplicationUser user, int groupId)
+        {
+            var dude = ctx.Users.Include(m => m.Groups).Single(u => u.Id == user.Id);
+            var group = ctx.Groups.Single(g => g.Id == groupId);
+            if(group == null || dude == null) {
+                return false;
+            }
+            dude.Groups.Add(group);
+            ctx.SaveChanges();
+            return true;
+        }
+
         public List<DestinationBL> GetUserDestinations(ApplicationUser sender)
         {
             //ctx.Users.
@@ -165,7 +177,7 @@ namespace community.DBLayer
             return msg;
         }
 
-        public void PostMessageToGroup(MessageDB msg, int groupId)
+        public MessageDB PostMessageToGroup(MessageDB msg, int groupId)
         {
             System.Console.WriteLine("Message to be handled in db layer = " + msg.ToString());
             var a = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
@@ -180,6 +192,7 @@ namespace community.DBLayer
             //     System.Console.WriteLine("Users sent messages  = "+ m);
 
             // }
+            return msg;
         }
 
 

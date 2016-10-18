@@ -59,6 +59,11 @@ namespace community.Business
             return ListConverter.Reduce(msg,0,(count,m) => (m.IsRead == false) ? count + 1 : count );
         }
 
+        internal bool JoinGroup(ApplicationUser user, int groupId)
+        {
+            return DBFacade.JoinGroup(user,groupId);
+        }
+
         internal List<MessageBL> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
             return DBFacade.GetUsersMessagesWithSender(user,senderId);
@@ -90,7 +95,13 @@ namespace community.Business
             //MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
             foreach(DestinationVM d in vm.destinations) {
                 MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,Title = vm.title, IsRead = false,IsDeleted = false,Sender = sender};
-                sentMessages.Add(DBFacade.SendMessage(d.destinationId,tmpMsg,sender));
+                MessageBL msgSent;//= DBFacade.SendMessage(d.destinationId,tmpMsg,sender);
+                if(d.isGroup) {
+                    msgSent = DBFacade.PostMessageToGroup(tmpMsg,d.destinationId);
+                }else {
+                     msgSent = DBFacade.SendMessage(d.destinationId,tmpMsg,sender);
+                }
+                sentMessages.Add(msgSent);
             }
             
            return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = sentMessages[sentMessages.Count - 1].TimeStamp.ToString(), title = vm.title};
