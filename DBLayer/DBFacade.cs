@@ -67,7 +67,10 @@ namespace community.DBLayer {
         {
             MessageDB messageDB = new DBLogic().SendMessage(destinationId,DBModelConverter.ConvertMessageBL(tmpMsg),sender); 
             return DBModelConverter.ConvertToMessageBL(messageDB);
-            
+
+        }
+         public static void GetConversations(ApplicationUser user) {
+            new DBLogic().GetConversations(user);
         }
     }
 }

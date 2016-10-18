@@ -35,6 +35,8 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
+<<<<<<< HEAD
+=======
             System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {
@@ -82,6 +84,7 @@ namespace community.Controllers
         public async Task<IActionResult> ReadAllMessages()
         {
             System.Console.WriteLine("-----------hi ReadAllMessages : ");
+
             if (ModelState.IsValid)
             {
                 //var user = await GetCurrentUserAsync();
@@ -144,5 +147,11 @@ namespace community.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
 
         }
+        public async Task<IActionResult> GetConversations()
+        {   
+            System.Console.WriteLine("----------- GetConversations init ");
+            var user = await GetCurrentUserAsync();
+            BusinessFacade.GetConversations(user);
+            return RedirectToAction("Index");        }
     }
 }
