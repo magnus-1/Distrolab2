@@ -88,6 +88,31 @@ namespace community.Business
             DBFacade.PostMessageToGroup(msg,groupId);
         }
 
+        public DateTime GetLatestLoginTimeStamp(ApplicationUser user){
+            DateTime latest = new DateTime();
+            List<DateTime> timeStamps = DBFacade.GetLoginTimeStamps(user);
+            
+            foreach(DateTime dt in timeStamps){
+                if (dt > latest){
+                    System.Console.WriteLine( "TimeStamp: "+dt.ToString()+":is later than : "+latest.ToString());
+                    latest = dt;
+                }
+            }
+            return latest;
+        }
+
+        public HomeVM GetHomeInfo(ApplicationUser user)
+        {   
+            HomeVM info = new HomeVM();
+            info.UserName = user.UserName;
+            info.noOfLoginThisMonth = DBFacade.GetNumberOfLogins(user);
+            info.UnreadMessages = GetUsersUnreadMessagesCount(user);
+            info.TimeStamp = GetLatestLoginTimeStamp(user).ToString();
+
+            System.Console.WriteLine( "HomeInfo created and sending back: "+ info.ToString() );
+            return info;
+
+        }
         internal CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
         {
             string timeStamp = "none sent";

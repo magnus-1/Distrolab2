@@ -76,15 +76,26 @@ namespace community.DBLayer {
             return new DBLogic().GetUserId(sender);
         }
 
-        internal static MessageBL SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
+        public static MessageBL SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
         {
             MessageDB messageDB = new DBLogic().SendMessage(destinationId,DBModelConverter.ConvertMessageBL(tmpMsg),sender); 
             return DBModelConverter.ConvertToMessageBL(messageDB);
 
         }
+        public static List<DateTime> GetLoginTimeStamps(ApplicationUser user){
+            return new DBLogic().GetLoginTimeStamps(user);
+        }
+
+
          public static List<InboxBL>  GetConversations(ApplicationUser user) {
             List<InboxDB> inboxes = new DBLogic().GetConversations(user);
             return DBModelConverter.ConvertListToInboxBL(inboxes);
+        }
+
+        public static int GetNumberOfLogins(ApplicationUser user)
+        {
+            
+            return new DBLogic().GetNumberOfLoginsThisMonth(user);
         }
     }
 }

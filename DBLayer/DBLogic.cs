@@ -39,6 +39,15 @@ namespace community.DBLayer
             System.Console.WriteLine( "NuberOfLoginsThisMonth: "+ numberOfLoginsThisMonth );
             return numberOfLoginsThisMonth;
         }
+        public List<DateTime> GetLoginTimeStamps(ApplicationUser user){
+            List<DateTime> TimeStamps = new List<DateTime>(); 
+            List<LoginDB> logins = new List<LoginDB>();
+            logins = ctx.Logins.Where(i => i.UserId == user.Id).ToList();
+            foreach(LoginDB log in logins){
+                TimeStamps.Add(log.TimeStamp);
+            }
+            return TimeStamps;
+        }
 
         public string EntriesWithKey(int key)
         {
