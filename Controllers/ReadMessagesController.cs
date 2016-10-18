@@ -41,16 +41,17 @@ namespace community.Controllers
             {
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                ReadInboxVM inbox = new ReadInboxVM
-                {
-                    incomingFrom = ListConverter.Map(
-                        rmIndexVm.messages, m => new FromUser
-                        {
-                            senderId = 22,
-                            senderName = m.from,
-                            recevedCount = 3
-                        })
-                };
+                ReadInboxVM inbox = BusinessFacade.GetConversations(user);
+                // new ReadInboxVM
+                // {
+                //     incomingFrom = ListConverter.Map(
+                //         rmIndexVm.messages, m => new FromUser
+                //         {
+                //             senderId = 22,
+                //             senderName = m.from,
+                //             recevedCount = 3
+                //         })
+                // };
                 return View(inbox);
             }
             else
