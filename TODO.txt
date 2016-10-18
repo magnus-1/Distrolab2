@@ -20,7 +20,7 @@ Några krav på implementationen:
 2. Datat i modellklasserna ska, där det är lämpligt, märkas med attribut för t.ex. icke null
 (Required), maxlängd på textsträngar, namn som visas i vyn (DisplayName), format för t.ex.
 datum och tid et c.
-3. Lösningen ska implementeras med hjälp av ViewModels som representerar det data som ska
+3. Lösningen ska implementeras med hjälp av ViewModels som representerar det data som skaÏ
 presenteras i vyerna. Vyerna ska alltså inte känna till modellklasserna i datalagret (EF-
 klasserna); däremot får controller-klasserna känna till modellklasserna från datalagret.
 4. Om ni använder Visual Studios mallar för att skapa t.ex. controllers ska alla irrelevanta

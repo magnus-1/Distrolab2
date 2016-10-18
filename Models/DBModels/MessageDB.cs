@@ -16,6 +16,9 @@ namespace community.Models.DBModels
         public bool IsRead {get; set;}
         public bool IsDeleted { get; set; }
 
+        [DataType(DataType.Time)]
+        public DateTime TimeStamp {get; set;}
+
         public string SenderId {get;set;}
         [ForeignKey("SenderId")]
         public virtual ApplicationUser Sender {get;set;}

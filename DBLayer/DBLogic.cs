@@ -85,9 +85,11 @@ namespace community.DBLayer
 
             var targetUser = ctx.Users.Include(u => u.ReceivedMessages).Include(u => u.UserId).Single(u => u.UserId.Id == destinationId);
             var senderUser = ctx.Users.Include(u => u.SentMessages).Single(u => u.Id == sender.Id);
+            messageDB.TimeStamp = DateTime.Now;
+
             messageDB.Sender = sender;
             messageDB.SenderId = sender.Id;
-
+            
             messageDB.Receiver = targetUser;
             messageDB.ReceiverId = targetUser.Id;
 

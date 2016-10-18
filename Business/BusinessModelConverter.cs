@@ -60,7 +60,7 @@ namespace community.Business
                     id = m.Id,
                     isRead = m.IsRead,
                     title = m.Title,
-                    time = " time stamp now?",
+                    time = m.TimeStamp.ToString(),
                     from = m.Sender.UserName
                 })
             };
