@@ -35,10 +35,7 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
-<<<<<<< HEAD
 
-=======
->>>>>>> f0250db3e8affc16274a6ecceaabf92dc1e924de
             System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {
@@ -85,13 +82,10 @@ namespace community.Controllers
         [HttpPostAttribute]
         public async Task<IActionResult> ReadAllMessages()
         {
-<<<<<<< HEAD
 
-            System.Console.WriteLine("-----------hi Index : ");
-=======
             System.Console.WriteLine("-----------hi ReadAllMessages : ");
 
->>>>>>> f0250db3e8affc16274a6ecceaabf92dc1e924de
+
             if (ModelState.IsValid)
             {
                 //var user = await GetCurrentUserAsync();
