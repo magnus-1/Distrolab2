@@ -103,5 +103,10 @@ namespace community.Business
            return inbox;
 
         }
+
+        internal static bool DeleteMessage(DeleteMessageVM vm, ApplicationUser user)
+        {
+            return new BusinessLogic().DeleteMessage(vm.id,user);
+        }
     }
 }

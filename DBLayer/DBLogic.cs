@@ -100,6 +100,22 @@ namespace community.DBLayer
             return ListConverter.Map(user, m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
 
+        internal bool DeleteMessage(int messageId, ApplicationUser user)
+        {
+            var dude = ctx.Users.Include(u => u.ReceivedMessages).Single(u => u.Id == user.Id);
+            if(dude == null) {
+                return false;
+            }
+            var msg = dude.ReceivedMessages.Single(m => m.Id == messageId);
+            if(msg == null) {
+                return false;
+            }
+            
+            msg.IsDeleted = true;
+            ctx.SaveChanges();
+            return true;
+        }
+
         internal List<MessageDB> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
             var send = ctx.Users.Include(u => u.UserId).Single(u => u.UserId.Id == senderId);

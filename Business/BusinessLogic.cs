@@ -6,6 +6,7 @@ using community.Models;
 using System;
 using community.Models.ViewModels;
 using community.ListUtils;
+using community.Models.ViewModels.ReadMessageViewModels;
 
 namespace community.Business
 {
@@ -66,7 +67,8 @@ namespace community.Business
 
         internal List<MessageBL> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
-            return DBFacade.GetUsersMessagesWithSender(user,senderId);
+            List<MessageBL> msg =  DBFacade.GetUsersMessagesWithSender(user,senderId);
+            return ListConverter.Filter(msg, m => m.IsDeleted == false);
         }
 
         public List<GroupBL> GetGroups(){
@@ -131,6 +133,12 @@ namespace community.Business
             
            return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = sentMessages[sentMessages.Count - 1].TimeStamp.ToString(), title = vm.title};
         }
+
+        internal bool DeleteMessage(int messageId, ApplicationUser user)
+        {
+            return DBFacade.DeleteMessage(messageId,user);
+        }
+
         public List<InboxBL> GetConversations(ApplicationUser user) 
         {   
            return DBFacade.GetConversations(user);

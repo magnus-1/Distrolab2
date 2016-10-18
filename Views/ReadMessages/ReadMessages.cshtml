@@ -11,7 +11,7 @@
 
 	@foreach (var msg in Model.messages) {
 
-	<tr>
+	<tr id="tabrow-@msg.id">
 		<td>
 			@Html.DisplayFor(modelMsg => msg.title)
 		</td>
@@ -30,6 +30,13 @@
 
 				<button id="btnreadmsg" type="button" name="msgid" value="@msg.id"> read</button>
 			</myrow>
+
+		</td>
+        <td>
+			<myrowdel>
+
+				<button id="btnremove" type="button" name="msgid" value="@msg.id"> delete message</button>
+			</myrowdel>
 
 		</td>
 	</tr>
@@ -62,9 +69,31 @@ $( "myrow" ).click( function( event) {
           //alert(msg.name);
       }
   });
-
-    
 });
 
+$( "myrowdel" ).click( function( event) {
+    event.preventDefault();
+    var theid = $( this ).find( "button[name='msgid']" ).val();
+    //alert("myrow: " + a);
+    var btn =$( this ).find( "button[name='msgid']" );
+    
+    var data = {
+          id : theid
+    };
+  var url1 = '@Url.Action("DeleteMessage","ReadMessages")';
+  var posting = $.post({
+      type: "POST",
+      url: url1,
+      data: JSON.stringify(data),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(msg) {
+          btn.hide();
+          $("#tabrow-" + theid ).hide();
+          alert(nsg.content);
+          //alert(msg.name);
+      }
+  });
+});
 
 </script> }
