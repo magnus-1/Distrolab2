@@ -69,8 +69,15 @@ $( "#writeMsg" ).submit( function( event ) {
       contentType:  "application/json",
       dataType: "json",
       success: function(msg) {
-          $("#disphere").html("Meddelande nummer: " + msg.id + " avsänt till "+ msg.destinations + "," + msg.timeStamp);
-          alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
+          var dests = "";
+          msg.destinations.forEach(function(entry) {
+              dests = dests.concat(entry.destinationName);
+              dests = dests.concat(", ")
+          });
+          //alert("Destinationer: "+ dests);
+
+          $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
+          //alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
       }
   });
   
@@ -102,7 +109,7 @@ $( "#addRecipient" ).click( function( event ) {
 });
 
 $( "#clearRecipients" ).click( function( event ) {
-    alert("Clearing recipients");
+    //alert("Clearing recipients");
     event.preventDefault();
     recipients.length = 0;
     reciepientsNames = "";

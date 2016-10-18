@@ -2,6 +2,13 @@
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <table class="table">
+<tr>
+    <th>Title</th>
+    <th>From</th> 
+    <th>Receiced at: </th>
+    <th>Content: </th>
+  </tr>
+
 	@foreach (var msg in Model.messages) {
 
 	<tr>

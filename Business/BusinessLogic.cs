@@ -77,7 +77,7 @@ namespace community.Business
                 sentMessages.Add(DBFacade.SendMessage(d.destinationId,tmpMsg,sender));
             }
             
-           return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = timeStamp, title = vm.title};
+           return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = sentMessages[sentMessages.Count - 1].TimeStamp.ToString(), title = vm.title};
         }
         public List<InboxBL> GetConversations(ApplicationUser user) 
         {   
