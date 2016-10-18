@@ -6,6 +6,7 @@ namespace community.Models.ViewModels.ReadMessageViewModels
     public class ReadInboxVM
     {
         public List<FromUser> incomingFrom { get; set; }
+        public int picked {get;set;}
 
     }
 
@@ -16,6 +17,13 @@ namespace community.Models.ViewModels.ReadMessageViewModels
         public int recevedCount {get;set;}
     }
 
+    public class ShowMessageFromSenderVM
+    {
+        public int senderId {get;set;}
+        public override string ToString() {
+            return "ShowMessageFromSenderVM: " + senderId;
+        }
+    }
     
 
 }
