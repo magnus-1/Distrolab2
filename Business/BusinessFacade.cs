@@ -41,6 +41,9 @@ namespace community.Business
             List<MessageBL> msg = new BusinessLogic().GetUsersMessages(user);
             return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
         }
+        public static int GetUsersUnreadMessagesCount(ApplicationUser user) {
+            return new BusinessLogic().GetUsersUnreadMessagesCount(user);
+        }
 
         internal static ReadMessageIndexVM GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {

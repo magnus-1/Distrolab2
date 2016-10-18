@@ -64,6 +64,26 @@ namespace community.DBLayer
             return ListConverter.Map(user, m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
 
+        internal List<MessageDB> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+        {
+            var send = ctx.Users.Include(u => u.UserId).Single(u => u.UserId.Id == senderId);
+
+            var dude = ctx.Users.Include(u => u.ReceivedMessages)
+                    .ThenInclude(m => m.Sender)
+                    .Single(u => u.Id == user.Id);
+            if (dude == null)
+            {
+                return new List<MessageDB>();
+            }
+            List<MessageDB> result = ListConverter.Filter(dude.ReceivedMessages,m => m.Sender == send);
+            foreach (MessageDB m in result)
+            {
+                System.Console.WriteLine("GetUsersMessagesWithSender: msg from db: " + m.ToString());
+            }
+
+            return result;
+        }
+
         public List<MessageDB> GetUsersMessages(ApplicationUser user)
         {
             var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);

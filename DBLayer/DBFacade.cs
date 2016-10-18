@@ -54,10 +54,16 @@ namespace community.DBLayer {
             return DBModelConverter.ListConvertToMessageBL(msg);
         }
 
+        internal static List<MessageBL> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+        {
+            List<MessageDB> msg =  new DBLogic().GetUsersMessagesWithSender(user,senderId);
+            return DBModelConverter.ListConvertToMessageBL(msg);
+        }
         public static MessageBL ReadMessage(int sender,int messageId) {
             MessageDB msg =  new DBLogic().ReadMessage(sender,messageId);
             return DBModelConverter.ConvertToMessageBL(msg);
         }
+
 
         public static int GetUserId(ApplicationUser sender) {
             return new DBLogic().GetUserId(sender);

@@ -61,7 +61,7 @@ namespace community.Business
 
         internal List<MessageBL> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
-            throw new NotImplementedException();
+            return DBFacade.GetUsersMessagesWithSender(user,senderId);
         }
 
         public List<GroupBL> GetGroups(){
