@@ -31,4 +31,15 @@ namespace community.Models.ViewModels.ReadMessageViewModels
             " : content = " + content;
         }
     }
+
+    public class DeleteMessageVM
+    {
+
+        public int id { get; set; }
+
+        public override string ToString()
+        {
+            return "DeleteMessageVM: " + " : id = " + id;
+        }
+    }
 }

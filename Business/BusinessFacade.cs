@@ -100,5 +100,10 @@ namespace community.Business
         {
            return  new BusinessLogic().GetConversations(user);
         }
+
+        internal static bool DeleteMessage(DeleteMessageVM vm, ApplicationUser user)
+        {
+            return new BusinessLogic().DeleteMessage(vm.id,user);
+        }
     }
 }

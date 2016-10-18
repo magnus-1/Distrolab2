@@ -51,7 +51,6 @@ namespace community.Controllers
                 return View();
             }
 
-            return View();
         }
 
         [HttpPostAttribute]
@@ -61,8 +60,8 @@ namespace community.Controllers
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
-                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessagesWithSender(user,senderId.picked);
-                return View("ReadMessages",rmIndexVm);
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessagesWithSender(user, senderId.picked);
+                return View("ReadMessages", rmIndexVm);
             }
             else
             {
@@ -84,7 +83,7 @@ namespace community.Controllers
                 //ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                return View("ReadMessages",rmIndexVm);
+                return View("ReadMessages", rmIndexVm);
             }
             else
             {
@@ -109,6 +108,26 @@ namespace community.Controllers
                 return View();
             }
         }
+
+        [HttpPostAttribute]
+        public async Task<IActionResult> DeleteMessage([FromBodyAttribute]DeleteMessageVM vm)
+        {
+            bool deleted = false;
+            GetMessageBodyVM msgbody = null;
+            if (ModelState.IsValid)
+            {
+                System.Console.WriteLine("-----------DeleteMessage : " + vm.ToString());
+                var user = await GetCurrentUserAsync();
+                deleted = BusinessFacade.DeleteMessage(vm, user);
+
+            }
+            else
+            {
+                System.Console.WriteLine("-----------GetMessageBody model invalid: ");
+            }
+            return Json(new { wasDeleted = deleted });
+        }
+
 
 
         [HttpPostAttribute]
@@ -140,5 +159,15 @@ namespace community.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
 
         }
+<<<<<<< HEAD
+=======
+        public async Task<IActionResult> GetConversations()
+        {
+            System.Console.WriteLine("----------- GetConversations init ");
+            var user = await GetCurrentUserAsync();
+            BusinessFacade.GetConversations(user);
+            return RedirectToAction("Index");
+        }
+>>>>>>> 55732e889bf0f2aba44af1d43cc74ad6e07adca2
     }
 }

@@ -87,6 +87,11 @@ namespace community.DBLayer {
         }
 
 
+        internal static bool DeleteMessage(int messageId, ApplicationUser user)
+        {
+            return new DBLogic().DeleteMessage(messageId,user);
+        }
+
          public static List<InboxBL>  GetConversations(ApplicationUser user) {
             List<InboxDB> inboxes = new DBLogic().GetConversations(user);
             return DBModelConverter.ConvertListToInboxBL(inboxes);
