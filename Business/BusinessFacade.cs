@@ -96,12 +96,9 @@ namespace community.Business
             CreateMessageResponseVM response = new BusinessLogic().SendNewMessage(vm,sender);
             return response;
         }
-        public static ReadInboxVM GetConversations(ApplicationUser user) 
+        public static ReadInboxVM GetInboxInfo(ApplicationUser user) 
         {
-           List<InboxBL> inboxes = new BusinessLogic().GetConversations(user);
-           ReadInboxVM inbox = BusinessModelConverter.ConvertInboxListToInboxVM(inboxes);
-           return inbox;
-
+           return  new BusinessLogic().GetConversations(user);
         }
     }
 }

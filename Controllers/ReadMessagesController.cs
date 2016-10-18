@@ -41,7 +41,7 @@ namespace community.Controllers
             {
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                ReadInboxVM inbox = BusinessFacade.GetConversations(user);
+                ReadInboxVM inbox = BusinessFacade.GetInboxInfo(user);
 
                 return View(inbox);
             }
@@ -140,11 +140,5 @@ namespace community.Controllers
             return _userManager.GetUserAsync(HttpContext.User);
 
         }
-        public async Task<IActionResult> GetConversations()
-        {   
-            System.Console.WriteLine("----------- GetConversations init ");
-            var user = await GetCurrentUserAsync();
-            BusinessFacade.GetConversations(user);
-            return RedirectToAction("Index");        }
     }
 }

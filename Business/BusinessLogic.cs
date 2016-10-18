@@ -6,6 +6,8 @@ using community.Models;
 using System;
 using community.Models.ViewModels;
 using community.ListUtils;
+using community.Models.ViewModels.ReadMessageViewModels;
+using System.Linq;
 
 namespace community.Business
 {
@@ -131,9 +133,18 @@ namespace community.Business
             
            return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = sentMessages[sentMessages.Count - 1].TimeStamp.ToString(), title = vm.title};
         }
-        public List<InboxBL> GetConversations(ApplicationUser user) 
+        public ReadInboxVM GetConversations(ApplicationUser user) 
         {   
-           return DBFacade.GetConversations(user);
+            List<InboxBL> inboxes = DBFacade.GetConversations(user);
+            ReadInboxVM inbox = BusinessModelConverter.ConvertInboxListToInboxVM(inboxes);
+            List<MessageBL> messages = new List<MessageBL>();
+            messages = GetUsersMessages(user);
+
+            inbox.totalReceivedMessages = messages.Count();
+            inbox.totalReadMessages = messages.Where(x => x.IsRead == true).ToList().Count();
+            inbox.totalDeletedMessages = messages.Where(x => x.IsDeleted == true).ToList().Count();
+
+           return inbox;
         }
     }
 }

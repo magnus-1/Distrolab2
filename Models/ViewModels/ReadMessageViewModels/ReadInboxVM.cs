@@ -7,6 +7,9 @@ namespace community.Models.ViewModels.ReadMessageViewModels
     {
         public List<FromUser> incomingFrom { get; set; }
         public int picked {get;set;}
+        public int totalReceivedMessages { get; set; }
+        public int totalReadMessages { get; set; }
+        public int totalDeletedMessages { get; set; }
 
     }
 
@@ -24,6 +27,4 @@ namespace community.Models.ViewModels.ReadMessageViewModels
             return "ShowMessageFromSenderVM: " + senderId;
         }
     }
-    
-
 }
