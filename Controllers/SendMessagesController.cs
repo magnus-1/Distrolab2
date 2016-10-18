@@ -78,7 +78,7 @@ namespace community.Controllers
             }else {
                 System.Console.WriteLine("-----------CreateMessage model invalid: " );
             }
-            return Json(response ?? new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = "now i think..."});
+            return Json(response ?? new CreateMessageResponseVM{destinations = vm.destinations,title = "defaultTitle", timeStamp = "now i think..."});
         }
 
         public IActionResult DummyPage(DummyVM dummy) {
