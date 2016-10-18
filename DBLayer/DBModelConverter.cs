@@ -49,6 +49,22 @@ namespace community.DBLayer
             
             };
         }
+        public static InboxBL ConvertToInboxBL(InboxDB inboxDB)
+        {
+            return new InboxBL
+            {
+                UserId = inboxDB.UserId,
+                UnreadMessages = inboxDB.UnreadMessages,
+                Sender = inboxDB.Sender
+            };
+        }
+
+
+
+        public static List<InboxBL> ConvertListToInboxBL(List<InboxDB> inboxes)
+        {   
+            return ListConverter.Map(inboxes,i => new InboxBL {UserId = i.UserId,  UnreadMessages = i.UnreadMessages, Sender = i.Sender});
+        }
         public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups)
         {
             return ListConverter.Map(groups, g => new GroupBL { Title = g.Title, Id = g.Id });

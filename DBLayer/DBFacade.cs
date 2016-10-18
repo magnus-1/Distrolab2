@@ -69,8 +69,9 @@ namespace community.DBLayer {
             return DBModelConverter.ConvertToMessageBL(messageDB);
 
         }
-         public static void GetConversations(ApplicationUser user) {
-            new DBLogic().GetConversations(user);
+         public static List<InboxBL>  GetConversations(ApplicationUser user) {
+            List<InboxDB> inboxes = new DBLogic().GetConversations(user);
+            return DBModelConverter.ConvertListToInboxBL(inboxes);
         }
     }
 }

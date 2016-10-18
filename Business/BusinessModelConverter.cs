@@ -80,5 +80,12 @@ namespace community.Business
         {
             return ListConverter.Map(groups, g => new GroupInfoVM { Title = g.Title, GroupId = g.Id });
         }
+
+        internal static ReadInboxVM ConvertInboxListToInboxVM(List<InboxBL> inboxes)
+        {
+            ReadInboxVM inbox = new ReadInboxVM {};
+            inbox.incomingFrom = ListConverter.Map(inboxes, f => new FromUser{senderId = f.UserId, senderName = f.Sender.UserName, recevedCount = f.UnreadMessages});
+            return inbox;
+        }
     }
 }

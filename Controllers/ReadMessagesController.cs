@@ -35,8 +35,7 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
-<<<<<<< HEAD
-=======
+
             System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {
@@ -82,7 +81,7 @@ namespace community.Controllers
 
         public async Task<IActionResult> ReadMessages(ReadMessageIndexVM readMessageIndexVM)
         {
->>>>>>> e01c4bd2c42b4a7c1817717b31e689a81a06ee4d
+
             System.Console.WriteLine("-----------hi Index : ");
             if (ModelState.IsValid)
             {

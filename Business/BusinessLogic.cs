@@ -79,9 +79,9 @@ namespace community.Business
             
            return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = timeStamp, title = vm.title};
         }
-        public void GetConversations(ApplicationUser user) 
+        public List<InboxBL> GetConversations(ApplicationUser user) 
         {   
-            DBFacade.GetConversations(user);
+           return DBFacade.GetConversations(user);
         }
     }
 }
