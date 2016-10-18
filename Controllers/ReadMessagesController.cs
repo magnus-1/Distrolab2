@@ -15,6 +15,7 @@ using community.Models.ViewModels.GroupViewModels;
 using community.Business;
 using System.Security.Claims;
 using community.Models.ViewModels.ReadMessageViewModels;
+using community.ListUtils;
 
 namespace community.Controllers
 {
@@ -34,54 +35,89 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
-            System.Console.WriteLine("-----------hi Index : " );
+            System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                // List<ReadMessageVM> genmessages = new List<ReadMessageVM>();
-                // for (int i = 0; i < 10; i++)
-                // {
-                //     genmessages.Add(new ReadMessageVM
-                //     {
-                //         id = i,
-                //         isRead = false,
-                //         title = "title" + i,
-                //         time = "now o clock: " + i,
-                //         from = "from everone " + i
-                //     });
+                ReadInboxVM inbox = new ReadInboxVM
+                {
+                    incomingFrom = ListConverter.Map(
+                        rmIndexVm.messages, m => new FromUser
+                        {
+                            senderId = 22,
+                            senderName = m.from,
+                            recevedCount = 3
+                        })
+                };
+                return View(inbox);
+            }
+            else
+            {
+                System.Console.WriteLine("invalid model ");
+                return View();
+            }
 
-                // }
-                // ReadMessageIndexVM vm = new ReadMessageIndexVM{messages = genmessages};
+            return View();
+        }
+
+        [HttpPostAttribute]
+        public async Task<IActionResult> ReadFromSender(int? senderId)
+        {
+            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId);
+            if (ModelState.IsValid)
+            {
+                //var user = await GetCurrentUserAsync();
+                //ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                return RedirectToAction("ReadMessages");
+            }
+            else
+            {
+                System.Console.WriteLine("invalid model ");
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> ReadMessages(ReadMessageIndexVM readMessageIndexVM)
+        {
+            System.Console.WriteLine("-----------hi Index : ");
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
                 return View(rmIndexVm);
             }
             else
             {
-                System.Console.WriteLine( "invalid model " );
+                System.Console.WriteLine("invalid model ");
                 return View();
             }
-           
+
             return View();
         }
 
 
         [HttpPostAttribute]
-        public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm) {
+        public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm)
+        {
             GetMessageBodyVM msgbody = null;
-            if(ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
                 System.Console.WriteLine("-----------GetMessageBody : " + vm.ToString());
                 var user = await GetCurrentUserAsync();
-                
+
                 var currentUserId = BusinessFacade.GetUserId(user);
-                System.Console.WriteLine( "User is: " + user.ToString() +" : " + currentUserId);
-                System.Console.WriteLine( "User Id: " +  currentUserId);
-                
-                msgbody = BusinessFacade.GetMessageBody(vm,currentUserId);
-                
-            }else {
-                System.Console.WriteLine("-----------GetMessageBody model invalid: " );
+                System.Console.WriteLine("User is: " + user.ToString() + " : " + currentUserId);
+                System.Console.WriteLine("User Id: " + currentUserId);
+
+                msgbody = BusinessFacade.GetMessageBody(vm, currentUserId);
+
             }
-            return Json(msgbody ?? new GetMessageBodyVM{id = 4,content = "this is from the controller"});
+            else
+            {
+                System.Console.WriteLine("-----------GetMessageBody model invalid: ");
+            }
+            return Json(msgbody ?? new GetMessageBodyVM { id = 4, content = "this is from the controller" });
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
