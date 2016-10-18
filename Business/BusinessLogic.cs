@@ -70,10 +70,11 @@ namespace community.Business
         internal CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
         {
             string timeStamp = "none sent";
+            List<MessageBL> sentMessages;
             //MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
             foreach(DestinationVM d in vm.destinations) {
                 MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,Title = vm.title, IsRead = false,IsDeleted = false,Sender = sender};
-                timeStamp = DBFacade.SendMessage(d.destinationId,tmpMsg,sender);
+                sentMessages.Add(DBFacade.SendMessage(d.destinationId,tmpMsg,sender));
             }
             
            return new CreateMessageResponseVM{destinations = vm.destinations,timeStamp = timeStamp, title = vm.title};

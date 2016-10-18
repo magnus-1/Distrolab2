@@ -63,9 +63,11 @@ namespace community.DBLayer {
             return new DBLogic().GetUserId(sender);
         }
 
-        internal static string SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
+        internal static MessageBL SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
         {
-            return new DBLogic().SendMessage(destinationId,DBModelConverter.ConvertMessageBL(tmpMsg),sender);
+            MessageDB messageDB = new DBLogic().SendMessage(destinationId,DBModelConverter.ConvertMessageBL(tmpMsg),sender); 
+            return DBModelConverter.ConvertToMessageBL(messageDB);
+            
         }
     }
 }
