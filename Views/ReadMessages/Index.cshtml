@@ -24,11 +24,12 @@
 		<td>
 			@Html.DisplayFor(modelMsg => from.senderId)
 		</td>
-		<td>
+	<td>
+		<form asp-controller="ReadMessages" asp-action="ReadFromSender" method="post">
+			<input asp-for="picked" value="@from.senderId" hidden/>
+			<button type="submit">check it out</button>
+		</form>
 
-			 <form id="ReadFromSender" action="/ReadMessages/ReadFromSender/@from.senderId" method="post" class="form-horizontal">
-	            <button type="submit" class="btn btn-default">check it out</button>
-            </form>
 
 		</td>
 	</tr>
@@ -39,3 +40,4 @@
 <form id="ReadAllMessages" action="/ReadMessages/ReadAllMessages" method="post" class="form-horizontal">
 	<button type="submit" class="btn btn-default">Show all messages</button>
 </form>
+

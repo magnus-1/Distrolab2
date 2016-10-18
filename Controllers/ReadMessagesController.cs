@@ -42,16 +42,7 @@ namespace community.Controllers
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
                 ReadInboxVM inbox = BusinessFacade.GetConversations(user);
-                // new ReadInboxVM
-                // {
-                //     incomingFrom = ListConverter.Map(
-                //         rmIndexVm.messages, m => new FromUser
-                //         {
-                //             senderId = 22,
-                //             senderName = m.from,
-                //             recevedCount = 3
-                //         })
-                // };
+
                 return View(inbox);
             }
             else
@@ -64,9 +55,9 @@ namespace community.Controllers
         }
 
         [HttpPostAttribute]
-        public async Task<IActionResult> ReadFromSender(string senderId)
+        public async Task<IActionResult> ReadFromSender(ReadInboxVM senderId)
         {
-            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId);
+            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId.picked);
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
