@@ -2,21 +2,6 @@
 @{ Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
-	<H5>Title: </H5>
-	<input name="title" type="text" class="form-control" />
-	<H5>Message: </H5>
-	<input name="textArea" type="text" class="form-control" />
-	<!--<input name="groupTitle" type="text" class="form-control" />-->
-	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
-	<button type="submit" class="btn btn-default">Send Message</button>
-</form>
-
-<!--oops solved it...-->
-
-
-
 <table class="table">
 	<tr>
 		<td>
@@ -33,9 +18,26 @@
 	</tr>
 </table>
 
-
-
 <div id="recipientsToSend"></div>
+<form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
+	<H5>Title: </H5>
+	<input name="title" type="text" class="form-control" />
+	<H5>Message: </H5>
+	<input name="textArea" type="text" class="form-control" />
+	<!--<input name="groupTitle" type="text" class="form-control" />-->
+	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+	<button type="submit" class="btn btn-default">Send Message</button>
+</form>
+
+<!--oops solved it...-->
+
+
+
+
+
+
+
+
 <div id="disphere"> </div>
 
 @section scripts {
@@ -77,6 +79,7 @@ $( "#writeMsg" ).submit( function( event ) {
           //alert("Destinationer: "+ dests);
 
           $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
+          
           //alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
       }
   });
