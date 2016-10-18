@@ -8,9 +8,11 @@
     ViewData["AboutUser3"] = "Something about user 1";
 }
 
-<h2>@Model.UserName</h2>
-
-<a asp-area="" asp-controller="ReadMessages" asp-action="Index">Read Messages</a>
+<h4>@Model.UserName</h4>
+<h5>Latest login at: @Model.TimeStamp</h5>
+<h5>Number of logins this month: @Model.noOfLoginThisMonth</h5>
+<h5>Number of unread messages: @Model.UnreadMessages</h5>
+<h5><a asp-area="" asp-controller="ReadMessages" asp-action="Index">Read Messages</a></h5>
 
     <!--<div class="col-md-3">
         <h2>Application uses</h2>

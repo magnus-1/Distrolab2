@@ -22,6 +22,11 @@ namespace community.Business
             return new BusinessLogic().EntriesWithKey(key);
         }
 
+        internal static HomeVM GetHomeInfo(ApplicationUser user)
+        {
+           return new BusinessLogic().GetHomeInfo(user);
+        }
+
         public static void InsertEntry(EntryDB entry) {
             new BusinessLogic().InsertEntry(entry);
         }
