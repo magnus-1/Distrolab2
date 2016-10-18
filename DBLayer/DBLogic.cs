@@ -145,8 +145,46 @@ namespace community.DBLayer
             // }
         }
 
+
+
+
+        public class UserSender
+        {
+            public ApplicationUser Sender { get; set; }
+            public int Count { get; set; }
+        }
+
+        public List<UserSender> GetInboxForUser(ApplicationUser user)
+        {
+            var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);
+            if (dude == null)
+            {
+                return new List<UserSender>();
+            }
+
+            List<MessageDB> rcvMsg = dude.ReceivedMessages;
+            List<UserSender> uniqSender = new List<UserSender>();
+            int count = 0;
+            while (rcvMsg.Count > 0)
+            {
+                ApplicationUser sender = rcvMsg.First().Sender;
+                rcvMsg = ListConverter.Filter(rcvMsg, m =>
+                {
+                    if(m.Sender == sender) {
+                        count++;
+                        return false;
+                    }
+                    return true;
+                });
+                uniqSender.Add(new UserSender{Sender = sender,Count = count});
+            }
+            return uniqSender;
+        }
+
+
         public List<InboxDB> GetConversations(ApplicationUser user)
         {
+
             List<ApplicationUser> uniqueConversations = new List<ApplicationUser>();
             List<InboxDB> InboxDBs = new List<InboxDB>();
 
@@ -175,8 +213,10 @@ namespace community.DBLayer
                     InboxDBs.Add(Inbox);
                 }
             }
+
             System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count after = " + uniqueConversations.Count() + ", inboxes created = " + InboxDBs.Count());
             return InboxDBs;
+
         }
     }
 }

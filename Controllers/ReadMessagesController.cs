@@ -35,7 +35,10 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
+<<<<<<< HEAD
 
+=======
+>>>>>>> f0250db3e8affc16274a6ecceaabf92dc1e924de
             System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {
@@ -63,14 +66,39 @@ namespace community.Controllers
         }
 
         [HttpPostAttribute]
-        public async Task<IActionResult> ReadFromSender(int? senderId)
+        public async Task<IActionResult> ReadFromSender(string senderId)
         {
             System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId);
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                return View("ReadMessages",rmIndexVm);
+            }
+            else
+            {
+                System.Console.WriteLine("invalid model ");
+                return View();
+            }
+        }
+
+        [HttpPostAttribute]
+        public async Task<IActionResult> ReadAllMessages()
+        {
+<<<<<<< HEAD
+
+            System.Console.WriteLine("-----------hi Index : ");
+=======
+            System.Console.WriteLine("-----------hi ReadAllMessages : ");
+
+>>>>>>> f0250db3e8affc16274a6ecceaabf92dc1e924de
+            if (ModelState.IsValid)
+            {
                 //var user = await GetCurrentUserAsync();
                 //ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                return RedirectToAction("ReadMessages");
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                return View("ReadMessages",rmIndexVm);
             }
             else
             {
@@ -81,21 +109,19 @@ namespace community.Controllers
 
         public async Task<IActionResult> ReadMessages(ReadMessageIndexVM readMessageIndexVM)
         {
-
-            System.Console.WriteLine("-----------hi Index : ");
+            System.Console.WriteLine("-----------hi ReadMessages : ");
             if (ModelState.IsValid)
             {
-                var user = await GetCurrentUserAsync();
-                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                return View(rmIndexVm);
+                System.Console.WriteLine("ReadMessages : readMessageIndexVM: count" + readMessageIndexVM.messages.Count);
+                // var user = await GetCurrentUserAsync();
+                // ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                return View(readMessageIndexVM);
             }
             else
             {
                 System.Console.WriteLine("invalid model ");
                 return View();
             }
-
-            return View();
         }
 
 
