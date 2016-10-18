@@ -26,7 +26,7 @@ namespace community.Models.ViewModels
     }
 
     public class CreateMessageResponseVM {
-        public int id { get; set; }
+
         public string title { get; set; }
         public List<DestinationVM> destinations  {get; set;}
         public string timeStamp { get; set; }
