@@ -41,7 +41,7 @@ Lösningen för betyg 5 måste uppfylla alla kraven för betyg 3 och 4 samt 
 
 * 0 Fixa till title i meddelnaden.
 * 0.1 Fixa receiver i meddelanden
-1 filtrera anv'ndare fr[n recieved messages och plocka med timestap p[ senaste meddelandet.
+* - 1 filtrera anv'ndare fr[n recieved messages och plocka med timestap p[ senaste meddelandet.
 2 skapa ny vy f;r denna lista fr[n steg 1.
 3 skriv om ReadMessages s[ att den endast inneh[ller meddelanden fr[n en avs'ndare.
 4 l'gg till funktionalitet f;r delete och isRead.
