@@ -21,9 +21,9 @@
 <div id="recipientsToSend"></div>
 <form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
 	<H5>Title: </H5>
-	<input name="title" type="text" class="form-control" />
+	<input id="titleTextField" name="title" type="text" class="form-control" />
 	<H5>Message: </H5>
-	<input name="textArea" type="text" class="form-control" />
+	<input id="textAreaTextField" name="textArea" type="text" class="form-control" />
 	<!--<input name="groupTitle" type="text" class="form-control" />-->
 	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
 	<button type="submit" class="btn btn-default">Send Message</button>
@@ -46,6 +46,19 @@
 
     var recipients = [];
     var reciepientsNames = "";
+
+    function clearFields() {
+        recipients.length = 0;
+        reciepientsNames = "";
+        $("#disphere").html(" ");
+        $("#recipientsToSend").html(reciepientsNames);
+        
+        var form = document.getElementById("writeMsg");
+        form.reset();
+
+    }       
+
+
 
 $( "#writeMsg" ).submit( function( event ) {
     event.preventDefault();
@@ -77,6 +90,7 @@ $( "#writeMsg" ).submit( function( event ) {
               dests = dests.concat(", ")
           });
           //alert("Destinationer: "+ dests);
+          clearFields();
 
           $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
           
