@@ -25,6 +25,21 @@ namespace community.DBLayer
             return a.NewsItem;
         }
 
+        public int GetNumberOfLoginsThisMonth(ApplicationUser user){
+            DateTime now = DateTime.Now;
+            int numberOfLoginsThisMonth = 0;
+
+            List<LoginDB> logins = new List<LoginDB>();
+            logins = ctx.Logins.Where(i => i.UserId == user.Id).ToList();
+            foreach(LoginDB log in logins){
+                if  (log.TimeStamp.Month == now.Month){
+                    numberOfLoginsThisMonth++;    
+                }
+            }
+            System.Console.WriteLine( "NuberOfLoginsThisMonth: "+ numberOfLoginsThisMonth );
+            return numberOfLoginsThisMonth;
+        }
+
         public string EntriesWithKey(int key)
         {
             var entry = ctx.Entries.Where(c => c.Id == key).ToList();
