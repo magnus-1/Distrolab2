@@ -38,3 +38,9 @@ Lösningen för betyg 5 måste uppfylla alla kraven för betyg 3 och 4 samt 
  sätt som möjligt. Notera att vad som är bästa lösningen här varierar från fall till fall
   – ni måste argumentera för era val i varje enskilt fall (varje enskild kontrollermetod).
 2. Använd AJAX för att, där så är lämpligt, hämta data bara när användaren väljer att visa det.
+
+0 Fixa till title i meddelnaden.
+1 filtrera anv'ndare fr[n recieved messages och plocka med timestap p[ senaste meddelandet.
+2 skapa ny vy f;r denna lista fr[n steg 1.
+3 skriv om ReadMessages s[ att den endast inneh[ller meddelanden fr[n en avs'ndare.
+4 l'gg till funktionalitet f;r delete och isRead.
