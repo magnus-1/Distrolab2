@@ -63,11 +63,12 @@ $( "#createGroup" ).submit(function( event ) {
 
 $( "table" ).on("click","viewGroup", function( event ) {
  
-  //event.preventDefault();
+  event.preventDefault();
 
   var url = "/Group/ViewGroup";
   var a = $( this ).find( "button[name='grpId']" ).val();
-	$("*").load(url,{ groupId: a});
+	//alert("tt");
+	$("*").children().load(url,{ groupId: a});
   //var posting = $.post( url, { groupId: a} );
 	
  
