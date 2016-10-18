@@ -35,8 +35,6 @@ namespace community.Controllers
 
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
-<<<<<<< HEAD
-=======
             System.Console.WriteLine("-----------hi ReadMessagesController:Index : ");
             if (ModelState.IsValid)
             {

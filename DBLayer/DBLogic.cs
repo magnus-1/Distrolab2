@@ -178,6 +178,7 @@ namespace community.DBLayer
                 uniqSender.Add(new UserSender{Sender = sender,Count = count});
             }
             return uniqSender;
+        }
 
         public void GetConversations(ApplicationUser user){
             List<ApplicationUser> uniqueConversations = new List<ApplicationUser>();
