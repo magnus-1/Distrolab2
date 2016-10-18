@@ -18,6 +18,7 @@ namespace community.Models.ViewModels
     public class NewMessageVM {
         public List<DestinationVM> destinations  {get; set;}
         //public MessageVM message {get; set;}
+        public string title { get; set; }
         public string textArea { get; set; }
         public override string ToString() {
             return "NewMessageVM: " +  " : " + textArea;

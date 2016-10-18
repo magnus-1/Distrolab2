@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161017200024_init")]
-    partial class init
+    [Migration("20161018082433_useridtest56")]
+    partial class useridtest56
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,6 +115,8 @@ namespace community.Migrations
                     b.Property<bool>("IsRead");
 
                     b.Property<string>("SenderId");
+
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 

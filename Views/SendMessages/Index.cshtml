@@ -5,7 +5,7 @@
 
 <form id="writeMsg" action="/SendMessages/CreateMessage" method="post" class="form-horizontal">
 	<H5>Title: </H5>
-	<input name="textArea" type="text" class="form-control" />
+	<input name="title" type="text" class="form-control" />
 	<H5>Message: </H5>
 	<input name="textArea" type="text" class="form-control" />
 	<!--<input name="groupTitle" type="text" class="form-control" />-->
@@ -50,12 +50,14 @@ $( "#writeMsg" ).submit( function( event ) {
     var $form = $( this );
     var destId1 = $form.find( "input[name='destId']" ).val();
     var destName1 = $form.find( "input[name='destName']" ).val();
+    var title1 = $form.find( "input[name='title']" ).val();
     var textArea1 = $form.find( "input[name='textArea']" ).val();
     var mysel = $("#destSelect option:selected").text();
     var myselval = $("#destSelect option:selected").val();
 
   var data = {
       destinations : recipients,
+      title : title1,
        textArea : textArea1
   };
 

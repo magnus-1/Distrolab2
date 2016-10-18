@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class init : Migration
+    public partial class useridtest56 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -210,7 +210,8 @@ namespace community.Migrations
                     GroupDBId = table.Column<int>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsRead = table.Column<bool>(nullable: false),
-                    SenderId = table.Column<string>(nullable: true)
+                    SenderId = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

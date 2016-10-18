@@ -72,7 +72,7 @@ namespace community.Business
             string timeStamp = "none sent";
             //MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
             foreach(DestinationVM d in vm.destinations) {
-                MessageBL tmpMsg = new MessageBL{Id = 0, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
+                MessageBL tmpMsg = new MessageBL{Id = 0,Title = vm.title, Content = vm.textArea,IsRead = false,IsDeleted = false,SenderId = 42,Sender = sender};
                 timeStamp = DBFacade.SendMessage(d.destinationId,tmpMsg,sender);
             }
             

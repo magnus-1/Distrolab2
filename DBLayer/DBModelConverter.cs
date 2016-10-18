@@ -11,7 +11,7 @@ namespace community.DBLayer
     {
         public static MessageDB ConvertMessageBL(MessageBL msg)
         {
-            return new MessageDB { Content = msg.Content, Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted };
+            return new MessageDB {Title = msg.Title, Content = msg.Content, Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted };
         }
 
         public static MessageBL ConvertToMessageBL(MessageDB msg)
@@ -19,6 +19,7 @@ namespace community.DBLayer
             return new MessageBL
             {
                 Id = msg.Id,
+                Title = msg.Title,
                 IsRead = msg.IsRead,
                 IsDeleted = msg.IsDeleted,
                 Content = msg.Content,
@@ -31,7 +32,7 @@ namespace community.DBLayer
             {
                 Id = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = ListConverter.Map(groupBL.Messages, m => new MessageDB { Content = m.Content })
+                Messages = ListConverter.Map(groupBL.Messages, m => new MessageDB {Title = m.Title, Content = m.Content })
             };
         }
 

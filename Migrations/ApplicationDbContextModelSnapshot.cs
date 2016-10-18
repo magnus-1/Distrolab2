@@ -115,6 +115,8 @@ namespace community.Migrations
 
                     b.Property<string>("SenderId");
 
+                    b.Property<string>("Title");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
