@@ -32,6 +32,8 @@
 
 </table>
 
+<div id="bb"></div>
+
 @section scripts {
 <script>
 $( "#createGroup" ).submit(function( event ) {
@@ -65,8 +67,9 @@ $( "table" ).on("click","viewGroup", function( event ) {
 
   var url = "/Group/ViewGroup";
   var a = $( this ).find( "button[name='grpId']" ).val();
-
-  var posting = $.post( url, { groupId: a} );
+	$("*").load(url,{ groupId: a});
+  //var posting = $.post( url, { groupId: a} );
+	
  
  
 });
