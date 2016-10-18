@@ -12,6 +12,7 @@ namespace community.Models.DBModels
         public int Id {get;set;}
         public string Title {get; set;}
         public string Content {get; set;}
+
         public bool IsRead {get; set;}
         public bool IsDeleted { get; set; }
 
@@ -19,6 +20,9 @@ namespace community.Models.DBModels
         [ForeignKey("SenderId")]
         public virtual ApplicationUser Sender {get;set;}
 
+        public string ReceiverId {get;set;}
+        [ForeignKey("ReceiverId")]
+        public virtual ApplicationUser Receiver {get;set;}
 
         public override string ToString (){
             return "Id= "+Id+"\n"+
