@@ -12,98 +12,153 @@ namespace community.Business
 {
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class BusinessFacade
-    {   
-        public static string GetEntries() {
+    {
+
+        ////////////////////////////////////////////////////////////////////////
+        //////////////////////////DELETE///////////////////////////////////////
+        public static string GetEntries()
+        {
             var a = new BusinessLogic().GetEntries();
             return a;
         }
 
-        public static string GetEntryByKey(int key){
+        public static string GetEntryByKey(int key)
+        {
             return new BusinessLogic().EntriesWithKey(key);
         }
 
-        internal static HomeVM GetHomeInfo(ApplicationUser user)
+        public static void InsertEntry(EntryDB entry)
         {
-           return new BusinessLogic().GetHomeInfo(user);
-        }
-
-        public static void InsertEntry(EntryDB entry) {
             new BusinessLogic().InsertEntry(entry);
         }
+        ////////////////////////////////////////////////////////////////////////
 
-        public static GroupVM InsertGroup(GroupVM group) {
+
+        /**
+        * forwarding request to get all info for the home page, returns HomeInfoVM
+        */
+        internal static HomeVM GetHomeInfo(ApplicationUser user)
+        {
+            return new BusinessLogic().GetHomeInfo(user);
+        }
+
+        /**
+        * forwarding request to insert group into db, returns groupVM
+        */
+        public static GroupVM InsertGroup(GroupVM group)
+        {
             var groupBL = new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
-        public static List<GroupInfoVM> GetGroups() {
-        
-            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups());
-        
-        }
 
+        /**
+        * forwarding request to get all groups, returns list of GroupVMs 
+        */
+        public static List<GroupInfoVM> GetGroups()
+        {
+
+            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups());
+
+        }
+        /**
+        * forwarding request to get all messages from a user, returns messageVMs
+        */
         public static ReadMessageIndexVM GetUsersMessages(ApplicationUser user)
         {
             List<MessageBL> msg = new BusinessLogic().GetUsersMessages(user);
             return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
         }
-        public static int GetUsersUnreadMessagesCount(ApplicationUser user) {
+        /**
+        * forwarding request to get the number of unread messages
+        */
+        public static int GetUsersUnreadMessagesCount(ApplicationUser user)
+        {
             return new BusinessLogic().GetUsersUnreadMessagesCount(user);
         }
 
+        /**
+        * forwarding request to join a group
+        */
         internal static bool JoinGroup(ApplicationUser user, int groupId)
         {
-            return new BusinessLogic().JoinGroup(user,groupId);
+            return new BusinessLogic().JoinGroup(user, groupId);
         }
 
+        /**
+        * forwarding request to get Inbox FROM specific user to current user
+        */
         internal static ReadMessageIndexVM GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
-            List<MessageBL> msg = new BusinessLogic().GetUsersMessagesWithSender(user,senderId);
+            List<MessageBL> msg = new BusinessLogic().GetUsersMessagesWithSender(user, senderId);
             return BusinessModelConverter.ConvertToReadMessageIndexVM(msg);
         }
 
-
-        public static List<DestinationVM> GetDestinations(ApplicationUser sender) {
+        /**
+        * forwarding request to get available destinations, returning converted list to DestinationVMs
+        */
+        public static List<DestinationVM> GetDestinations(ApplicationUser sender)
+        {
             var destinations = new BusinessLogic().GetDestinations(sender);
             return BusinessModelConverter.ConvertToDestinationVM(destinations);
         }
 
-
+        /**
+        * forwarding request to get group matching id
+        */
         public static GroupVM GetGroupById(int groupId)
         {
             var groupBL = new BusinessLogic().GroupsWithKey(groupId);
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
 
-
-        public static GetMessageBodyVM GetMessageBody(GetMessageBodyVM vm,int reader) {
+        /**
+        * forwarding request to get the message content, some convertings happens here, no real magic
+        */
+        public static GetMessageBodyVM GetMessageBody(GetMessageBodyVM vm, int reader)
+        {
             var msgBody = BusinessModelConverter.ConvertGetMessageBodyVM(vm);
-            MessageBodyBL msg = new BusinessLogic().ReadMessageBody(msgBody,reader);
+            MessageBodyBL msg = new BusinessLogic().ReadMessageBody(msgBody, reader);
             return BusinessModelConverter.ConvertToGetMessageBodyVM(msg);
         }
 
-    
-        public static void PostMessageToGroup(MessageVM msg,int groupId, ApplicationUser sender ) 
+        /**
+        * forwarding request to post message to group, coverting VM message to BL befor sending to BLLogic
+        */
+        public static void PostMessageToGroup(MessageVM msg, int groupId, ApplicationUser sender)
         {
-            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg) ,groupId, sender);
+            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg), groupId, sender);
         }
 
-        public static int GetUserId(ApplicationUser sender) {
+        /**
+        * forwarding request to get Integer userId
+        */
+        public static int GetUserId(ApplicationUser sender)
+        {
             return DBFacade.GetUserId(sender);
         }
 
+        /**
+        * forwarding request to send message, returning message confirnation
+        */
         public static CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
         {
-            CreateMessageResponseVM response = new BusinessLogic().SendNewMessage(vm,sender);
+            CreateMessageResponseVM response = new BusinessLogic().SendNewMessage(vm, sender);
             return response;
         }
-        public static ReadInboxVM GetInboxInfo(ApplicationUser user) 
+        /**
+        * forwarding request to get inboxInfo
+        */
+        public static ReadInboxVM GetInboxInfo(ApplicationUser user)
         {
-           return  new BusinessLogic().GetConversations(user);
+            return new BusinessLogic().GetConversations(user);
         }
 
+        /**
+        * forwarding request to mark message as deleted.
+        */
         internal static bool DeleteMessage(DeleteMessageVM vm, ApplicationUser user)
         {
-            return new BusinessLogic().DeleteMessage(vm.id,user);
+            return new BusinessLogic().DeleteMessage(vm.id, user);
         }
     }
 }
