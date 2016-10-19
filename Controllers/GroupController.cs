@@ -34,9 +34,10 @@ namespace community.Controllers
         {
             return RedirectToAction("EntryStart");
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var groupInfoVMs = BusinessFacade.GetGroups();
+            var user = await GetCurrentUserAsync();
+            var groupInfoVMs = BusinessFacade.GetGroups(user);
 
             var groupVm = new GroupIndexVM { Groups = groupInfoVMs };
 

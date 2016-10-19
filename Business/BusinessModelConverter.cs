@@ -78,7 +78,7 @@ namespace community.Business
         }
         public static List<GroupInfoVM> ConvertListToGroupInfoVM(List<GroupBL> groups)
         {
-            return ListConverter.Map(groups, g => new GroupInfoVM { Title = g.Title, GroupId = g.Id });
+            return ListConverter.Map(groups, g => new GroupInfoVM { Title = g.Title, GroupId = g.Id, JoinedGroup = g.HaveJoined});
         }
 
         internal static ReadInboxVM ConvertInboxListToInboxVM(List<InboxBL> inboxes)

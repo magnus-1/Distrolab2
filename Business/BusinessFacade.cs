@@ -35,9 +35,9 @@ namespace community.Business
             var groupBL = new BusinessLogic().InsertGroup(BusinessModelConverter.ConvertGroupVM(group));
             return BusinessModelConverter.ConvertToGroupVM(groupBL);
         }
-        public static List<GroupInfoVM> GetGroups() {
+        public static List<GroupInfoVM> GetGroups(ApplicationUser user) {
         
-            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups());
+            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups(user));
         
         }
 
