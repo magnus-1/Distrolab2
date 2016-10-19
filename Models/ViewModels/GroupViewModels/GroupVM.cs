@@ -13,4 +13,10 @@ namespace community.Models.ViewModels.GroupViewModels {
             return "GroupDB: Id = "+GroupId+", Title = "+Title+", Messages = "+ Messages;
         }
     }
+
+    public class GroupPostMessage {
+        public int groupId {get; set;}
+        public string title { get; set; }
+        public string content {get; set;} 
+    }
 }

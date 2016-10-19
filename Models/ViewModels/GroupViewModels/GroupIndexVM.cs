@@ -13,4 +13,8 @@ namespace community.Models.ViewModels.GroupViewModels
     {
         public List<GroupInfoVM> Groups { get; set; }
     }
+
+    
+
+
 }

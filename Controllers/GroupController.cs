@@ -81,7 +81,7 @@ namespace community.Controllers
         }
 
         [HttpPostAttribute]
-        public async Task<IActionResult> PostMessageToGroup(string text, int groupId)
+        public async Task<IActionResult> PostMessageToGroup(string title, string text, int groupId)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace community.Controllers
 
                 int Id = groupId;
                 System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
-                BusinessFacade.PostMessageToGroup(new MessageVM { Content = text}, groupId,user);
+                BusinessFacade.PostMessageToGroup(new MessageVM {Title = title, Content = text}, groupId,user);
                 return RedirectToAction("ViewGroup", new { groupId = Id });
             }
                 return RedirectToAction("Index");

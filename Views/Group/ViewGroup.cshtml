@@ -12,6 +12,7 @@
 </form>-->
 
 <form id="postMessage" action="/Group/PostMessageToGroup" method="post" class="form-horizontal">
+<input name="title" type="text" class="form-control" />
 	<input name="text" type="text" class="form-control" />
 	<button name="groupId" type="submit" class="btn btn-default" value="@Model.GroupId">Submit</button>
 </form>
@@ -29,6 +30,7 @@ $( "#postMessage" ).submit(function( event ) {
   // Get some values from elements on the page:
   var $form = $( this ),
     message = $form.find( "input[name='text']" ).val(),
+    title = $form.find( "input[name='title']" ).val(),
     groupId = @Model.GroupId,
     url = $form.attr( "action" );
  
@@ -36,7 +38,7 @@ $( "#postMessage" ).submit(function( event ) {
  console.log("Values for message in script = " + message ); // John
   console.log("Values for message in script = " + groupId ); // 2pm
   // Send the data using post
-  var posting = $.post( url, { text: "message",groupId: "lol" } );
+  var posting = $.post( url, {title: "title" text: "message",groupId: "lol" } );
  
   // Put the results in a div
   
