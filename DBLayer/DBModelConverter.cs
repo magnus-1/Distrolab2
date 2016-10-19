@@ -14,6 +14,7 @@ namespace community.DBLayer
             return new MessageDB {Title = msg.Title, Content = msg.Content, Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted };
         }
 
+        
         public static MessageBL ConvertToMessageBL(MessageDB msg)
         {
             return new MessageBL

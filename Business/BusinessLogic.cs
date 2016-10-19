@@ -51,8 +51,8 @@ namespace community.Business
         }
 
         public List<MessageBL> GetUsersMessages(ApplicationUser user)
-        {
-            return DBFacade.GetUsersMessages(user);
+        {   
+            return DBFacade.GetUsersMessages(user).Where(m => m.IsDeleted == false).ToList();;
         }
 
         public int GetUsersUnreadMessagesCount(ApplicationUser user)

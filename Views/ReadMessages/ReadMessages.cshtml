@@ -6,6 +6,7 @@
     <th>Title</th>
     <th>From</th> 
     <th>Receiced at: </th>
+    <th>IsRead</th>
     <th>Content: </th>
   </tr>
 
@@ -20,6 +21,9 @@
 		</td>
 		<td>
 			@Html.DisplayFor(modelMsg => msg.time)
+		</td>
+        <td>
+			<div id="isRead-@msg.id"> @Html.DisplayFor(modelMsg => msg.isRead)</div>
 		</td>
 		<td>
 
@@ -66,6 +70,7 @@ $( "myrow" ).click( function( event) {
       success: function(msg) {
           btn.hide();
           $("#message-" + a ).html(msg.content).show()
+          $("#isRead-" + a).html('<input checked="checked" class="check-box" disabled="disabled" type="checkbox">').show()
           //alert(msg.name);
       }
   });
