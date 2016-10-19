@@ -8,12 +8,18 @@ namespace community.DBLayer
 {
 
     public class DBModelConverter
-    {
+    {   
+        /**
+        * converts a MessageBL to MessageDB
+        */
         public static MessageDB ConvertMessageBL(MessageBL msg)
         {
             return new MessageDB {Title = msg.Title, Content = msg.Content, Sender = msg.Sender, IsRead = msg.IsRead, IsDeleted = msg.IsDeleted };
         }
 
+        /**
+        * converts a MessageDB to MessageBL
+        */
         public static MessageBL ConvertToMessageBL(MessageDB msg)
         {
             return new MessageBL
@@ -28,6 +34,9 @@ namespace community.DBLayer
                 TimeStamp = msg.TimeStamp
             };
         }
+        /**
+        * converts a GroupBL to GroupDB
+        */
         public static GroupDB ConvertGroupBL(GroupBL groupBL)
         {
             return new GroupDB
@@ -37,7 +46,9 @@ namespace community.DBLayer
                 Messages = ListConverter.Map(groupBL.Messages, m => new MessageDB {Title = m.Title, Content = m.Content })
             };
         }
-
+        /**
+        * converts a GroupDB to GroupBL
+        */
         public static GroupBL ConvertToGroupBL(GroupDB groupDB)
         {
 
@@ -50,6 +61,9 @@ namespace community.DBLayer
             
             };
         }
+        /**
+        * converts a InboxDB to InboxBL
+        */
         public static InboxBL ConvertToInboxBL(InboxDB inboxDB)
         {
             return new InboxBL
@@ -61,16 +75,23 @@ namespace community.DBLayer
         }
 
 
-
+        /**
+        * converts a list if InboxDB to InboxBL
+        */
         public static List<InboxBL> ConvertListToInboxBL(List<InboxDB> inboxes)
         {   
             return ListConverter.Map(inboxes,i => new InboxBL {UserId = i.UserId,  UnreadMessages = i.UnreadMessages, Sender = i.Sender});
         }
+        /**
+        * converts a list if GroupDB to GroupBL
+        */
         public static List<GroupBL> ConvertListToGroupBL(List<GroupDB> groups)
         {
             return ListConverter.Map(groups, g => new GroupBL { Title = g.Title, Id = g.Id });
         }
-
+        /**
+        * converts a list if MessageDB to MessageBL
+        */
         internal static List<MessageBL> ListConvertToMessageBL(List<MessageDB> msg)
         {
             return ListConverter.Map(msg,m => ConvertToMessageBL(m));

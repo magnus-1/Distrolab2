@@ -55,5 +55,5 @@ ToDo
   title can't be null and add timestamp!
  - documentation and cleenUpCode.
  - Annotations where it seems nessessary.
- - indicate that messages is read.
+ * indicate that messages is read.
  

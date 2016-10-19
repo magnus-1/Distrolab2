@@ -315,20 +315,23 @@ namespace community.DBLayer
         {
 
             List<ApplicationUser> uniqueConversations = new List<ApplicationUser>();
+            List<MessageDB> messages = new List<MessageDB>();
             List<InboxDB> InboxDBs = new List<InboxDB>();
 
             var currentUser = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(rm => rm.Sender).ThenInclude(u => u.UserId).Single(u => u.Id == user.Id);
+            messages = currentUser.ReceivedMessages.Where(r => r.IsDeleted == false).ToList();
+
             System.Console.WriteLine("DBLogic:GetConversations:CurrnetUser = " + currentUser.ToString());
             System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count before = " + uniqueConversations.Count());
 
-            foreach (MessageDB m in currentUser.ReceivedMessages)
+            foreach (MessageDB m in messages)
             {
                 if (!uniqueConversations.Exists(p => p.Id == m.Sender.Id))
                 {
                     System.Console.WriteLine("DBLogic:GetConversations:Unique user added: " + m.Sender.UserName);
                     uniqueConversations.Add(m.Sender);
                     //var senderUser = ctx.Users.Include(u => u.UserId).Single(i => i.m.Sender.Id);
-                    int unreadMessagesFromSender = currentUser.ReceivedMessages.Where(
+                    int unreadMessagesFromSender = messages.Where(
                                                             x => x.SenderId == m.Sender.Id &&
                                                             x.IsRead == false &&
                                                             x.IsDeleted == false).ToList().Count();
