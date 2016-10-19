@@ -106,7 +106,6 @@ namespace community.Controllers
         public async Task<IActionResult> DeleteMessage([FromBodyAttribute]DeleteMessageVM vm)
         {
             bool deleted = false;
-            GetMessageBodyVM msgbody = null;
             if (ModelState.IsValid)
             {
                 System.Console.WriteLine("-----------DeleteMessage : " + vm.ToString());

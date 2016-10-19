@@ -83,16 +83,27 @@ $( "#writeMsg" ).submit( function( event ) {
       data: JSON.stringify(data),
       contentType:  "application/json",
       dataType: "json",
-      success: function(msg) {
-          var dests = "";
-          msg.destinations.forEach(function(entry) {
-              dests = dests.concat(entry.destinationName);
-              dests = dests.concat(", ")
-          });
-          //alert("Destinationer: "+ dests);
-          clearFields();
+      success: function(resp) {
+          if(resp.wasSent == true) {
 
-          $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
+          
+            var msg = resp.towho;
+            var dests = "";
+            msg.destinations.forEach(function(entry) {
+                dests = dests.concat(entry.destinationName);
+                dests = dests.concat(", ")
+            });
+          //alert("Destinationer: "+ dests);
+             clearFields();
+             $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
+          }else {
+              //alert("resp = " + resp.toString());
+              clearFields();
+              $("#disphere").html("Failed to send message: " + resp.errorMsg);
+              
+          }
+
+          
           
           //alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
       }

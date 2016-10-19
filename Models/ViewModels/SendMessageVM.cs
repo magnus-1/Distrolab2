@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using community.Models.ViewModels;
 namespace community.Models.ViewModels
 {
@@ -19,11 +20,17 @@ namespace community.Models.ViewModels
         }
     }
     public class NewMessageVM {
+        [Required(ErrorMessage = "Need to enter destinations")]
         public List<DestinationVM> destinations  {get; set;}
+        [Required(ErrorMessage = "Need title")]
+        [StringLength(60, MinimumLength = 2,ErrorMessage = "should be 2 to 60 in lenght")]
         public string title { get; set; }
+        
+        //[StringLength(60, MinimumLength = 2,ErrorMessage = "Text needs to be what")]
+        [Required(ErrorMessage = "Need to enter message")]
         public string textArea { get; set; }
         public override string ToString() {
-            return "NewMessageVM: " +  "Title : " + title+
+            return "NewMessageVM: " + "Dest : count" + destinations.Count ?? " no 0" +  "Title : " + title ?? " null" +
                     "Message : " + textArea;
         }
     }

@@ -15,6 +15,7 @@ using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
 using community.Business;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace community.Controllers
 {
@@ -65,22 +66,52 @@ namespace community.Controllers
         [HttpPostAttribute]
         public async Task<IActionResult> CreateMessage([FromBodyAttribute]NewMessageVM vm) {
             CreateMessageResponseVM response = null;
+            bool success = false;
+            string errorMessage = "";
             if(ModelState.IsValid) {
                 System.Console.WriteLine("-----------CreateMessage : " + vm.ToString());
                 System.Console.WriteLine("Destination size : " + vm.destinations.Count());
-                
                 foreach(DestinationVM dest in vm.destinations){
                     System.Console.WriteLine("destination : " + dest.ToString());
                 }
-                var sender = await GetCurrentUserAsync();
-                response = BusinessFacade.SendNewMessage(vm,sender);
+                if(vm.destinations.Count > 0) {
+                    var sender = await GetCurrentUserAsync();
+                    response = BusinessFacade.SendNewMessage(vm,sender);
+                    success = true;
+                }else {
+                    errorMessage = "no destination";
+                }            
 
             }else {
-                System.Console.WriteLine("-----------CreateMessage model invalid: " );
+                errorMessage = GetErrorMsg(ModelState.AsEnumerable());
+                
+                if(vm == null ||vm.destinations == null ||  vm.destinations.Count <= 0 ) {
+                    errorMessage = errorMessage + " no destination";
+                }
+                System.Console.WriteLine( "CreateMessage error: " + errorMessage );
+                System.Console.WriteLine("-----------CreateMessage model invalid: vm:  " + vm ?? "null");
             }
-            return Json(response ?? new CreateMessageResponseVM{destinations = vm.destinations,title = "defaultTitle", timeStamp = "now i think..."});
+            return Json(new
+            {
+                wasSent = success,
+                errorMsg = errorMessage,
+                towho = response ?? new CreateMessageResponseVM { destinations = vm.destinations, title = "defaultTitle", timeStamp = "now i think..." }
+            });
         }
 
+        private string GetErrorMsg(IEnumerable<KeyValuePair<string, ModelStateEntry>> enumerable)
+        {
+            string errorMsg = "";
+            foreach(var entry in enumerable) {
+                errorMsg = errorMsg + entry.Key + " = ( ";
+                foreach (var err in entry.Value.Errors.AsEnumerable())
+                {
+                    errorMsg = errorMsg + err.ErrorMessage + ", ";
+                }
+                errorMsg = errorMsg + " ),\n ";
+            }
+            return errorMsg;
+        }
 
         public IActionResult SendMessage(SendMessageVM message) {
             
@@ -98,6 +129,7 @@ namespace community.Controllers
         [HttpPostAttribute]
         public async Task<IActionResult> PostMessageToGroup(string text, int groupId)
         {
+            System.Console.WriteLine( "----------- Sendmessage controller :PostMessageToGroup" );
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
