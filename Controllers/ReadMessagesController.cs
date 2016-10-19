@@ -44,6 +44,7 @@ namespace community.Controllers
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
                 ReadInboxVM inbox = BusinessFacade.GetInboxInfo(user);
+                //ReadInboxVM inbox = BusinessFacade.GetUserInboxStatistics(user);
 
                 return View(inbox);
             }

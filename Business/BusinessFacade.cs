@@ -136,6 +136,14 @@ namespace community.Business
         }
 
         /**
+        * forwarding request to get inboxInfo
+        */
+        public static ReadInboxVM GetUserInboxStatistics(ApplicationUser user)
+        {
+            return new BusinessLogic().GetUserInboxStatistics(user);
+        }
+
+        /**
         * forwarding request to mark message as deleted.
         */
         internal static bool DeleteMessage(DeleteMessageVM vm, ApplicationUser user)

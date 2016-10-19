@@ -18,6 +18,8 @@ namespace community.Models.ViewModels.ReadMessageViewModels
         public int senderId {get;set;}
         public string senderName {get;set;}
         public int recevedCount {get;set;}
+        public int totalMessages {get;set;} = 0;
+        public int deletedMessages {get;set;} = 0;
     }
 
     public class ShowMessageFromSenderVM

@@ -96,5 +96,17 @@ namespace community.DBLayer
         {
             return ListConverter.Map(msg,m => ConvertToMessageBL(m));
         }
+
+        internal static List<InboxBL> ConvertInboxStatisticsToInboxBL(List<UserSenderDB> stats)
+        {
+            return ListConverter.Map(stats, i => new InboxBL
+            {
+                UserId = i.UserId,
+                UnreadMessages = i.UnreadMessages,
+                DeletedMessages = i.DeletedMessages,
+                TotalMessages = i.TotalMessages,
+                Sender = i.Sender
+            });
+        }
     }
 }

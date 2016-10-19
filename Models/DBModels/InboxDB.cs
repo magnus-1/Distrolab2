@@ -11,7 +11,6 @@ namespace community.Models.DBModels
         
         public int UnreadMessages {get;set;}
 
-        
         public ApplicationUser Sender {get;set;}
 
         public override string ToString (){
@@ -21,4 +20,16 @@ namespace community.Models.DBModels
             "Sender= "+Sender + "\n"; 
         }
     }
+
+     /**
+        * Includes extra information about deleted messages and totalmessages per sender 
+        */
+        public class UserSenderDB
+        {
+            public int UserId { get; set; }
+            public ApplicationUser Sender { get; set; }
+            public int UnreadMessages { get; set; }
+            public int DeletedMessages { get; set; }
+            public int TotalMessages { get; set; }
+        }
 }

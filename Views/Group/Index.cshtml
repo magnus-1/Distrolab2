@@ -46,20 +46,35 @@ $( "#createGroup" ).submit(function( event ) {
  
 
   var $form = $( this ),
-    groupTitle2 = $form.find( "input[name='groupTitle']" ).val(),
-    url = $form.attr( "action" );
+    groupTitle2 = $form.find( "input[name='groupTitle']" ).val();
+    //url = $form.attr( "action" );
+		var mydata = {title : groupTitle2};
+		var url1 = '@Url.Action("CreateGroup","Group")';
+  //var posting = $.post( url1, mydata );
  
-  var posting = $.post( url, { groupTitle: groupTitle2} );
- 
-  posting.done(function( data ) {
- 
-        var GroupId = data.groupId;
-        var Title = data.title;
+ var posting = $.post({
+      type: "POST",
+      url: url1,
+      data: JSON.stringify(mydata),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(resp) {
+				if(resp.wascreated == true) {
+					var mydata2 = resp.result;
+         var GroupId = mydata2.groupId;
+        var Title = mydata2.title;
   
       
       $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td id="viewGroupPlace-'+GroupId+'"></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
-
+				}
+				else {
+					alert("Failed to create group" + resp.errormsg);
+				}
+          //alert(msg.name);
+      }
   });
+
+
 });
 
 

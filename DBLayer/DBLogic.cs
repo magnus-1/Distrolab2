@@ -122,8 +122,9 @@ namespace community.DBLayer
         */
         internal List<MessageDB> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
+            System.Console.WriteLine( "sender id == " + senderId );
             var send = ctx.Users.Include(u => u.UserId).Single(u => u.UserId.Id == senderId);
-
+            System.Console.WriteLine( "sender == " + send ?? " null" );
             var dude = ctx.Users.Include(u => u.ReceivedMessages)
                     .ThenInclude(m => m.Sender)
                     .Single(u => u.Id == user.Id);
@@ -219,6 +220,7 @@ namespace community.DBLayer
         {
 
             var a = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
+            msg.TimeStamp = DateTime.Now;
             a.Messages.Add(msg);
             ApplicationUser user = ctx.Users.Include(m => m.SentMessages).Single(p => p.Id == msg.Sender.Id);
             user.SentMessages.Add(msg);
@@ -235,42 +237,49 @@ namespace community.DBLayer
 
 
 
+       
         /**
         *
         *
         */
-        public class UserSender
+        public List<UserSenderDB> GetUserInboxStatistics(ApplicationUser user)
         {
-            public ApplicationUser Sender { get; set; }
-            public int Count { get; set; }
-        }
-        /**
-        *
-        *
-        */
-        public List<UserSender> GetInboxForUser(ApplicationUser user)
-        {
-            var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);
+            var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).ThenInclude(u => u.UserId).Single(u => u.Id == user.Id);
             if (dude == null)
             {
-                return new List<UserSender>();
+                return new List<UserSenderDB>();
             }
 
             List<MessageDB> rcvMsg = dude.ReceivedMessages;
-            List<UserSender> uniqSender = new List<UserSender>();
-            int count = 0;
+            List<UserSenderDB> uniqSender = new List<UserSenderDB>();
+            
             while (rcvMsg.Count > 0)
             {
+                int total = 0;
+                int readCount = 0;
+                int rdCount = 0;
+                int deletedCount = 0;
                 ApplicationUser sender = rcvMsg.First().Sender;
                 rcvMsg = ListConverter.Filter(rcvMsg, m =>
                 {
                     if(m.Sender == sender) {
-                        count++;
+                        deletedCount += (m.IsDeleted) ? 1 : 0;
+                        rdCount += (m.IsRead && !m.IsDeleted) ? 1 : 0;
+                        readCount += (m.IsRead) ? 1 : 0;
+                        total++;
                         return false;
                     }
                     return true;
                 });
-                uniqSender.Add(new UserSender{Sender = sender,Count = count});
+                System.Console.WriteLine( "readCount: " + readCount +" deletedCount: " + deletedCount +" read/deldCount: " + rdCount +" total: " + total );
+                uniqSender.Add(new UserSenderDB
+                {
+                    UserId = sender.UserId.Id,
+                    Sender = sender,
+                    UnreadMessages = total - readCount,
+                    DeletedMessages = deletedCount,
+                    TotalMessages = total
+                });
             }
             return uniqSender;
         }

@@ -110,8 +110,16 @@ namespace community.Business
         */
         internal static ReadInboxVM ConvertInboxListToInboxVM(List<InboxBL> inboxes)
         {
-            ReadInboxVM inbox = new ReadInboxVM {};
-            inbox.incomingFrom = ListConverter.Map(inboxes, f => new FromUser{senderId = f.UserId, senderName = f.Sender.UserName, recevedCount = f.UnreadMessages});
+            ReadInboxVM inbox = new ReadInboxVM { };
+            inbox.incomingFrom = ListConverter.Map(inboxes, f =>
+             new FromUser
+             {
+                 senderId = f.UserId,
+                 senderName = f.Sender.UserName,
+                 recevedCount = f.UnreadMessages,
+                 totalMessages = f.TotalMessages,
+                 deletedMessages = f.DeletedMessages
+             });
             return inbox;
         }
     }

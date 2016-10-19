@@ -30,6 +30,7 @@ namespace community.Business
             List<DestinationBL> destinations = new List<DestinationBL>();
             var groups = DBFacade.GetUserGroupDestinations(sender);
             if(groups != null) {
+                ListConverter.DoAction(groups,g => g.Name = "Group: " + g.Name);
                 destinations.AddRange(groups);
             }
             var users = DBFacade.GetUserDestinations(sender);
@@ -184,7 +185,6 @@ namespace community.Business
         * returns ReadInboxVM filled with candy.
         */
         public ReadInboxVM GetConversations(ApplicationUser user) 
-
         {   
             List<InboxBL> inboxes = DBFacade.GetConversations(user);
             ReadInboxVM inbox = BusinessModelConverter.ConvertInboxListToInboxVM(inboxes);
@@ -197,5 +197,27 @@ namespace community.Business
 
            return inbox;
         }
+
+        /**
+        * getting unique conversations from DB and information about total-received/read/deleted-mesages 
+        * returns ReadInboxVM filled with candy.
+        */
+        public ReadInboxVM GetUserInboxStatistics(ApplicationUser user) 
+        {   
+            List<InboxBL> inboxes = DBFacade.GetUserInboxStatistics(user);
+            ReadInboxVM inbox = BusinessModelConverter.ConvertInboxListToInboxVM(inboxes);
+            foreach (var sender in inbox.incomingFrom)
+            {
+                inbox.totalReceivedMessages += sender.totalMessages;
+                inbox.totalReadMessages += sender.totalMessages - sender.recevedCount;
+                inbox.totalDeletedMessages += sender.deletedMessages;
+            }
+            // ListConverter.DoAction(inbox.incomingFrom, g =>
+            //     System.Console.WriteLine("Inbox:unread: " + g.recevedCount + " totalMessages: " + g.totalMessages + " deletedMessages: " + g.deletedMessages)
+            //  );
+            //inbox.totalReadMessages = inbox.totalReceivedMessages - totalUndread ;
+            return inbox;
+        }
+
     }
 }

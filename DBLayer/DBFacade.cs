@@ -152,6 +152,18 @@ namespace community.DBLayer
             List<InboxDB> inboxes = new DBLogic().GetConversations(user);
             return DBModelConverter.ConvertListToInboxBL(inboxes);
         }
+        
+         /**
+        * Calls to get all information about the inbox of a user,
+        * this diffrers from GetConversations in that this includes TotalMessages and deleted count
+        * Returns DBobject list converted to BLobject list
+        */
+        public static List<InboxBL> GetUserInboxStatistics(ApplicationUser user) {
+            List<UserSenderDB> stats = new DBLogic().GetUserInboxStatistics(user);
+            return DBModelConverter.ConvertInboxStatisticsToInboxBL(stats);
+        }
+
+
         /**
         * Calls to get number of logins this month from database. 
         * Returns int Id

@@ -69,16 +69,31 @@ namespace community.Controllers
             return View(group);
         }
 
-        public IActionResult CreateGroup(string groupTitle)
+        //public IActionResult CreateGroup(string groupTitle)
+        [HttpPostAttribute]
+        public IActionResult CreateGroup([FromBodyAttribute]NewGroupVM vm)
         {
-            System.Console.WriteLine("--------- CreateGroup with title = " + groupTitle);
-            List<MessageVM> messages = new List<MessageVM>();
-       
-            var group = new GroupVM { Title = groupTitle, Messages = messages };
-            var result = BusinessFacade.InsertGroup(group);
-            System.Console.WriteLine( "Group to be returned to view: " + result );
-            return Json(result);
-       
+            string errorMsg = "";
+            bool wasCreated = false;
+            GroupVM result = null;
+            if (ModelState.IsValid)
+            {
+                string groupTitle = vm.title;
+                System.Console.WriteLine("--------- CreateGroup with title = " + groupTitle);
+                List<MessageVM> messages = new List<MessageVM>();
+
+                var group = new GroupVM { Title = groupTitle, Messages = messages };
+                result = BusinessFacade.InsertGroup(group);
+                System.Console.WriteLine("Group to be returned to view: " + result);
+                //return Json(result);
+                wasCreated = true;
+            }
+            else
+            {
+                System.Console.WriteLine("Group; CreateGroup: invalid state");
+                
+            }
+            return Json(new {wascreated = wasCreated,result = result,errormsg = errorMsg});
         }
 
         [HttpPostAttribute]
