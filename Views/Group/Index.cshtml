@@ -18,14 +18,18 @@
 			@Html.DisplayFor(groupTitle => grp.Title)
 		</td>
 		<td>
+			@if(grp.JoinedGroup) {
 			<viewGroup>
 				<button id="viewGroup" type="button" name="grpId" value="@grp.GroupId" class="btn btn-default">View Group</button>
 			</viewGroup>
+			}
 		</td>
 		<td>
+			@if(!grp.JoinedGroup) {
 			<joinGroup>
 				<button id="joinGroup" type="button" name="grpId" value="@grp.GroupId" class="btn btn-default">Join Group</button>
 			</joinGroup>
+			}
 		</td>
 	</tr>
 	}

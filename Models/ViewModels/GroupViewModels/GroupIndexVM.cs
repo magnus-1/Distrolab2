@@ -7,10 +7,15 @@ namespace community.Models.ViewModels.GroupViewModels
     {
         public int GroupId { get; set; }
         public string Title { get; set; }
+        public bool JoinedGroup {get;set;}
     }
 
     public class GroupIndexVM
     {
         public List<GroupInfoVM> Groups { get; set; }
     }
+
+    
+
+
 }

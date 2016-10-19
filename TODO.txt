@@ -50,7 +50,9 @@ ToDo
 * 3 skriv om ReadMessages s[ att den endast inneh[ller meddelanden fr[n en avs'ndare.
 * 4 l'gg till funktionalitet f;r delete och isRead.
 
- - accsess controll to groups, only able to view groups that you have joined, title can't be null and add timestamp!
+ - accsess controll to groups, 
+ only able to view groups that you have joined,
+  title can't be null and add timestamp!
  - documentation and cleenUpCode.
  - Annotations where it seems nessessary.
  * indicate that messages is read.

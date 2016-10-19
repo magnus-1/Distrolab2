@@ -35,12 +35,13 @@ namespace community.Business
         /**
         * forwarding request to get all groups, returns list of GroupVMs 
         */
-        public static List<GroupInfoVM> GetGroups()
-        {
-
-            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups());
-
+        public static List<GroupInfoVM> GetGroups(ApplicationUser user) {
+        
+            return BusinessModelConverter.ConvertListToGroupInfoVM(new BusinessLogic().GetGroups(user));
+        
         }
+
+
         /**
         * forwarding request to get all messages from a user, returns messageVMs
         */

@@ -83,13 +83,20 @@ namespace community.Business
             return ListConverter.Filter(msg, m => m.IsDeleted == false);
         }
 
-        /**
+               /**
         * forwarding request get all groups
         * returns list of GroupBL 
         */
-        public List<GroupBL> GetGroups(){
-            return DBFacade.GetGroups();
-        
+        public List<GroupBL> GetGroups(ApplicationUser user){
+            var allGroups =  DBFacade.GetGroups();
+            var joinedGroups = DBFacade.GetUserGroupDestinations(user);
+            foreach(DestinationBL dest in joinedGroups) {
+                GroupBL group = allGroups.Single(g => g.Id == dest.Id);
+                if(group != null) {
+                    group.HaveJoined = true;
+                }
+            }
+            return allGroups;
         }
 
         
