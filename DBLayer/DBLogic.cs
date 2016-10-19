@@ -25,6 +25,9 @@ namespace community.DBLayer
             return a.NewsItem;
         }
 
+        /**
+        * returns integer of the number of logins this actual month
+        */
         public int GetNumberOfLoginsThisMonth(ApplicationUser user){
             DateTime now = DateTime.Now;
             int numberOfLoginsThisMonth = 0;
@@ -39,6 +42,10 @@ namespace community.DBLayer
             System.Console.WriteLine( "NuberOfLoginsThisMonth: "+ numberOfLoginsThisMonth );
             return numberOfLoginsThisMonth;
         }
+        
+        /**
+        * Returns a list of all the login timeStamps for a user. 
+        */
         public List<DateTime> GetLoginTimeStamps(ApplicationUser user){
             List<DateTime> TimeStamps = new List<DateTime>(); 
             List<LoginDB> logins = new List<LoginDB>();
@@ -48,7 +55,9 @@ namespace community.DBLayer
             }
             return TimeStamps;
         }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                    REMOVE ???????
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
         public string EntriesWithKey(int key)
         {
             var entry = ctx.Entries.Where(c => c.Id == key).ToList();
@@ -59,8 +68,17 @@ namespace community.DBLayer
         {
             ctx.Entries.Add(entry);//.Entries.Add(entry);
             ctx.SaveChanges();
-        }
+        
+        
+    }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /**
+        * Inserts a group into database that other users vill be able to join 
+        */
         public GroupDB InsertGroup(GroupDB group)
         {
             System.Console.WriteLine("Group before: " + group);
@@ -70,7 +88,9 @@ namespace community.DBLayer
 
             return group;
         }
-
+        /**
+        * returns list of all the groupdestinations a user can send messages to(aka groups that user has joined) 
+        */
         public List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender)
         {
             //ctx.Users.
@@ -78,7 +98,9 @@ namespace community.DBLayer
             List<GroupDB> group = user.Groups;
             return ListUtils.ListConverter.Map(group, m => new DestinationBL { Id = m.Id, Name = m.Title, IsGroup = true });
         }
-
+        /**
+        * Insert group into users list of groups
+        */
         internal bool JoinGroup(ApplicationUser user, int groupId)
         {
             var dude = ctx.Users.Include(m => m.Groups).Single(u => u.Id == user.Id);
@@ -90,7 +112,9 @@ namespace community.DBLayer
             ctx.SaveChanges();
             return true;
         }
-
+        /**
+        * Returns a list of all recipiants(Users) as valid destinations that messages can be sent to. 
+        */
         public List<DestinationBL> GetUserDestinations(ApplicationUser sender)
         {
             //ctx.Users.
@@ -99,7 +123,9 @@ namespace community.DBLayer
 
             return ListConverter.Map(user, m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
-
+        /**
+        * Marks a message as deleted
+        */
         internal bool DeleteMessage(int messageId, ApplicationUser user)
         {
             var dude = ctx.Users.Include(u => u.ReceivedMessages).Single(u => u.Id == user.Id);
@@ -115,7 +141,9 @@ namespace community.DBLayer
             ctx.SaveChanges();
             return true;
         }
-
+        /**
+        * Returns list of all messages from a specific sender
+        */
         internal List<MessageDB> GetUsersMessagesWithSender(ApplicationUser user, int senderId)
         {
             var send = ctx.Users.Include(u => u.UserId).Single(u => u.UserId.Id == senderId);
@@ -135,7 +163,9 @@ namespace community.DBLayer
 
             return result;
         }
-
+        /**
+        * Returns a list of all received messages from a user
+        */
         public List<MessageDB> GetUsersMessages(ApplicationUser user)
         {
             var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);
@@ -150,7 +180,10 @@ namespace community.DBLayer
 
             return dude.ReceivedMessages;
         }
-
+        /**
+        * Inserts a message to the receivers receivedMessage list. 
+        * Returns the message that was sent. 
+        */
         internal MessageDB SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
         {
             System.Console.WriteLine("Inserting message to db: " + messageDB.ToString());
@@ -171,24 +204,34 @@ namespace community.DBLayer
             System.Console.WriteLine("After inserting message to db: " + messageDB.ToString());
             return messageDB;
         }
-
+        /**
+        * Returns the Integer version of a userId, this is not the Id generated by IIdentity 2.0
+        */
         public int GetUserId(ApplicationUser sender)
         {
             var user = ctx.Users.Include(u => u.UserId).Single(u => u.Id == sender.Id);
             return user.UserId.Id;
         }
-
+        /**
+        * Returns the group including the messages for this group that matches the groupID, 
+        */
         public GroupDB GetGroup(int groupId)
         {
             var group = ctx.Groups.Include(m => m.Messages).ThenInclude(messages => messages.Sender).Single(p => p.Id == groupId);
             return group;
         }
+        /**
+        * Returns a list of all the groups in the community, not including it's messages.
+        */
         public List<GroupDB> GetGroups()
         {
             var groups = ctx.Groups.ToList();
             return groups;
         }
-
+        /**
+        * Finds the message corresponding to the messageId.
+        * Marks messages as read and returns the message.
+        */
         public MessageDB ReadMessage(int sender, int messageId)
         {
             var userId = sender;
@@ -201,7 +244,9 @@ namespace community.DBLayer
             System.Console.WriteLine("ReadMessage: msgdb:" + msg.ToString());
             return msg;
         }
-
+        /**
+        * Adds a message to the groups messages. Specified by GroupId
+        */
         public MessageDB PostMessageToGroup(MessageDB msg, int groupId)
         {
             System.Console.WriteLine("Message to be handled in db layer = " + msg.ToString());
@@ -222,13 +267,19 @@ namespace community.DBLayer
 
 
 
-
+        /**
+        *
+        *
+        */
         public class UserSender
         {
             public ApplicationUser Sender { get; set; }
             public int Count { get; set; }
         }
-
+        /**
+        *
+        *
+        */
         public List<UserSender> GetInboxForUser(ApplicationUser user)
         {
             var dude = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(m => m.Sender).Single(u => u.Id == user.Id);
@@ -256,7 +307,10 @@ namespace community.DBLayer
             return uniqSender;
         }
 
-
+        /**
+        * Goes thru all of the received messages to find heach unique sender of messages.
+        * Returns List of all unique conversations between users.
+        */
         public List<InboxDB> GetConversations(ApplicationUser user)
         {
 
