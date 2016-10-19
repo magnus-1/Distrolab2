@@ -17,7 +17,7 @@
 		<td>
 			@Html.DisplayFor(groupTitle => grp.Title)
 		</td>
-		<td>
+		<td id="viewGroupPlace-@grp.GroupId">
 			@if(grp.JoinedGroup) {
 			<viewGroup>
 				<button id="viewGroup" type="button" name="grpId" value="@grp.GroupId" class="btn btn-default">View Group</button>
@@ -57,7 +57,7 @@ $( "#createGroup" ).submit(function( event ) {
         var Title = data.title;
   
       
-      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td><viewGroup><button id="viewGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">View Group</button></viewGroup></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
+      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td id="viewGroupPlace-'+GroupId+'"></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
 
   });
 });
@@ -69,11 +69,12 @@ $( "table" ).on("click","viewGroup", function( event ) {
  
   event.preventDefault();
 
-  var url = "/Group/ViewGroup";
   var a = $( this ).find( "button[name='grpId']" ).val();
+  var url = "/Group/ViewGroup?groupId=" + a;
 	//alert("tt");
-	$("*").children().load(url,{ groupId: a});
+	//$("*").children().load(url,{ groupId: a});
   //var posting = $.post( url, { groupId: a} );
+	window.location.href = url;
 	
  
  
@@ -86,7 +87,10 @@ $( "table" ).on("click","joinGroup", function( event ) {
 
   var url ="/Group/JoinGroup";
   var a = $( this ).find( "button[name='grpId']" ).val();
+	var vgPlace = $( this ).find( "td[name='viewGroupPlace']" );
   var posting = $.post( url, { groupId: a} );
+	 $( this ).hide();
+	 $("#viewGroupPlace-" + a).append('<viewGroup><button id="viewGroup" type="button" name="grpId" value='+a+' class="btn btn-default">View Group</button></viewGroup>');
 
 });
 </script> }
