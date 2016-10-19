@@ -32,7 +32,9 @@ namespace community.Controllers
         }
 
 
-
+        /**
+        * Index page for the Read messages, getting awesome data to display
+        */
         public async Task<IActionResult> Index(ReadMessageIndexVM readMessageIndexVM)
         {
 
@@ -52,24 +54,10 @@ namespace community.Controllers
             }
 
         }
-
-        [HttpPostAttribute]
-        public async Task<IActionResult> ReadFromSender(ReadInboxVM senderId)
-        {
-            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId.picked);
-            if (ModelState.IsValid)
-            {
-                var user = await GetCurrentUserAsync();
-                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessagesWithSender(user, senderId.picked);
-                return View("ReadMessages", rmIndexVm);
-            }
-            else
-            {
-                System.Console.WriteLine("invalid model ");
-                return View();
-            }
-        }
-
+      
+        /**
+        * Handles call to display all messages 
+        */
         [HttpPostAttribute]
         public async Task<IActionResult> ReadAllMessages()
         {
@@ -91,16 +79,18 @@ namespace community.Controllers
                 return View();
             }
         }
-
-        public async Task<IActionResult> ReadMessages(ReadMessageIndexVM readMessageIndexVM)
+        /**
+        * Handles call to display all messages from specific user
+        */
+        [HttpPostAttribute]
+        public async Task<IActionResult> ReadFromSender(ReadInboxVM senderId)
         {
-            System.Console.WriteLine("-----------hi ReadMessages : ");
+            System.Console.WriteLine("-----------hi ReadFromSender : senderId = " + senderId.picked);
             if (ModelState.IsValid)
             {
-                System.Console.WriteLine("ReadMessages : readMessageIndexVM: count" + readMessageIndexVM.messages.Count);
-                // var user = await GetCurrentUserAsync();
-                // ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                return View(readMessageIndexVM);
+                var user = await GetCurrentUserAsync();
+                ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessagesWithSender(user, senderId.picked);
+                return View("ReadMessages", rmIndexVm);
             }
             else
             {
@@ -108,7 +98,10 @@ namespace community.Controllers
                 return View();
             }
         }
-
+        
+        /**
+        * handles call for deleting a message
+        */
         [HttpPostAttribute]
         public async Task<IActionResult> DeleteMessage([FromBodyAttribute]DeleteMessageVM vm)
         {
@@ -128,8 +121,9 @@ namespace community.Controllers
             return Json(new { wasDeleted = deleted });
         }
 
-
-
+        /**
+        * call to get the content of a message
+        */
         [HttpPostAttribute]
         public async Task<IActionResult> GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm)
         {
@@ -152,7 +146,9 @@ namespace community.Controllers
             }
             return Json(msgbody ?? new GetMessageBodyVM { id = 4, content = "this is from the controller" });
         }
-
+        /**
+        * get current user from HttpContext
+        */
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             //return _userManager.GetUsersForClaimAsync(HttpContext.User);

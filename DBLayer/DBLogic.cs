@@ -113,6 +113,7 @@ namespace community.DBLayer
             }
             
             msg.IsDeleted = true;
+            msg.IsRead = true;
             ctx.SaveChanges();
             return true;
         }
