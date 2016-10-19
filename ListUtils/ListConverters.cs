@@ -34,7 +34,5 @@ namespace community.ListUtils {
             }
             return result;
         }
-
-
     }
 }
