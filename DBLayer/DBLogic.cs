@@ -18,12 +18,7 @@ namespace community.DBLayer
     {
 
         private ApplicationDbContext ctx = ApplicationDbContext.Create();
-        public string GetEntries()
-        {
-            EntryDB a = ctx.Entries.First();
-            System.Console.WriteLine("-------  db sak" + a.ToString());
-            return a.NewsItem;
-        }
+ 
 
         /**
         * returns integer of the number of logins this actual month
@@ -39,7 +34,7 @@ namespace community.DBLayer
                     numberOfLoginsThisMonth++;    
                 }
             }
-            System.Console.WriteLine( "NuberOfLoginsThisMonth: "+ numberOfLoginsThisMonth );
+
             return numberOfLoginsThisMonth;
         }
         
@@ -55,36 +50,16 @@ namespace community.DBLayer
             }
             return TimeStamps;
         }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //                    REMOVE ???????
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public string EntriesWithKey(int key)
-        {
-            var entry = ctx.Entries.Where(c => c.Id == key).ToList();
-            return entry.First().NewsItem;//First().NewsItem;
-        }
-
-        public void InsertEntry(EntryDB entry)
-        {
-            ctx.Entries.Add(entry);//.Entries.Add(entry);
-            ctx.SaveChanges();
-        
-        
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /**
         * Inserts a group into database that other users vill be able to join 
         */
         public GroupDB InsertGroup(GroupDB group)
         {
-            System.Console.WriteLine("Group before: " + group);
+
             ctx.Groups.Add(group);
             ctx.SaveChanges();
-            System.Console.WriteLine("Group after: " + group);
+
 
             return group;
         }
@@ -119,7 +94,7 @@ namespace community.DBLayer
         {
             //ctx.Users.
             var user = ctx.Users.Include(u => u.UserId).ToList();
-            ListConverter.DoAction(user, u => System.Console.WriteLine("user id: " + u.UserId.Id));
+            //ListConverter.DoAction(user, u => System.Console.WriteLine("user id: " + u.UserId.Id));
 
             return ListConverter.Map(user, m => new DestinationBL { Id = m.UserId.Id, Name = m.UserName, IsGroup = false });
         }
@@ -156,10 +131,6 @@ namespace community.DBLayer
                 return new List<MessageDB>();
             }
             List<MessageDB> result = ListConverter.Filter(dude.ReceivedMessages,m => m.Sender == send);
-            foreach (MessageDB m in result)
-            {
-                System.Console.WriteLine("GetUsersMessagesWithSender: msg from db: " + m.ToString());
-            }
 
             return result;
         }
@@ -173,11 +144,7 @@ namespace community.DBLayer
             {
                 return new List<MessageDB>();
             }
-            foreach (MessageDB m in dude.ReceivedMessages)
-            {
-                System.Console.WriteLine("Fetching msg from db: " + m.ToString());
-            }
-
+           
             return dude.ReceivedMessages;
         }
         /**
@@ -186,7 +153,7 @@ namespace community.DBLayer
         */
         internal MessageDB SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)
         {
-            System.Console.WriteLine("Inserting message to db: " + messageDB.ToString());
+
 
             var targetUser = ctx.Users.Include(u => u.ReceivedMessages).Include(u => u.UserId).Single(u => u.UserId.Id == destinationId);
             var senderUser = ctx.Users.Include(u => u.SentMessages).Single(u => u.Id == sender.Id);
@@ -201,7 +168,7 @@ namespace community.DBLayer
             senderUser.SentMessages.Add(messageDB);
             targetUser.ReceivedMessages.Add(messageDB);
             ctx.SaveChanges();
-            System.Console.WriteLine("After inserting message to db: " + messageDB.ToString());
+
             return messageDB;
         }
         /**
@@ -241,7 +208,7 @@ namespace community.DBLayer
             msg.IsRead = true;
             ctx.SaveChanges();
 
-            System.Console.WriteLine("ReadMessage: msgdb:" + msg.ToString());
+
             return msg;
         }
         /**
@@ -249,7 +216,7 @@ namespace community.DBLayer
         */
         public MessageDB PostMessageToGroup(MessageDB msg, int groupId)
         {
-            System.Console.WriteLine("Message to be handled in db layer = " + msg.ToString());
+
             var a = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
             a.Messages.Add(msg);
             ApplicationUser user = ctx.Users.Include(m => m.SentMessages).Single(p => p.Id == msg.Sender.Id);
@@ -321,14 +288,12 @@ namespace community.DBLayer
             var currentUser = ctx.Users.Include(u => u.ReceivedMessages).ThenInclude(rm => rm.Sender).ThenInclude(u => u.UserId).Single(u => u.Id == user.Id);
             messages = currentUser.ReceivedMessages.Where(r => r.IsDeleted == false).ToList();
 
-            System.Console.WriteLine("DBLogic:GetConversations:CurrnetUser = " + currentUser.ToString());
-            System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count before = " + uniqueConversations.Count());
-
+          
             foreach (MessageDB m in messages)
             {
                 if (!uniqueConversations.Exists(p => p.Id == m.Sender.Id))
                 {
-                    System.Console.WriteLine("DBLogic:GetConversations:Unique user added: " + m.Sender.UserName);
+
                     uniqueConversations.Add(m.Sender);
                     //var senderUser = ctx.Users.Include(u => u.UserId).Single(i => i.m.Sender.Id);
                     int unreadMessagesFromSender = messages.Where(
@@ -342,12 +307,12 @@ namespace community.DBLayer
                         UnreadMessages = unreadMessagesFromSender,
                         Sender = m.Sender
                     };
-                    System.Console.WriteLine("DBLogic:GetConversations:Inbox created: " + Inbox);
+
                     InboxDBs.Add(Inbox);
                 }
             }
 
-            System.Console.WriteLine("DBLogic:GetConversations:uniqueConversations count after = " + uniqueConversations.Count() + ", inboxes created = " + InboxDBs.Count());
+
             return InboxDBs;
 
         }

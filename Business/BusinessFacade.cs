@@ -14,25 +14,6 @@ namespace community.Business
     public class BusinessFacade
     {
 
-        ////////////////////////////////////////////////////////////////////////
-        //////////////////////////DELETE///////////////////////////////////////
-        public static string GetEntries()
-        {
-            var a = new BusinessLogic().GetEntries();
-            return a;
-        }
-
-        public static string GetEntryByKey(int key)
-        {
-            return new BusinessLogic().EntriesWithKey(key);
-        }
-
-        public static void InsertEntry(EntryDB entry)
-        {
-            new BusinessLogic().InsertEntry(entry);
-        }
-        ////////////////////////////////////////////////////////////////////////
-
 
         /**
         * forwarding request to get all info for the home page, returns HomeInfoVM

@@ -81,41 +81,6 @@ namespace community.Controllers
             return Json(response ?? new CreateMessageResponseVM{destinations = vm.destinations,title = "defaultTitle", timeStamp = "now i think..."});
         }
 
-        public IActionResult DummyPage(DummyVM dummy) {
-            System.Console.WriteLine("----------- Hello from start : DummyPage");
-            DummyVM tmp = new DummyVM{Name = "namndd"};
-            System.Console.WriteLine("----------- DummyPage:tmp dummy : DummyPage" + tmp.ToString());
-            return View( dummy ?? tmp);
-        }
-        [HttpPostAttribute]
-        public IActionResult DummyPageData([FromBodyAttribute]DummyVM dummy) {
-            //DummyVM dummy = new DummyVM{Name = Name, MyData = MyData, SomeDate = SomeDate};
-            System.Console.WriteLine("----------- Hello from model : DummyPage");
-            System.Console.WriteLine("----------- DummyPage: " + dummy.ToString());
-            //System.Console.WriteLine("----------- DummyVM: " + Name + " : " + MyData + " : "+ SomeDate );
-            if(ModelState.IsValid) {
-                System.Console.WriteLine("----------- Valid model : " + dummy.ToString());
-                //return Json("Success");
-            }else {
-                System.Console.WriteLine("----------- Invalid model : ");
-            }
-            return Json(dummy);//RedirectToAction("DummyPage",dummy);
-        }
-
-        // [HttpPostAttribute]
-        // public IActionResult DummyPage([FromBodyAttribute]DummyVM dummy) {
-        //     System.Console.WriteLine("----------- Hello from model : DummyPage");
-        //     if(ModelState.IsValid) {
-        //         System.Console.WriteLine("----------- Valid model : " + dummy.ToString());
-        //         //return Json("Success");
-        //     }else {
-        //         System.Console.WriteLine("----------- Invalid model : ");
-        //     }
-        //     return View("DummyPage",dummy);
-        // }
-
-
-
 
         public IActionResult SendMessage(SendMessageVM message) {
             
@@ -129,21 +94,6 @@ namespace community.Controllers
             return View(group);
         }
 
-        public IActionResult CreateGroup(string groupTitle)
-        {
-            System.Console.WriteLine("--------- CreateGroup with title = " + groupTitle);
-            List<MessageVM> messages = new List<MessageVM>();
-            // for (int i = 0; i < 20; i++)
-            // {
-            //     var data = new MessageVM { Title = "Title" + i, Content = "this is my text" + i, SenderName = "dude" + i };
-            //     messages.Add(data);
-
-            // }
-            var group = new GroupVM { Title = groupTitle, Messages = messages };
-            BusinessFacade.InsertGroup(group);
-
-            return RedirectToAction("Index");
-        }
 
         [HttpPostAttribute]
         public async Task<IActionResult> PostMessageToGroup(string text, int groupId)

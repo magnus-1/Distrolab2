@@ -15,24 +15,6 @@ namespace community.Business
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class BusinessLogic
     {   
-
-        ////////////////////////////////////////////////////////////////////////
-        //////////////////////////DELETE///////////////////////////////////////
-        //private ApplicationDbContext ctx = ApplicationDbContext.Create();
-        public string GetEntries() {
-            return DBFacade.GetEntries();
-        }
-
-        public string EntriesWithKey(int key)
-        {
-            return DBFacade.EntriesWithKey(key);
-        }
-        public void InsertEntry(EntryDB entry) {
-            DBFacade.InsertEntry(entry);
-        
-        }
-        //////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////
         /**
         * forwarding request to insert group into db, returns groupBL
         */
