@@ -58,6 +58,11 @@ namespace community.Business
             return new BusinessLogic().GetUsersUnreadMessagesCount(user);
         }
 
+        internal static bool IsGroupMember(ApplicationUser user, int groupId)
+        {
+            return new BusinessLogic().IsGroupMember(user, groupId);
+        }
+
         /**
         * forwarding request to join a group
         */

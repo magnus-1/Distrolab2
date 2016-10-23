@@ -64,11 +64,17 @@ namespace community.Business
         {
             var msg = DBFacade.GetUsersMessages(user);
             
-            return ListConverter.Reduce(msg,0,(count,m) => (m.IsRead == false) ? count + 1 : count );
+            return ListConverter.Reduce(msg,0,(count,m) => (m.IsRead == false && !m.IsDeleted) ? count + 1 : count );
         }
+
+        internal bool IsGroupMember(ApplicationUser user, int groupId)
+        {
+            return DBFacade.IsGroupMember(user, groupId);
+        }
+
         /**
-        * forwarding request to join group
-        */
+* forwarding request to join group
+*/
         internal bool JoinGroup(ApplicationUser user, int groupId)
         {
             return DBFacade.JoinGroup(user,groupId);

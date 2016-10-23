@@ -51,7 +51,7 @@ ToDo
 * 4 l'gg till funktionalitet f;r delete och isRead.
 
  * accsess controll to groups, 
- / only able to view groups that you have joined,
+ * only able to view groups that you have joined,
  / title can't be null
    and add timestamp!
  / documentation and cleenUpCode.

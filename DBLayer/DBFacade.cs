@@ -69,6 +69,11 @@ namespace community.DBLayer
             return new DBLogic().GetUserDestinations(sender);
         }
 
+        internal static bool IsGroupMember(ApplicationUser user, int groupId)
+        {
+            return new DBLogic().IsGroupMember(user,groupId);
+        }
+
         /**
        * Calls to get all messages for specific user from database. 
        * Returns DBobject List converted to BLobject List

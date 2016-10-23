@@ -181,6 +181,19 @@ namespace community.DBLayer
             var user = ctx.Users.Include(u => u.UserId).Single(u => u.Id == sender.Id);
             return user.UserId.Id;
         }
+
+
+        public bool IsGroupMember(ApplicationUser sender,int groupId) {
+            var usr = ctx.Users.Include(u => u.Groups).Single(u => u.Id == sender.Id );
+            if(usr == null) {
+                return false;
+            }
+            var group = usr.Groups.Where(m => m.Id == groupId).ToList();
+            if(group == null || group.Count <= 0) {
+                return false;
+            }
+            return true;
+        }
         /**
         * Returns the group including the messages for this group that matches the groupID, 
         */
