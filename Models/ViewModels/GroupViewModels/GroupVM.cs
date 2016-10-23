@@ -17,11 +17,16 @@ namespace community.Models.ViewModels.GroupViewModels {
     }
 
     public class GroupPostMessage {
-        public int groupId {get; set;}
+        [Required(ErrorMessage = "group id is wrong")]
+        public int groupId { get; set; }
+        [Required(ErrorMessage = "Need title")]
+        [StringLength(60, MinimumLength = 2, ErrorMessage = "should be 2 to 60 in lenght")]
         public string title { get; set; }
-        public string content {get; set;} 
-        public override string ToString(){
-            return "GroupPostMessage: Group: Id = "+groupId+", Title = "+title+", Messages = "+ content;
+        [Required(ErrorMessage = "Need to enter message")]
+        public string content { get; set; }
+        public override string ToString()
+        {
+            return "GroupPostMessage: Group: Id = " + groupId + ", Title = " + title + ", Messages = " + content;
         }
     }
 }

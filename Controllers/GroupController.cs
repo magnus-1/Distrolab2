@@ -15,6 +15,7 @@ using community.Models.ViewModels;
 using community.Models.ViewModels.GroupViewModels;
 using community.Business;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace community.Controllers
 {
@@ -44,17 +45,19 @@ namespace community.Controllers
             return View(groupVm);
         }
 
-        // public IActionResult GroupPage()
-        // {
-        //     var group = BusinessFacade.GroupsWithKey(1);
-        //     return View(group);
-        // }
         public async Task<IActionResult>  JoinGroup(int groupId)
         {
-            System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
-            //var group = BusinessFacade.GroupsWithKey(1);
-            var user = await GetCurrentUserAsync();
-            bool joined = BusinessFacade.JoinGroup(user , groupId);
+            if (ModelState.IsValid)
+            {
+                System.Console.WriteLine("--------- JoinGroup with Id = " + groupId);
+        
+                var user = await GetCurrentUserAsync();
+                bool joined = BusinessFacade.JoinGroup(user, groupId);
+            }
+            else
+            {
+                System.Console.WriteLine("JoinGroup: not valid");
+            }
             return RedirectToAction("Index");
         }
 
@@ -109,8 +112,10 @@ namespace community.Controllers
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
-                var currentUserId = user.Id;
-                System.Console.WriteLine("----------- Current User Id  = " + currentUserId);
+                System.Console.WriteLine("----------- PostMessageToGroup ");
+                if(!BusinessFacade.IsGroupMember(user,vm.groupId) || vm.title.Equals("tt4")) {
+                    return Json(new {wasSent = false,errormessage = "Not a member",url = "Index"});
+                }
                 //System.Console.WriteLine( "PostMessageToGroup: Title: " + title + " text: " + text + " groupId: " + groupId );
                 System.Console.WriteLine( "PostMessageToGroup:" + vm.ToString() );
 
@@ -119,15 +124,31 @@ namespace community.Controllers
                 var messageSent = BusinessFacade.PostMessageToGroup(new MessageVM {Title = vm.title, Content = vm.content}, vm.groupId ,user);
                 return Json(new {wasSent = true, message = messageSent,url = ""});
             }else {
+                var errorMessage = GetErrorMsg(ModelState.AsEnumerable());
                 System.Console.WriteLine( "PostMessageToGroup: invalid state" );
+                return Json(new {wasSent = false, errormessage = errorMessage});
             }
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
 
+        }
+
+        private string GetErrorMsg(IEnumerable<KeyValuePair<string, ModelStateEntry>> enumerable)
+        {
+            string errorMsg = "";
+            foreach(var entry in enumerable) {
+                errorMsg = errorMsg + entry.Key + " = ( ";
+                foreach (var err in entry.Value.Errors.AsEnumerable())
+                {
+                    errorMsg = errorMsg + err.ErrorMessage + ", ";
+                }
+                errorMsg = errorMsg + " ),\n ";
+            }
+            return errorMsg;
         }
     }
 }

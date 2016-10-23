@@ -81,6 +81,7 @@ namespace community.DBLayer
             var dude = ctx.Users.Include(m => m.Groups).Single(u => u.Id == user.Id);
             var group = ctx.Groups.Single(g => g.Id == groupId);
             if(group == null || dude == null) {
+                System.Console.WriteLine( "DBLogic:JoinGroup: failed to join group " );
                 return false;
             }
             dude.Groups.Add(group);

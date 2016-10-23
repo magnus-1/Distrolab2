@@ -41,7 +41,7 @@ namespace community.Data
                 .WithMany(b => b.ReceivedMessages);
             builder.Entity<LoginDB>()  
                 .HasOne(r => r.User);
-                
+            //builder.Entity<ApplicationUser>().HasMany(u => u.Groups).WithOne();
             
             
             // builder.Entity<ApplicationUser>()

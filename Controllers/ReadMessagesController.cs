@@ -16,6 +16,7 @@ using community.Business;
 using System.Security.Claims;
 using community.Models.ViewModels.ReadMessageViewModels;
 using community.ListUtils;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace community.Controllers
 {
@@ -154,6 +155,20 @@ namespace community.Controllers
             //return _userManager.GetUsersForClaimAsync(HttpContext.User);
             return _userManager.GetUserAsync(HttpContext.User);
 
+        }
+
+        private string GetErrorMsg(IEnumerable<KeyValuePair<string, ModelStateEntry>> enumerable)
+        {
+            string errorMsg = "";
+            foreach(var entry in enumerable) {
+                errorMsg = errorMsg + entry.Key + " = ( ";
+                foreach (var err in entry.Value.Errors.AsEnumerable())
+                {
+                    errorMsg = errorMsg + err.ErrorMessage + ", ";
+                }
+                errorMsg = errorMsg + " ),\n ";
+            }
+            return errorMsg;
         }
     }
 }

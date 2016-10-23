@@ -22,7 +22,7 @@
 
 
 
-  <table class="table">
+  <table id="messageTable" class="table">
 <tr>
     <th>Title</th>
     <th>From</th> 
@@ -81,11 +81,15 @@ console.log("Values for title in script = " + title ); // John
       dataType: "json",
       success: function(msg) {
         if(msg.wasSent) {
-          alert("msg wasSent");
+          var message = msg.message;
 
+           $( "#messageTable" ).append('<tr><td>'+message.title+'</td><td>'+message.senderName+'</td> <td>'+message.time+'</td> <td>'+message.content+'</td>  </tr>');
+          
         }else {
-
-          alert("failed msg wasSent");
+          alert("failed msg:" + msg.errormessage);
+          if(msg.url) {
+            window.location.href = msg.url;
+          }
         }
       }
   });
