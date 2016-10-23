@@ -19,41 +19,14 @@
 
 
 
-<script>
-// Attach a submit handler to the form
 
-$( "#postMessage" ).submit(function( event ) {
- 
-  // Stop form from submitting normally
-  event.preventDefault();
- 
-  // Get some values from elements on the page:
-  var $form = $( this ),
-    message = $form.find( "input[name='text']" ).val(),
-    title = $form.find( "input[name='title']" ).val(),
-    groupId = @Model.GroupId,
-    url = $form.attr( "action" );
- 
-
- console.log("Values for message in script = " + message ); // John
-  console.log("Values for message in script = " + groupId ); // 2pm
-  // Send the data using post
-  var posting = $.post( url, {title: "title" text: "message",groupId: "lol" } );
- 
-  // Put the results in a div
-  
-  //posting.done(function( data ) {
-  //var content = $( data ).find( "#content" );
-  //$( "#result" ).empty().append( content );
-  //});
-});
-</script>
 
 
   <table class="table">
 <tr>
     <th>Title</th>
     <th>From</th> 
+    <th>Date</th> 
     <th>Content: </th>
   </tr>
 
@@ -66,7 +39,9 @@ $( "#postMessage" ).submit(function( event ) {
 		<td>
 			@Html.DisplayFor(modelMsg => msg.SenderName)
 		</td>
-
+  <td>
+			@Html.DisplayFor(modelMsg => msg.time)
+		</td>
     <td>
 			@Html.DisplayFor(modelMsg => msg.Content)
 		</td>
@@ -77,7 +52,51 @@ $( "#postMessage" ).submit(function( event ) {
 </table>
 
 @section scripts {
-<script>
+  <script>
+// Attach a submit handler to the form
+
+$( "#postMessage" ).submit(function( event ) {
+ 
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    message = $form.find( "input[name='text']" ).val(),
+    title = $form.find( "input[name='title']" ).val(),
+    groupId = @Model.GroupId,
+    url1 = $form.attr( "action" );
+ 
+console.log("Values for title in script = " + title ); // John
+ console.log("Values for message in script = " + message ); // John
+  console.log("Values for groupId in script = " + groupId ); // 2pm
+  // Send the data using post
+  var data = {groupId: groupId, title: title , content: message };
+  //var posting = $.post( url,data );
+ var posting = $.post({
+      type: "POST",
+      url: url1,
+      data: JSON.stringify(data),
+      contentType:  "application/json",
+      dataType: "json",
+      success: function(msg) {
+        if(msg.wasSent) {
+          alert("msg wasSent");
+
+        }else {
+
+          alert("failed msg wasSent");
+        }
+      }
+  });
+  // Put the results in a div
+  
+  //posting.done(function( data ) {
+  //var content = $( data ).find( "#content" );
+  //$( "#result" ).empty().append( content );
+  //});
+});
+
 $( "myrow" ).click( function( event) {
     event.preventDefault();
     var a = $( this ).find( "button[name='msgid']" ).val();

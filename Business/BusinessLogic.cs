@@ -118,10 +118,10 @@ namespace community.Business
         /**
         * attatches sender to message before forwarding request to post message to group, 
         */
-        public void PostMessageToGroup(MessageBL msg,int groupId, ApplicationUser sender) 
+        public MessageBL PostMessageToGroup(MessageBL msg,int groupId, ApplicationUser sender) 
         {   
             msg.Sender = sender;
-            DBFacade.PostMessageToGroup(msg,groupId);
+            return DBFacade.PostMessageToGroup(msg,groupId);
         }
         /**
         * Returns timeStamp of latest login

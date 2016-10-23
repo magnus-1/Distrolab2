@@ -111,9 +111,10 @@ namespace community.Business
         /**
         * forwarding request to post message to group, coverting VM message to BL befor sending to BLLogic
         */
-        public static void PostMessageToGroup(MessageVM msg, int groupId, ApplicationUser sender)
+        public static MessageVM PostMessageToGroup(MessageVM msg, int groupId, ApplicationUser sender)
         {
-            new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg), groupId, sender);
+            MessageBL messageBl = new BusinessLogic().PostMessageToGroup(BusinessModelConverter.ConvertMessageVM(msg), groupId, sender);
+            return BusinessModelConverter.ConvertToMessageVM(messageBl);
         }
 
         /**

@@ -26,6 +26,21 @@ namespace community.Business
         {
             return new MessageBL {Title = msg.Title, Content = msg.Content };
         }
+
+        /**
+        * converts MessageVM to MessageBL
+        */
+        public static MessageVM ConvertToMessageVM(MessageBL msg)
+        {
+            return new MessageVM
+            {
+                Title = msg.Title,
+                Content = msg.Content,
+                time = msg.TimeStamp.ToString(),
+                SenderName = msg.Sender.UserName
+            };
+        }
+
         /**
         * converts GroupVM to GroupBL
         */
@@ -95,7 +110,13 @@ namespace community.Business
             {
                 GroupId = groupBL.Id,
                 Title = groupBL.Title,
-                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM {Title = m.Title, Content = m.Content, SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown" }))
+                Messages = Reverse(ListConverter.Map(groupBL.Messages, m => new MessageVM
+                {
+                    Title = m.Title,
+                    Content = m.Content,
+                    SenderName = (m.Sender != null) ? m.Sender.UserName : "Unknown",
+                    time = m.TimeStamp.ToString(),
+                }))
             };
         }
         /**

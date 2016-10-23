@@ -102,19 +102,24 @@ namespace community.Controllers
             return Json(new {wascreated = wasCreated,result = result,errormsg = errorMsg});
         }
 
+//        public async Task<IActionResult> PostMessageToGroup(string title, string text, int groupId)
         [HttpPostAttribute]
-        public async Task<IActionResult> PostMessageToGroup(string title, string text, int groupId)
+        public async Task<IActionResult> PostMessageToGroup([FromBodyAttribute]GroupPostMessage vm)
         {
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
                 var currentUserId = user.Id;
                 System.Console.WriteLine("----------- Current User Id  = " + currentUserId);
+                //System.Console.WriteLine( "PostMessageToGroup: Title: " + title + " text: " + text + " groupId: " + groupId );
+                System.Console.WriteLine( "PostMessageToGroup:" + vm.ToString() );
 
-                int Id = groupId;
-                System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
-                BusinessFacade.PostMessageToGroup(new MessageVM {Title = title, Content = text}, groupId,user);
-                return RedirectToAction("ViewGroup", new { groupId = Id });
+                int Id = vm.groupId;
+                //System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
+                var messageSent = BusinessFacade.PostMessageToGroup(new MessageVM {Title = vm.title, Content = vm.content}, vm.groupId ,user);
+                return Json(new {wasSent = true, message = messageSent,url = ""});
+            }else {
+                System.Console.WriteLine( "PostMessageToGroup: invalid state" );
             }
                 return RedirectToAction("Index");
         }
