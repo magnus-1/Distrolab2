@@ -41,6 +41,17 @@ namespace community.Data
                 .WithMany(b => b.ReceivedMessages);
             builder.Entity<LoginDB>()  
                 .HasOne(r => r.User);
+
+            // to simulate many to meny i core
+            builder.Entity<GroupMemberDB>()
+                .HasOne(gm => gm.Group)
+                .WithMany(g => g.GroupMembers)
+                .HasForeignKey(gm => gm.GroupId);
+
+            builder.Entity<GroupMemberDB>()
+                .HasOne(gm => gm.User)
+                .WithMany(u => u.GroupMembership)
+                .HasForeignKey(gm => gm.UserId);
             //builder.Entity<ApplicationUser>().HasMany(u => u.Groups).WithOne();
             
             
@@ -59,6 +70,7 @@ namespace community.Data
         }
         public DbSet<EntryDB> Entries { get; set; }
         public DbSet<GroupDB> Groups { get; set; }
+        public DbSet<GroupMemberDB> GroupMembership { get; set; }
         public DbSet<MessageDB> Messages { get; set; }
         public DbSet<LoginDB> Logins {get;set;}
 

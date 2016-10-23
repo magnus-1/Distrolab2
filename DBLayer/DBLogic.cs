@@ -56,7 +56,7 @@ namespace community.DBLayer
         */
         public GroupDB InsertGroup(GroupDB group)
         {
-
+            group.GroupMembers = new List<GroupMemberDB>();
             ctx.Groups.Add(group);
             ctx.SaveChanges();
 
@@ -69,22 +69,31 @@ namespace community.DBLayer
         public List<DestinationBL> GetUserGroupDestinations(ApplicationUser sender)
         {
             //ctx.Users.
-            var user = ctx.Users.Include(m => m.Groups).Include(u => u.UserId).Single(u => u.Id == sender.Id);
-            List<GroupDB> group = user.Groups;
-            return ListUtils.ListConverter.Map(group, m => new DestinationBL { Id = m.Id, Name = m.Title, IsGroup = true });
+            // var user = ctx.Users.Include(m => m.Groups).Include(u => u.UserId).Single(u => u.Id == sender.Id);
+            //var user1 = ctx.User.i
+            var user = ctx.Users.Include(u => u.GroupMembership).Single(u => u.Id == sender.Id);
+            var members = ctx.GroupMembership.Include(gm => gm.Group).Where(g => g.UserId == user.Id).ToList();//ListConverter.Map(user.GroupMembership , gm => gm.Group);
+            
+            return ListUtils.ListConverter.Map(members, gm => new DestinationBL { Id = gm.Group.Id, Name = gm.Group.Title, IsGroup = true });
         }
         /**
         * Insert group into users list of groups
         */
         internal bool JoinGroup(ApplicationUser user, int groupId)
         {
-            var dude = ctx.Users.Include(m => m.Groups).Single(u => u.Id == user.Id);
-            var group = ctx.Groups.Single(g => g.Id == groupId);
+            //var dude = ctx.Users.Include(m => m.Groups).Single(u => u.Id == user.Id);
+            var dude = ctx.Users.Include(m => m.GroupMembership).Single(u => u.Id == user.Id);
+            var group = ctx.Groups.Include(g => g.GroupMembers).Single(g => g.Id == groupId);
             if(group == null || dude == null) {
                 System.Console.WriteLine( "DBLogic:JoinGroup: failed to join group " );
                 return false;
             }
-            dude.Groups.Add(group);
+            GroupMemberDB member = new GroupMemberDB{GroupId = group.Id,Group = group,UserId = dude.Id,User = dude};
+            ctx.GroupMembership.Add(member);
+            // group.GroupMembers.Add(member);
+            // dude.GroupMembership.Add(member);
+
+            //dude.Groups.Add(group);
             ctx.SaveChanges();
             return true;
         }
@@ -185,14 +194,15 @@ namespace community.DBLayer
 
 
         public bool IsGroupMember(ApplicationUser sender,int groupId) {
-            var usr = ctx.Users.Include(u => u.Groups).Single(u => u.Id == sender.Id );
+            //var usr = ctx.Users.Include(u => u.Groups).Single(u => u.Id == sender.Id );
+            var usr = ctx.GroupMembership.Single(gm => gm.GroupId == groupId && gm.UserId == sender.Id);//.Users.Include(u => u.GroupMembership).Single(u => u.Id == sender.Id );
             if(usr == null) {
                 return false;
             }
-            var group = usr.Groups.Where(m => m.Id == groupId).ToList();
-            if(group == null || group.Count <= 0) {
-                return false;
-            }
+            // var group = usr.GroupMembership.Where(gm => gm.GroupId == groupId).ToList();
+            // if(group == null || group.Count <= 0) {
+            //     return false;
+            // }
             return true;
         }
         /**
@@ -233,9 +243,9 @@ namespace community.DBLayer
         public MessageDB PostMessageToGroup(MessageDB msg, int groupId)
         {
 
-            var a = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
+            var group = ctx.Groups.Include(m => m.Messages).Single(p => p.Id == groupId);
             msg.TimeStamp = DateTime.Now;
-            a.Messages.Add(msg);
+            group.Messages.Add(msg);
             ApplicationUser user = ctx.Users.Include(m => m.SentMessages).Single(p => p.Id == msg.Sender.Id);
             user.SentMessages.Add(msg);
             ctx.SaveChanges();

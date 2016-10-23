@@ -11,7 +11,8 @@ namespace community.Models
     public class ApplicationUser : IdentityUser
     {
 
-        public virtual List<GroupDB> Groups { get; set; }
+        //public virtual List<GroupDB> Groups { get; set; }
+        public virtual List<GroupMemberDB> GroupMembership { get; set; }
         public virtual List<MessageDB> ReceivedMessages { get; set; }
         public virtual List<MessageDB> SentMessages { get; set; }
     

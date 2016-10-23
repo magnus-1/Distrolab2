@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace community.Migrations
 {
-    public partial class useridtest55 : Migration
+    public partial class newmtm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,19 @@ namespace community.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,20 +128,26 @@ namespace community.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Groups",
+                name: "GroupMembership",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    MembershipId = table.Column<int>(nullable: false)
                         .Annotation("Autoincrement", true),
-                    ApplicationUserId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    GroupId = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
+                    table.PrimaryKey("PK_GroupMembership", x => x.MembershipId);
                     table.ForeignKey(
-                        name: "FK_Groups_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_GroupMembership_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GroupMembership_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -149,6 +168,44 @@ namespace community.Migrations
                     table.ForeignKey(
                         name: "FK_Logins_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Content = table.Column<string>(nullable: true),
+                    GroupDBId = table.Column<int>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsRead = table.Column<bool>(nullable: false),
+                    ReceiverId = table.Column<string>(nullable: true),
+                    SenderId = table.Column<string>(nullable: true),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Groups_GroupDBId",
+                        column: x => x.GroupDBId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -219,44 +276,6 @@ namespace community.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Autoincrement", true),
-                    Content = table.Column<string>(nullable: true),
-                    GroupDBId = table.Column<int>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    IsRead = table.Column<bool>(nullable: false),
-                    ReceiverId = table.Column<string>(nullable: true),
-                    SenderId = table.Column<string>(nullable: true),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_Groups_GroupDBId",
-                        column: x => x.GroupDBId,
-                        principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
@@ -275,9 +294,14 @@ namespace community.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Groups_ApplicationUserId",
-                table: "Groups",
-                column: "ApplicationUserId");
+                name: "IX_GroupMembership_GroupId",
+                table: "GroupMembership",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GroupMembership_UserId",
+                table: "GroupMembership",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Logins_UserId",
@@ -334,6 +358,9 @@ namespace community.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Entries");
+
+            migrationBuilder.DropTable(
+                name: "GroupMembership");
 
             migrationBuilder.DropTable(
                 name: "Logins");

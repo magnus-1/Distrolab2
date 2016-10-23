@@ -8,8 +8,8 @@ using community.Data;
 namespace community.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20161023130956_useridtest55dd")]
-    partial class useridtest55dd
+    [Migration("20161023144147_newmtm")]
+    partial class newmtm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,15 +88,29 @@ namespace community.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("community.Models.DBModels.GroupMemberDB", b =>
+                {
+                    b.Property<int>("MembershipId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("GroupId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("MembershipId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("GroupMembership");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>
@@ -272,11 +286,16 @@ namespace community.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("community.Models.DBModels.GroupDB", b =>
+            modelBuilder.Entity("community.Models.DBModels.GroupMemberDB", b =>
                 {
-                    b.HasOne("community.Models.ApplicationUser")
-                        .WithMany("Groups")
-                        .HasForeignKey("ApplicationUserId");
+                    b.HasOne("community.Models.DBModels.GroupDB", "Group")
+                        .WithMany("GroupMembers")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("community.Models.ApplicationUser", "User")
+                        .WithMany("GroupMembership")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("community.Models.DBModels.LoginDB", b =>

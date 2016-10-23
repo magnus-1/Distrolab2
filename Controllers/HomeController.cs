@@ -22,10 +22,20 @@ namespace community.Controllers
      
         public async Task<IActionResult> Index()
         {
-            var user = await GetCurrentUserAsync(); 
-            HomeVM info = BusinessFacade.GetHomeInfo(user);
-            
-            return View(info);
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+                if (user != null)
+                {
+                    HomeVM info = BusinessFacade.GetHomeInfo(user);
+                    return View(info);
+                }
+            }
+            else
+            {
+                System.Console.WriteLine("Invalid model, redirect to login");
+            }
+            return RedirectToAction("Login", "AccountController");
         }
 
         public IActionResult Error()

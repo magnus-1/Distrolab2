@@ -145,6 +145,9 @@ namespace community.Business
         public HomeVM GetHomeInfo(ApplicationUser user)
         {   
             HomeVM info = new HomeVM();
+            if(info == null) {
+                return null;
+            }
             info.UserName = user.UserName;
             info.noOfLoginThisMonth = DBFacade.GetNumberOfLogins(user);
             info.UnreadMessages = GetUsersUnreadMessagesCount(user);
