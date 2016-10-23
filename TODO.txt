@@ -54,8 +54,9 @@ ToDo
  * only able to view groups that you have joined,
  * title can't be null
  *  and add timestamp!
- / documentation and cleenUpCode.
- - Annotations where it seems nessessary.
+ / documentation 
+ * and cleenUpCode.
+ * Annotations where it seems nessessary.
  * indicate that messages is read.
- fix wrong count on read/deleted/total
+ fix wrong count on read/deleted/total both home page and ReadMessages
  * bug that only one user can be member of a group

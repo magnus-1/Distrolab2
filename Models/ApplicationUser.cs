@@ -7,18 +7,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace community.Models
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
+
     public class ApplicationUser : IdentityUser
     {
 
-        //public virtual List<GroupDB> Groups { get; set; }
         public virtual List<GroupMemberDB> GroupMembership { get; set; }
         public virtual List<MessageDB> ReceivedMessages { get; set; }
         public virtual List<MessageDB> SentMessages { get; set; }
     
-        // public override string ToString(){
-        //     return "Hej jag 'r en anv'ndare";
-        // }
         public UserIdDB UserId {get;set;}
 
     }

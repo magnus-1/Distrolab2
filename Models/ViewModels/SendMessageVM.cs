@@ -12,10 +12,6 @@ namespace community.Models.ViewModels
         public override string ToString() {
 
             return destinationName + ", ";
-            
-            // return "DestinationVM: " +  " : IsGroup = " + isGroup +  
-            // " : destinationId = " + destinationId +  
-            // " : destinationName = " + destinationName;
 
         }
     }
@@ -26,8 +22,8 @@ namespace community.Models.ViewModels
         [StringLength(60, MinimumLength = 2,ErrorMessage = "should be 2 to 60 in lenght")]
         public string title { get; set; }
         
-        //[StringLength(60, MinimumLength = 2,ErrorMessage = "Text needs to be what")]
         [Required(ErrorMessage = "Need to enter message")]
+        [StringLength(60, MinimumLength = 2,ErrorMessage = "should be 2 to 60 in lenght")]
         public string textArea { get; set; }
         public override string ToString() {
             return "NewMessageVM: " + "Dest : count" + destinations.Count ?? " no 0" +  "Title : " + title ?? " null" +
@@ -35,6 +31,7 @@ namespace community.Models.ViewModels
         }
     }
 
+// used to send data to the cshtml
     public class CreateMessageResponseVM {
 
         public string title { get; set; }
@@ -42,7 +39,9 @@ namespace community.Models.ViewModels
         public string timeStamp { get; set; }
     }
 
-    // Add profile data for application users by adding properties to the ApplicationUser class
+      /**
+    *   Used to pass information to the cshtml view, 
+    */
     public class SendMessageVM
     {
         public string title { get; set; }

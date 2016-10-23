@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace community.Models.ViewModels.ReadMessageViewModels
 {
@@ -19,9 +20,12 @@ namespace community.Models.ViewModels.ReadMessageViewModels
         public string from { get; set; }
     }
 
+/**
+    *   Used to pass information  
+    */
     public class GetMessageBodyVM
     {
-
+        [Required(ErrorMessage = "Need message id")]
         public int id { get; set; }
         public string content { get; set; }
 

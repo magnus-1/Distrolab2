@@ -1,5 +1,8 @@
 
 namespace community.Models.ViewModels {
+    /**
+    *   Used to pass information to the cshtml view, 
+    */
     public class HomeVM
     {
         public string UserName{get; set;}

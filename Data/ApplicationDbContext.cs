@@ -52,23 +52,9 @@ namespace community.Data
                 .HasOne(gm => gm.User)
                 .WithMany(u => u.GroupMembership)
                 .HasForeignKey(gm => gm.UserId);
-            //builder.Entity<ApplicationUser>().HasMany(u => u.Groups).WithOne();
-            
-            
-            // builder.Entity<ApplicationUser>()
-            //     .HasMany(p => p.SentMessages)
-            //     .WithOne();
-            // builder.Entity<ApplicationUser>()
-            //     .HasMany(p => p.ReceivedMessages)
-            //     .WithOne(a => a.Sender);
 
-            // TODO: builder.Entity<outstuff>.hasOne(k => till vad) . hasOneToMany
-
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<EntryDB> Entries { get; set; }
+
         public DbSet<GroupDB> Groups { get; set; }
         public DbSet<GroupMemberDB> GroupMembership { get; set; }
         public DbSet<MessageDB> Messages { get; set; }

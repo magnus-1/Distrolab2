@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace community.Models.ViewModels.GroupViewModels {
+    /**
+    *   Used to pass information to the cshtml view, 
+    */
     public class GroupVM
     {
         public int GroupId {get; set;}

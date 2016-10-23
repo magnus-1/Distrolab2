@@ -1,6 +1,9 @@
 
 
 namespace community.Models.ViewModels {
+    /**
+    *   Used to pass information to the cshtml view, 
+    */
     public class MessageVM
     {
         public string Title {get; set;}

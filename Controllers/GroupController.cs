@@ -78,7 +78,7 @@ namespace community.Controllers
             return RedirectToAction("Index");
         }
 
-        //public IActionResult CreateGroup(string groupTitle)
+    
         [HttpPostAttribute]
         public IActionResult CreateGroup([FromBodyAttribute]NewGroupVM vm)
         {
@@ -94,7 +94,6 @@ namespace community.Controllers
                 var group = new GroupVM { Title = groupTitle, Messages = messages };
                 result = BusinessFacade.InsertGroup(group);
                 System.Console.WriteLine("Group to be returned to view: " + result);
-                //return Json(result);
                 wasCreated = true;
             }
             else
@@ -105,7 +104,7 @@ namespace community.Controllers
             return Json(new {wascreated = wasCreated,result = result,errormsg = errorMsg});
         }
 
-//        public async Task<IActionResult> PostMessageToGroup(string title, string text, int groupId)
+
         [HttpPostAttribute]
         public async Task<IActionResult> PostMessageToGroup([FromBodyAttribute]GroupPostMessage vm)
         {
@@ -116,11 +115,10 @@ namespace community.Controllers
                 if(!BusinessFacade.IsGroupMember(user,vm.groupId) || vm.title.Equals("tt4")) {
                     return Json(new {wasSent = false,errormessage = "Not a member",url = "Index"});
                 }
-                //System.Console.WriteLine( "PostMessageToGroup: Title: " + title + " text: " + text + " groupId: " + groupId );
+
                 System.Console.WriteLine( "PostMessageToGroup:" + vm.ToString() );
 
-                int Id = vm.groupId;
-                //System.Console.WriteLine("--------- Input from ajax, message = " + text + " groupId = " + groupId);
+                
                 var messageSent = BusinessFacade.PostMessageToGroup(new MessageVM {Title = vm.title, Content = vm.content}, vm.groupId ,user);
                 return Json(new {wasSent = true, message = messageSent,url = ""});
             }else {

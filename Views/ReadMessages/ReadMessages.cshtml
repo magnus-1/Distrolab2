@@ -53,7 +53,6 @@
 $( "myrow" ).click( function( event) {
     event.preventDefault();
     var a = $( this ).find( "button[name='msgid']" ).val();
-    //alert("myrow: " + a);
     var btn =$( this ).find( "button[name='msgid']" );
     
     var data = {
@@ -71,7 +70,6 @@ $( "myrow" ).click( function( event) {
           btn.hide();
           $("#message-" + a ).html(msg.content).show()
           $("#isRead-" + a).html('<input checked="checked" class="check-box" disabled="disabled" type="checkbox">').show()
-          //alert(msg.name);
       }
   });
 });
@@ -79,7 +77,6 @@ $( "myrow" ).click( function( event) {
 $( "myrowdel" ).click( function( event) {
     event.preventDefault();
     var theid = $( this ).find( "button[name='msgid']" ).val();
-    //alert("myrow: " + a);
     var btn =$( this ).find( "button[name='msgid']" );
     
     var data = {
@@ -96,7 +93,6 @@ $( "myrowdel" ).click( function( event) {
           btn.hide();
           $("#tabrow-" + theid ).hide();
           alert(nsg.content);
-          //alert(msg.name);
       }
   });
 });

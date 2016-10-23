@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 
 namespace community.ListUtils {
+    /**
+    *   Diffrent list operations that was helpful to convert and work whit whole group of items
+    */
     class ListConverter {
         public static List<U> Map<T,U>(List<T> inList,Func<T,U> lambda) {
             List<U> result = new List<U>();

@@ -8,9 +8,6 @@
 	<button type="submit" class="btn btn-default">Create Group</button>
 </form>
 
-
-
-
 <table id="groupsTable" class="table">
 	@foreach (var grp in Model.Groups) {
 	<tr>`
@@ -47,10 +44,9 @@ $( "#createGroup" ).submit(function( event ) {
 
   var $form = $( this ),
     groupTitle2 = $form.find( "input[name='groupTitle']" ).val();
-    //url = $form.attr( "action" );
+  
 		var mydata = {title : groupTitle2};
 		var url1 = '@Url.Action("CreateGroup","Group")';
-  //var posting = $.post( url1, mydata );
  
  var posting = $.post({
       type: "POST",
@@ -63,21 +59,16 @@ $( "#createGroup" ).submit(function( event ) {
 					var mydata2 = resp.result;
          var GroupId = mydata2.groupId;
         var Title = mydata2.title;
-  
-      
-      $( "#groupsTable" ).append('<tr><td>'+Title+'</td><td id="viewGroupPlace-'+GroupId+'"></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
+      			$( "#groupsTable" ).append('<tr><td>'+Title+'</td><td id="viewGroupPlace-'+GroupId+'"></td><td><joinGroup><button id="joinGroup" type="button" name="grpId" value='+GroupId+' class="btn btn-default">Join Group</button></joinGroup></td></tr>');
 				}
 				else {
 					alert("Failed to create group" + resp.errormsg);
 				}
-          //alert(msg.name);
       }
   });
 
 
 });
-
-
 
 
 $( "table" ).on("click","viewGroup", function( event ) {
@@ -86,13 +77,8 @@ $( "table" ).on("click","viewGroup", function( event ) {
 
   var a = $( this ).find( "button[name='grpId']" ).val();
   var url = "/Group/ViewGroup?groupId=" + a;
-	//alert("tt");
-	//$("*").children().load(url,{ groupId: a});
-  //var posting = $.post( url, { groupId: a} );
 	window.location.href = url;
-	
- 
- 
+
 });
 
 $( "table" ).on("click","joinGroup", function( event ) {

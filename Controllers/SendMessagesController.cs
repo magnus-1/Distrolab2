@@ -38,13 +38,6 @@ namespace community.Controllers
        
         public async Task<IActionResult> Index(SendMessageVM message)
         {
-            // var groupInfoVMs = BusinessFacade.GetGroups();
-
-            // var groupVm = new GroupIndexVM { Groups = groupInfoVMs };
-            // if(message != null) {
-            //     System.Console.WriteLine("-----------hi Index : " + message.Tmptext);
-            //     return View(message);
-            // }
             var user = await GetCurrentUserAsync();
             var currentUserId = user.Id;
             List<DestinationVM> destinfo = BusinessFacade.GetDestinations(user);//new List<DestinationVM>();
@@ -53,11 +46,6 @@ namespace community.Controllers
 
             }
             
-            // for(int i = 0; i < 4;i++) {
-            //     destinfo.Add(new DestinationVM{isGroup = false,
-            //      destinationId = i,
-            //     destinationName = "namn" + i});
-            // }
             SendMessageVM msg = new SendMessageVM{Tmptext ="tmptext",DestinationInfo = destinfo };
             System.Console.WriteLine("-----------hi Index : " +msg);
             return View(msg);

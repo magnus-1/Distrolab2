@@ -24,17 +24,9 @@
 	<input id="titleTextField" name="title" type="text" class="form-control" />
 	<H5>Message: </H5>
 	<input id="textAreaTextField" name="textArea" type="text" class="form-control" />
-	<!--<input name="groupTitle" type="text" class="form-control" />-->
-	<!--<button type="submit" class="btn btn-default">Create Group</button>-->
+
 	<button type="submit" class="btn btn-default">Send Message</button>
 </form>
-
-<!--oops solved it...-->
-
-
-
-
-
 
 
 
@@ -93,25 +85,18 @@ $( "#writeMsg" ).submit( function( event ) {
                 dests = dests.concat(entry.destinationName);
                 dests = dests.concat(", ")
             });
-          //alert("Destinationer: "+ dests);
              clearFields();
              $("#disphere").html("Meddelande avsänt till "+ dests.toString() + "," + msg.timeStamp);
           }else {
-              //alert("resp = " + resp.toString());
               clearFields();
               $("#disphere").html("Failed to send message: " + resp.errorMsg);
               
           }
 
-          
-          
-          //alert("Meddelande nummer" + msg.id + "avsänt till "+ JSON.stringify(msg.destinations) + "," + msg.timeStamp);
+
       }
   });
-  
-  
-  // Send the data using post
-  //var posting = $.post( url, { text: "message",groupId: "lol" } );
+
 });
 
 $( "#addRecipient" ).click( function( event ) {
