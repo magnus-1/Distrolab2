@@ -58,5 +58,5 @@ ToDo
  * and cleenUpCode.
  * Annotations where it seems nessessary.
  * indicate that messages is read.
- fix wrong count on read/deleted/total both home page and ReadMessages
+ / fix wrong count on read/deleted/total both home page and ReadMessages
  * bug that only one user can be member of a group
