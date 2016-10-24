@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.1.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>469</y>
+      <w>455</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ReadMessageController&gt;&gt;
+--
+Task&lt;IActionResult&gt; Index(ReadMessageIndexVM readMessageIndexVM)
+Task&lt;IActionResult&gt; ReadAllMessages()
+Task&lt;IActionResult&gt; ReadFromSender(ReadInboxVM senderId)
+Task&lt;IActionResult&gt; DeleteMessage([FromBodyAttribute]DeleteMessageVM vm)
+Task&lt;IActionResult&gt; GetMessageBody([FromBodyAttribute]GetMessageBodyVM vm)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>350</y>
+      <w>455</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupController&gt;&gt;
+--
+GroupController(
+IActionResult MessageGroup()
+async Task&lt;IActionResult&gt; Index()
+async Task&lt;IActionResult&gt;  JoinGroup(int groupId)
+async Task&lt;IActionResult&gt; ViewGroup(int groupId)
+IActionResult CreateGroup([FromBodyAttribute]NewGroupVM vm)
+async Task&lt;IActionResult&gt; PostMessageToGroup([FromBodyAttribute]GroupPostMessage vm)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>560</y>
+      <w>455</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;SendMessageController&gt;&gt;
+--
+SendMessagesController(
+IActionResult MessageGroup()
+Task&lt;IActionResult&gt; Index(SendMessageVM message)
+Task&lt;IActionResult&gt; CreateMessage([FromBodyAttribute]NewMessageVM vm) {
+IActionResult SendMessage(SendMessageVM message) {
+IActionResult ViewGroup(int groupId)
+Task&lt;IActionResult&gt; PostMessageToGroup(string text, int groupId)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>280</y>
+      <w>455</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;HomeController&gt;&gt;
+--
+ HomeController(UserManager&lt;ApplicationUser&gt; userManager)
+ Task&lt;IActionResult&gt; Index()
+ IActionResult Error()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>854</x>
+      <y>385</y>
+      <w>441</w>
+      <h>238</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;BusinessFacade&gt;&gt;
+--
+HomeVM GetHomeInfo(ApplicationUser user)
+GroupVM InsertGroup(GroupVM group)
+List&lt;GroupInfoVM&gt; GetGroups(ApplicationUser user)
+ReadMessageIndexVM GetUsersMessages(ApplicationUser user)
+bool IsGroupMember(ApplicationUser user, int groupId)
+int GetUsersUnreadMessagesCount(ApplicationUser user)
+ReadMessageIndexVM GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+bool JoinGroup(ApplicationUser user, int groupId)
+List&lt;DestinationVM&gt; GetDestinations(ApplicationUser sender)
+GroupVM GetGroupById(int groupId)
+GetMessageBodyVM GetMessageBody(GetMessageBodyVM vm, int reader)
+MessageVM PostMessageToGroup(MessageVM msg, int groupId, ApplicationUser sender)
+int GetUserId(ApplicationUser sender)
+CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
+ReadInboxVM GetInboxInfo(ApplicationUser user)
+ReadInboxVM GetUserInboxStatistics(ApplicationUser user)
+bool DeleteMessage(DeleteMessageVM vm, ApplicationUser user)
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2331</x>
+      <y>406</y>
+      <w>441</w>
+      <h>238</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DBLogic&gt;&gt;
+--
+int GetNumberOfLoginsThisMonth(ApplicationUser user){
+List&lt;DateTime&gt; GetLoginTimeStamps(ApplicationUser user){
+GroupDB InsertGroup(GroupDB group)
+List&lt;DestinationBL&gt; GetUserGroupDestinations(ApplicationUser sender)
+List&lt;DestinationBL&gt; GetUserDestinations(ApplicationUser sender)
+List&lt;MessageDB&gt; GetUsersMessages(ApplicationUser user)
+int GetUserId(ApplicationUser sender)
+bool IsGroupMember(ApplicationUser sender,int groupId) {
+GroupDB GetGroup(int groupId)
+List&lt;GroupDB&gt; GetGroups()
+MessageDB ReadMessage(int sender, int messageId)
+MessageDB PostMessageToGroup(MessageDB msg, int groupId)
+List&lt;UserSenderDB&gt; GetUserInboxStatistics(ApplicationUser user)
+List&lt;InboxDB&gt; GetConversations(ApplicationUser user)
+bool JoinGroup(ApplicationUser user, int groupId)
+bool DeleteMessage(int messageId, ApplicationUser user)
+List&lt;MessageDB&gt; GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+MessageDB SendMessage(int destinationId, MessageDB messageDB, ApplicationUser sender)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>301</y>
+      <w>196</w>
+      <h>175</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>260.0;230.0;100.0;230.0;100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>413</y>
+      <w>196</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>260.0;120.0;80.0;120.0;80.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>140</x>
+      <y>112</y>
+      <w>630</w>
+      <h>581</h>
+    </coordinates>
+    <panel_attributes>UI</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>819</x>
+      <y>112</y>
+      <w>952</w>
+      <h>581</h>
+    </coordinates>
+    <panel_attributes>BO</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1820</x>
+      <y>112</y>
+      <w>994</w>
+      <h>581</h>
+    </coordinates>
+    <panel_attributes>DB</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>210</y>
+      <w>455</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ManageControllerä&gt;&gt;
+--
+doGet(HttpServletRequest request, HttpServletResponse response)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>168</y>
+      <w>455</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AccountController&gt;&gt;
+--
+doGet(HttpServletRequest request, HttpServletResponse response)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>854</x>
+      <y>189</y>
+      <w>441</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;BuissinesModelConverter&gt;&gt;
+--
+ConvertInboxListToInboxVM(List&lt;InboxBL&gt; inboxes)
+ConvertListToGroupInfoVM(List&lt;GroupBL&gt; groups)
+ConvertToGroupVM(GroupBL groupBL)
+ConvertToReadMessageIndexVM(List&lt;MessageBL&gt; msg)
+ConvertGetMessageBodyVM(GetMessageBodyVM msgBodyVM)
+GetMessageBodyVM ConvertToGetMessageBodyVM(MessageBodyBL msgBodyBL)
+List&lt;DestinationVM&gt; ConvertToDestinationVM(List&lt;DestinationBL&gt; destsBL)
+GroupBL ConvertGroupVM(GroupVM groupVM)
+MessageVM ConvertToMessageVM(MessageBL msg)
+MessageBL ConvertMessageVM(MessageVM msg)
+List&lt;T&gt; Reverse&lt;T&gt;(List&lt;T&gt; list)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1316</x>
+      <y>357</y>
+      <w>441</w>
+      <h>287</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;BusinessLogic&gt;&gt;
+--
+GroupBL InsertGroup(GroupBL group)
+List&lt;DestinationBL&gt; GetDestinations(ApplicationUser sender) 
+GroupBL GroupsWithKey(int groupId)
+List&lt;MessageBL&gt; GetUsersMessages(ApplicationUser user)
+List&lt;MessageBL&gt; GetUsersAllMessages(ApplicationUser user)
+int GetUsersUnreadMessagesCount(Appli
+List&lt;GroupBL&gt; GetGroups(ApplicationUser user){
+MessageBodyBL ReadMessageBody(MessageBodyBL msgbody,int reader) 
+MessageBL PostMessageToGroup(MessageBL msg,int groupId, ApplicationUser sender) 
+DateTime GetLatestLoginTimeStamp(ApplicationUser user){
+HomeVM GetHomeInfo(ApplicationUser user)
+ReadInboxVM GetConversations(ApplicationUser user) 
+ReadInboxVM GetUserInboxStatistics(ApplicationUser user) 
+bool IsGroupMember(ApplicationUser user, int groupId)
+bool JoinGroup(ApplicationUser user, int groupId)
+List&lt;MessageBL&gt; GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+CreateMessageResponseVM SendNewMessage(NewMessageVM vm, ApplicationUser sender)
+bool DeleteMessage(int messageId, ApplicationUser user)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1834</x>
+      <y>364</y>
+      <w>441</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DBFacade&gt;&gt;
+--
+ GroupBL InsertGroup(GroupBL group)
+ GroupBL GetGroup(int groupId)
+ List&lt;GroupBL&gt; GetGroups()
+ MessageBL PostMessageToGroup(MessageBL msg, int groupId)
+ List&lt;DestinationBL&gt; GetUserGroupDestinations(ApplicationUser sender)
+ List&lt;DestinationBL&gt; GetUserDestinations(ApplicationUser sender)
+ bool IsGroupMember(ApplicationUser user, int groupId)
+ List&lt;MessageBL&gt; GetUsersMessages(ApplicationUser user)
+ List&lt;MessageBL&gt; GetUsersMessagesWithSender(ApplicationUser user, int senderId)
+ bool JoinGroup(ApplicationUser user, int groupId)
+ MessageBL ReadMessage(int sender, int messageId)
+ int GetUserId(ApplicationUser sender)
+ MessageBL SendMessage(int destinationId, MessageBL tmpMsg, ApplicationUser sender)
+ List&lt;DateTime&gt; GetLoginTimeStamps(ApplicationUser user)
+ bool DeleteMessage(int messageId, ApplicationUser user)
+ List&lt;InboxBL&gt; GetConversations(ApplicationUser user)
+ List&lt;InboxBL&gt; GetUserInboxStatistics(ApplicationUser user) {
+ int GetNumberOfLogins(ApplicationUser user)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1883</x>
+      <y>154</y>
+      <w>308</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DBModelConverter&gt;&gt;
+--
+MessageDB ConvertMessageBL(MessageBL msg)
+MessageBL ConvertToMessageBL(MessageDB msg)
+GroupDB ConvertGroupBL(GroupBL groupBL)
+GroupBL ConvertToGroupBL(GroupDB groupDB)
+InboxBL ConvertToInboxBL(InboxDB inboxDB)
+List&lt;InboxBL&gt; ConvertListToInboxBL(List&lt;InboxDB&gt; inboxes)
+List&lt;GroupBL&gt; ConvertListToGroupBL(List&lt;GroupDB&gt; groups)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>525</y>
+      <w>196</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>560</y>
+      <w>196</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>260.0;10.0;80.0;10.0;80.0;70.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1288</x>
+      <y>497</y>
+      <w>42</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1036</x>
+      <y>336</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1750</x>
+      <y>497</y>
+      <w>98</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2268</x>
+      <y>497</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2037</x>
+      <y>287</y>
+      <w>21</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>140</x>
+      <y>700</y>
+      <w>2667</w>
+      <h>301</h>
+    </coordinates>
+    <panel_attributes>Models</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1841</x>
+      <y>742</y>
+      <w>826</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>DBModels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2471</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;UserIdDB&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1855</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupDB&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2009</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;InboxDB&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2163</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;LoginDB&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2317</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;MessageDB&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>161</x>
+      <y>735</y>
+      <w>714</w>
+      <h>245</h>
+    </coordinates>
+    <panel_attributes>BusinessModels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>763</x>
+      <y>819</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;MessageVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>763</x>
+      <y>777</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;HomeVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>777</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupInfoVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>917</x>
+      <y>742</y>
+      <w>798</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>BusinessModels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1547</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;MessageBodyBL&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;MessageBL&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1239</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DestinationBL&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1085</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;InboxBL&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>931</x>
+      <y>770</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupBL&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>161</x>
+      <y>756</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>GroupViewModels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>357</x>
+      <y>756</y>
+      <w>189</w>
+      <h>217</h>
+    </coordinates>
+    <panel_attributes>ReadMessageViewModels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>805</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;NewGroupVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>833</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupIndexVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>861</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupPostMessage&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>182</x>
+      <y>889</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GroupVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>777</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ReadInbocVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>805</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;FromUser&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>833</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ShowMessageFromSenderVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>861</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ReadMessageIndexVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>889</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;ReadMessageVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>917</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;GetMessageBodyVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>371</x>
+      <y>945</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DeleteMessageVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>574</x>
+      <y>777</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;DestinationVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>574</x>
+      <y>805</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;NewMessageVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>574</x>
+      <y>833</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;CreateMessageResponseVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>574</x>
+      <y>861</y>
+      <w>147</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;SendMessageVM&gt;&gt;
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>560</x>
+      <y>756</y>
+      <w>182</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>SendMessageVM</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
