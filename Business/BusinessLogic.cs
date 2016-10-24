@@ -54,7 +54,7 @@ namespace community.Business
         */
         public List<MessageBL> GetUsersMessages(ApplicationUser user)
         {   
-            return DBFacade.GetUsersMessages(user).Where(m => m.IsDeleted == false).ToList();;
+            return DBFacade.GetUsersMessages(user).Where(m => m.IsDeleted == false).ToList();
         }
 
         /**
@@ -63,7 +63,7 @@ namespace community.Business
         */
         public List<MessageBL> GetUsersAllMessages(ApplicationUser user)
         {   
-            return DBFacade.GetUsersMessages(user).ToList();;
+            return DBFacade.GetUsersMessages(user).ToList();
         }
 
         /**
