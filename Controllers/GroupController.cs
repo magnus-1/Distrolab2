@@ -65,16 +65,19 @@ namespace community.Controllers
         public async Task<IActionResult> ViewGroup(int groupId)
         {
             System.Console.WriteLine("--------- ViewGroup with Id = " + groupId);
-            var user = await GetCurrentUserAsync();
-            if (BusinessFacade.IsGroupMember(user, groupId))
+            if (ModelState.IsValid)
             {
-                var group = BusinessFacade.GetGroupById(groupId);
+                var user = await GetCurrentUserAsync();
+                if (BusinessFacade.IsGroupMember(user, groupId))
+                {
+                    var group = BusinessFacade.GetGroupById(groupId);
 
-                System.Console.WriteLine("--------- Gruppen vi ska till:  " + group);
+                    System.Console.WriteLine("--------- Gruppen vi ska till:  " + group);
 
-                return View(group);
+                    return View(group);
+                }
+                System.Console.WriteLine("--------- ViewGroup with Id denied access");
             }
-            System.Console.WriteLine( "--------- ViewGroup with Id denied access" );
             return RedirectToAction("Index");
         }
 

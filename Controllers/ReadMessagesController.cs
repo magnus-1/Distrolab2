@@ -44,8 +44,8 @@ namespace community.Controllers
             {
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
-                //ReadInboxVM inbox = BusinessFacade.GetInboxInfo(user);
-                ReadInboxVM inbox = BusinessFacade.GetUserInboxStatistics(user);
+                ReadInboxVM inbox = BusinessFacade.GetInboxInfo(user);
+                //ReadInboxVM inbox = BusinessFacade.GetUserInboxStatistics(user);
 
                 return View(inbox);
             }
@@ -69,8 +69,7 @@ namespace community.Controllers
 
             if (ModelState.IsValid)
             {
-                //var user = await GetCurrentUserAsync();
-                //ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
+                
                 var user = await GetCurrentUserAsync();
                 ReadMessageIndexVM rmIndexVm = BusinessFacade.GetUsersMessages(user);
                 return View("ReadMessages", rmIndexVm);

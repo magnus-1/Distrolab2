@@ -58,6 +58,15 @@ namespace community.Business
         }
 
         /**
+        * forwarding request get messages for specific user.
+        * returns list of MessageBL
+        */
+        public List<MessageBL> GetUsersAllMessages(ApplicationUser user)
+        {   
+            return DBFacade.GetUsersMessages(user).ToList();;
+        }
+
+        /**
         * returns numberOfUnreadMessages for a user.
         */
         public int GetUsersUnreadMessagesCount(ApplicationUser user)
@@ -198,7 +207,7 @@ namespace community.Business
             List<InboxBL> inboxes = DBFacade.GetConversations(user);
             ReadInboxVM inbox = BusinessModelConverter.ConvertInboxListToInboxVM(inboxes);
             List<MessageBL> messages = new List<MessageBL>();
-            messages = GetUsersMessages(user);
+            messages = GetUsersAllMessages(user);
 
             inbox.totalReceivedMessages = messages.Count();
             inbox.totalReadMessages = messages.Where(x => x.IsRead == true).ToList().Count();
