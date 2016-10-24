@@ -496,7 +496,7 @@ List&lt;GroupBL&gt; ConvertListToGroupBL(List&lt;GroupDB&gt; groups)</panel_attr
       <w>714</w>
       <h>245</h>
     </coordinates>
-    <panel_attributes>BusinessModels</panel_attributes>
+    <panel_attributes>ViewModels</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
